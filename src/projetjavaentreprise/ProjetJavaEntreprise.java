@@ -3,19 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaapplication3;
+
+package projetjavaentreprise;
 
 /**
  *
- * @author psl2094a
+ * @author user
  */
-public class JavaApplication3 {
+public class ProjetJavaEntreprise {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        System.out.println("Branche MASTER");
     }
     
 }
