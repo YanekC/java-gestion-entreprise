@@ -11,12 +11,23 @@ package projetjavaentreprise;
  * @author user
  */
 public class ProjetJavaEntreprise {
-
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //Branche de dev d'alex
         System.out.println("Branche alex");
+        //Récupérer l'adresse du fichier
+        String csvFile = "\\\\ens.fsi\\ens\\HOME-ETUD\\psl2094a\\Downloads\\fichiers\\liste_competences.csv";
+        //Vérifier l'extension du fichier
+        if(csvFile.matches(".*(.csv)$")){
+           FichierLoader test = new FichierLoader(csvFile); 
+        }
+        if(csvFile.matches(".*(.xml)$")){
+            
+        }
+        
     }
     
 }
