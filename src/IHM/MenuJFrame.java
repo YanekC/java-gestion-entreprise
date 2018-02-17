@@ -5,10 +5,23 @@
  */
 package IHM;
 
+import IHM.Competences.AjouterCompetenceJFrame;
+import IHM.Competences.InfoCompetenceJFrame;
+import IHM.Competences.ModifierCompetenceJFrame;
+import IHM.Competences.SupprimerCompetenceJFrame;
+import IHM.Missions.AjouterMissionJFrame;
+import IHM.Missions.InfoMissionJFrame;
+import IHM.Missions.ModifierMissionJFrame;
+import IHM.Missions.SupprimerMissionJFrame;
+import IHM.Personnel.AjouterPersonnelJFrame;
+import IHM.Personnel.InfoPersonnelJFrame;
+import IHM.Personnel.ModifierPersonnelJFrame;
+import IHM.Personnel.SupprimerPersonnelJFrame;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -376,9 +389,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jButtonVoirInfoPersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonVoirInfoPersonnelMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame infosPersonnel = new JFrame();
-                infosPersonnel.setSize(300, 300);
-                infosPersonnel.setLocationRelativeTo(null);
+                InfoPersonnelJFrame infosPersonnel = new InfoPersonnelJFrame();
                 infosPersonnel.setVisible(true);
             }
         });
@@ -387,9 +398,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jButtonModifierPersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonModifierPersonnelMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame modifierPersonnel = new JFrame();
-                modifierPersonnel.setSize(300, 300);
-                modifierPersonnel.setLocationRelativeTo(null);
+                ModifierPersonnelJFrame modifierPersonnel = new ModifierPersonnelJFrame();
                 modifierPersonnel.setVisible(true);
             }
         });
@@ -398,9 +407,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jToggleButtonSupprimerPersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButtonSupprimerPersonnelMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame supprimerPersonnel = new JFrame();
-                supprimerPersonnel.setSize(300, 300);
-                supprimerPersonnel.setLocationRelativeTo(null);
+                SupprimerPersonnelJFrame supprimerPersonnel = new SupprimerPersonnelJFrame();
                 supprimerPersonnel.setVisible(true);
             }
         });
@@ -409,9 +416,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jButtonAjouterPersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAjouterPersonnelMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame ajouterPersonnel = new JFrame();
-                ajouterPersonnel.setSize(300, 300);
-                ajouterPersonnel.setLocationRelativeTo(null);
+                AjouterPersonnelJFrame ajouterPersonnel = new AjouterPersonnelJFrame();
                 ajouterPersonnel.setVisible(true);
             }
         });
@@ -421,9 +426,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jButtonVoirInfosMissionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonVoirInfosMissionsMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame infosMission = new JFrame();
-                infosMission.setSize(300, 300);
-                infosMission.setLocationRelativeTo(null);
+                InfoMissionJFrame infosMission = new InfoMissionJFrame();
                 infosMission.setVisible(true);
             }
         });
@@ -432,9 +435,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jButtonModifierMissionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonModifierMissionMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame modifierMission = new JFrame();
-                modifierMission.setSize(300, 300);
-                modifierMission.setLocationRelativeTo(null);
+                ModifierMissionJFrame modifierMission = new ModifierMissionJFrame();
                 modifierMission.setVisible(true);
             }
         });
@@ -443,9 +444,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jToggleButtonSupprimerMissionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButtonSupprimerMissionMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame supprimerMission = new JFrame();
-                supprimerMission.setSize(300, 300);
-                supprimerMission.setLocationRelativeTo(null);
+                SupprimerMissionJFrame supprimerMission = new SupprimerMissionJFrame();
                 supprimerMission.setVisible(true);
             }
         });
@@ -454,9 +453,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jButtonAjouterMissionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAjouterMissionMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame ajouterMission = new JFrame();
-                ajouterMission.setSize(300, 300);
-                ajouterMission.setLocationRelativeTo(null);
+                AjouterMissionJFrame ajouterMission = new AjouterMissionJFrame();
                 ajouterMission.setVisible(true);
             }
         });
@@ -466,9 +463,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jButtonVoirInfoCompetencesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonVoirInfoCompetencesMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame infoCompetence = new JFrame();
-                infoCompetence.setSize(300, 300);
-                infoCompetence.setLocationRelativeTo(null);
+                InfoCompetenceJFrame infoCompetence = new InfoCompetenceJFrame();
                 infoCompetence.setVisible(true);
             }
         });
@@ -477,9 +472,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jButtonModifierCompetenceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonModifierCompetenceMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame modifierCompetence = new JFrame();
-                modifierCompetence.setSize(300, 300);
-                modifierCompetence.setLocationRelativeTo(null);
+                ModifierCompetenceJFrame modifierCompetence = new ModifierCompetenceJFrame();
                 modifierCompetence.setVisible(true);
             }
         });
@@ -488,9 +481,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jToggleButtonSupprimerCometenceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButtonSupprimerCometenceMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame supprimerCompetence = new JFrame();
-                supprimerCompetence.setSize(300, 300);
-                supprimerCompetence.setLocationRelativeTo(null);
+                SupprimerCompetenceJFrame supprimerCompetence = new SupprimerCompetenceJFrame();
                 supprimerCompetence.setVisible(true);
             }
         });
@@ -499,9 +490,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jButtonAjouterCompetenceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAjouterCompetenceMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame ajouterCompetence = new JFrame();
-                ajouterCompetence.setSize(300, 300);
-                ajouterCompetence.setLocationRelativeTo(null);
+                AjouterCompetenceJFrame ajouterCompetence = new AjouterCompetenceJFrame();
                 ajouterCompetence.setVisible(true);
             }
         });
@@ -533,7 +522,7 @@ public class MenuJFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MenuJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -541,7 +530,6 @@ public class MenuJFrame extends javax.swing.JFrame {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel OngletCompetences;
     private javax.swing.JPanel OngletMenu;
