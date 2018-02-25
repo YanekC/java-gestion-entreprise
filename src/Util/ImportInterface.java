@@ -26,5 +26,5 @@ public interface ImportInterface {
      * @param listeCompetences L'arrayList regroupant les competences de l'appli
      */
     void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, 
-            ArrayList<Personnel> listePersonnels, ArrayList<Competence> listeCompetences);    
+            ArrayList<Personnel> listePersonnels, ArrayList<Competence> listeCompetences) throws Exception;    
 }
