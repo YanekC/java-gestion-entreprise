@@ -38,6 +38,7 @@ public class ImportCSV implements ImportInterface{
         ArrayList<String> indexIdComp = new ArrayList<>();
         for(Competence c : listeCompetences){
             indexIdComp.add(c.getIdC());
+            lstComp.add(c);
         }
         //Maintenant on peut parser la liste de competences et les ajouter a chaque personnel
         for(Map.Entry compPers : listeCompetencesPerso.entrySet()){
