@@ -1,6 +1,8 @@
 package Model;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -14,17 +16,35 @@ public class Personnel {
     private String nom;
     private String prenom;
     private Calendar dateNaiss;
+    private int id;
+    private ArrayList<String> listeCompetences;
     
     /**
      * Constructeur de base d'un personnel.
      * @param nom Le nom du personnel
      * @param prenom Le prenom du personnel
      * @param dateNaiss La date de naissance du personnel
+     * @param id Identitfiant du personnel
      */
-    public Personnel(String nom, String prenom, Calendar dateNaiss){
+    public Personnel(String nom, String prenom, String dateNaiss, int id){
         this.nom = nom;
         this.prenom = prenom;
-        this.dateNaiss = dateNaiss;
+        this.id = id;
+        this.listeCompetences = new ArrayList<String>();
+        this.dateNaiss = Calendar.getInstance();
+        try{
+            this.dateNaiss.setTime(formatDate.parse(dateNaiss));
+        }
+        catch(ParseException e){
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public void ajouterCompetence(String c){
+        if(!this.listeCompetences.contains(c)){
+            this.listeCompetences.add(c);
+        }
     }
     
     @Override

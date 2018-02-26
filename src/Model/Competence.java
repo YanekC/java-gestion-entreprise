@@ -23,5 +23,10 @@ public class Competence {
     public String toString(){
         return this.idC+" "+this.libelleAng+" "+this.libelleFra;
     }
+
+    public String getIdC() {
+        return idC;
+    }
+    
     
 }
