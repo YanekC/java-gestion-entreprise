@@ -54,7 +54,6 @@ public class ImportCSV implements ImportInterface{
         }
                 
         lstComp = listeCompetences;
-        System.out.println(lstComp);
         
         for(Map.Entry pers : listePersonnels.entrySet()){
             lstPerso.put((Integer)pers.getKey(), (Personnel)pers.getValue());
