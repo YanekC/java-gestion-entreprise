@@ -96,6 +96,8 @@ public class ImportCSV implements ImportInterface{
                     throw new Exception("Fichier CSV Competences par personnel mal formé. Erreur a la ligne : "+ compteurLigne);
                 }
             }
+            
+            br.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -130,7 +132,8 @@ public class ImportCSV implements ImportInterface{
                     throw new Exception("Fichier CSV Personnels mal formé. Erreur a la ligne : "+ compteurLigne);
                 }
             }
-
+            
+            br.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -162,7 +165,8 @@ public class ImportCSV implements ImportInterface{
                     throw new Exception("Fichier CSV Competences mal formé. Erreur a la ligne : "+ compteurLigne);
                 }
             }
-
+            
+            br.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
