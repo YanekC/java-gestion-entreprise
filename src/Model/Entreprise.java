@@ -10,6 +10,7 @@ import Util.ImportInterface;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -32,7 +33,24 @@ public class Entreprise {
         }
         catch(Exception e){
             System.err.println(e.getMessage());
+        }        
+    }
+    
+    public String toString(){
+        String s = "";
+        s = "Liste des competences de l'entreprise : ";
+        for(Competence c : competences){
+            s += "\n"+c;
+        }
+        s += "\n Liste du personnel : ";
+        for(Map.Entry p : personnels.entrySet()){
+            s += "\n"+p.getKey()+" : "+p.getValue();
+        }
+        s += "\n Liste des missions : ";
+        for (Mission m : missions) {
+            s += "\n"+m;
         }
         
+        return s;
     }
 }
