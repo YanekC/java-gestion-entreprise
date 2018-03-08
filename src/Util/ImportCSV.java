@@ -73,7 +73,6 @@ public class ImportCSV implements ImportInterface{
         try {
             
             br = new BufferedReader(new FileReader(fCompetencesPerso));
-            br.readLine();
             while ((ligne = br.readLine()) != null) {
                 compteurLigne++;
                 
@@ -118,7 +117,6 @@ public class ImportCSV implements ImportInterface{
         try {
 
             br = new BufferedReader(new FileReader(fPersonnels));
-            br.readLine();
             while ((ligne = br.readLine()) != null) {
                 compteurLigne++;
                 
