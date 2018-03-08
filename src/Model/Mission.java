@@ -8,6 +8,8 @@ package Model;
 import java.util.ArrayList;
 import java.util.Date;
 
+//@TODO Ajouter des constante pour l'état
+
 /**
  *
  * @author guilhem
@@ -29,6 +31,15 @@ public class Mission {
         this.listeCompetences = null;
         this.listePersonnels = null;
         this.nbPersMin = nbPersMin;
+    }
+    
+    public String toString(){
+        return "Date de debut : "+this.dateDebut+
+                "\nDate de fin estimée : "+this.dateFinEstime+
+                "\nEtat : "+
+                "\nCompetences requises : "+
+                "\nPersonnels participants : "+
+                "\nNombre de personnes requises : "+this.nbPersMin;
     }
     
     public void ajouterCompetence(Competence c){
@@ -114,5 +125,6 @@ public class Mission {
     public void setNbPersMin(int nbPersMin) {
         this.nbPersMin = nbPersMin;
     }
+    
     
 }
