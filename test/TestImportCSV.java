@@ -5,6 +5,8 @@ import Util.ImportCSV;
 import Util.ImportInterface;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,7 +25,7 @@ public class TestImportCSV {
         File fCompetences = new File("static\\liste_competences.csv");
         File fCompetencesPerso = new File("static\\competences_personnel.csv");
         
-        ArrayList<Personnel> listePersonnels = new ArrayList();
+        HashMap<Integer, Personnel> listePersonnels = new HashMap<>();
         ArrayList<Competence> listeCompetences = new ArrayList();
         
         try{
@@ -33,15 +35,15 @@ public class TestImportCSV {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }
-        System.out.println(listeCompetences);
+        
         System.out.println("----------Competences----------");
         for(Competence c : listeCompetences){
             System.out.println(c);
         }
-        /*
+        
         System.out.println("----------Personnels----------");
-        for(Personnel p : listePersonnels){
+        for(Map.Entry p : listePersonnels.entrySet()){
             System.out.println(p);
-        }*/
+        }
     }
 }
