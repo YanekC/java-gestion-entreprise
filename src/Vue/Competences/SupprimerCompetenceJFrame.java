@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package IHM.Missions;
+package Vue.Competences;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -13,12 +13,12 @@ import javax.swing.JFrame;
  *
  * @author guilhem
  */
-public class SupprimerMissionJFrame extends javax.swing.JFrame {
+public class SupprimerCompetenceJFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form SupprimerMissionJFrame
+     * Creates new form SupprimerCompetenceJFrame
      */
-    public SupprimerMissionJFrame() {
+    public SupprimerCompetenceJFrame() {
         initComponents();
         this.setLocationRelativeTo(null); // positionner la fenetre au centre de l'écran
         Container content = this.getContentPane();
@@ -43,7 +43,7 @@ public class SupprimerMissionJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setText("Voulez-vous vraiment supprimer ce personnel ?");
+        jLabel2.setText("Voulez-vous vraiment supprimer cette compétence ?");
 
         jButton1.setText("OUI");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -94,9 +94,7 @@ public class SupprimerMissionJFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

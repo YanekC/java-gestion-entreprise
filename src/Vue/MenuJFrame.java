@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package IHM;
+package Vue;
 
-import IHM.Competences.AjouterCompetenceJFrame;
-import IHM.Competences.InfoCompetenceJFrame;
-import IHM.Competences.ModifierCompetenceJFrame;
-import IHM.Competences.SupprimerCompetenceJFrame;
-import IHM.Missions.AjouterMissionJFrame;
-import IHM.Missions.InfoMissionJFrame;
-import IHM.Missions.ModifierMissionJFrame;
-import IHM.Missions.SupprimerMissionJFrame;
-import IHM.Personnel.AjouterPersonnelJFrame;
-import IHM.Personnel.InfoPersonnelJFrame;
-import IHM.Personnel.ModifierPersonnelJFrame;
-import IHM.Personnel.SupprimerPersonnelJFrame;
+import Vue.Competences.AjouterCompetenceJFrame;
+import Vue.Competences.InfoCompetenceJFrame;
+import Vue.Competences.ModifierCompetenceJFrame;
+import Vue.Competences.SupprimerCompetenceJFrame;
+import Vue.Missions.AjouterMissionJFrame;
+import Vue.Missions.InfoMissionJFrame;
+import Vue.Missions.ModifierMissionJFrame;
+import Vue.Missions.SupprimerMissionJFrame;
+import Vue.Personnel.AjouterPersonnelJFrame;
+import Vue.Personnel.InfoPersonnelJFrame;
+import Vue.Personnel.ModifierPersonnelJFrame;
+import Vue.Personnel.SupprimerPersonnelJFrame;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import javax.swing.JFrame;

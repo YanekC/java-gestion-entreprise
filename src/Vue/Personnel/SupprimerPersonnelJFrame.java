@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package IHM.Competences;
+package Vue.Personnel;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -13,12 +13,12 @@ import javax.swing.JFrame;
  *
  * @author guilhem
  */
-public class SupprimerCompetenceJFrame extends javax.swing.JFrame {
+public class SupprimerPersonnelJFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form SupprimerCompetenceJFrame
+     * Creates new form SupprimerJFrame
      */
-    public SupprimerCompetenceJFrame() {
+    public SupprimerPersonnelJFrame() {
         initComponents();
         this.setLocationRelativeTo(null); // positionner la fenetre au centre de l'écran
         Container content = this.getContentPane();
@@ -43,7 +43,7 @@ public class SupprimerCompetenceJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setText("Voulez-vous vraiment supprimer cette compétence ?");
+        jLabel2.setText("Voulez-vous vraiment supprimer ce personnel ?");
 
         jButton1.setText("OUI");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -66,7 +66,7 @@ public class SupprimerCompetenceJFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLabel2)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addComponent(jButton1)
@@ -83,18 +83,18 @@ public class SupprimerCompetenceJFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();

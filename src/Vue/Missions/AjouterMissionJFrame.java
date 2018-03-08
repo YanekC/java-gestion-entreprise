@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package IHM.Missions;
+package Vue.Missions;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -13,12 +13,12 @@ import javax.swing.JFrame;
  *
  * @author guilhem
  */
-public class ModifierMissionJFrame extends javax.swing.JFrame {
+public class AjouterMissionJFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form ModifierMissionJFrame
+     * Creates new form AjouterMissionJFrame
      */
-    public ModifierMissionJFrame() {
+    public AjouterMissionJFrame() {
         initComponents();
         this.setLocationRelativeTo(null); // positionner la fenetre au centre de l'écran
         Container content = this.getContentPane();
@@ -58,15 +58,13 @@ public class ModifierMissionJFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel8.setText("Modifier la mission : ");
+        jLabel8.setText("Ajouter une mission : ");
 
         jLabel2.setText("Libellé : ");
 
         jLabel3.setText("Description :");
 
         jLabel5.setText("Missions assignées : ");
-
-        jTextFieldLibelle.setText("libel");
 
         jButtonEnregistrer.setText("Enregistrer");
         jButtonEnregistrer.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +135,7 @@ public class ModifierMissionJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(146, 146, 146)
                         .addComponent(jButtonEnregistrer)))
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +156,7 @@ public class ModifierMissionJFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAjouterCompetence))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonSupprimerCompetence))
