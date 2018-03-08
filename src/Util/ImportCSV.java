@@ -27,7 +27,7 @@ public class ImportCSV implements ImportInterface{
     private HashMap<Integer,ArrayList<String>> listeCompetencesPerso;
     
     @Override
-    public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, ArrayList<Personnel> lstPerso, ArrayList<Competence> lstComp) throws Exception{
+    public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, HashMap<Integer, Personnel> lstPerso, ArrayList<Competence> lstComp) throws Exception{
         this.importPersonnel(fPersonnels);
         this.importCompetence(fCompetences);
         this.importCompetencesPerso(fCompetencesPerso);
@@ -57,7 +57,7 @@ public class ImportCSV implements ImportInterface{
         System.out.println(lstComp);
         
         for(Map.Entry pers : listePersonnels.entrySet()){
-            lstPerso.add((Personnel)pers.getValue());
+            lstPerso.put((Integer)pers.getKey(), (Personnel)pers.getValue());
         }
     }
     
