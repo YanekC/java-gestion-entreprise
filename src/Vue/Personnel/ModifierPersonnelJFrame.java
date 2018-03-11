@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package IHM.Personnel;
+package Vue.Personnel;
 
 import java.awt.Container;
 import java.awt.FlowLayout;

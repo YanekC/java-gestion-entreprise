@@ -128,7 +128,7 @@
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="listePersonnel" min="-2" pref="171" max="-2" attributes="0"/>
+                              <Component id="comboboxListePersonnel" min="-2" pref="171" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jButtonVoirInfoPersonnel" min="-2" pref="167" max="-2" attributes="0"/>
                           </Group>
@@ -152,7 +152,7 @@
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="listePersonnel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboboxListePersonnel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jToggleButtonSupprimerPersonnel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonVoirInfoPersonnel" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                           <Component id="jButtonModifierPersonnel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -173,7 +173,7 @@
                 <Property name="text" type="java.lang.String" value="Personnel"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="listePersonnel">
+            <Component class="javax.swing.JComboBox" name="comboboxListePersonnel">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
@@ -260,7 +260,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="listePersonnel1" min="-2" pref="171" max="-2" attributes="0"/>
+                      <Component id="comboboxListeMissions" min="-2" pref="171" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButtonVoirInfosMissions" min="-2" pref="167" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -291,7 +291,7 @@
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="listePersonnel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboboxListeMissions" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jToggleButtonSupprimerMission" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonVoirInfosMissions" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                           <Component id="jButtonModifierMission" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -312,7 +312,7 @@
                 <Property name="text" type="java.lang.String" value="Missions"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="listePersonnel1">
+            <Component class="javax.swing.JComboBox" name="comboboxListeMissions">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
@@ -404,7 +404,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="listePersonnel2" min="-2" pref="171" max="-2" attributes="0"/>
+                      <Component id="comboBoxCompetences" min="-2" pref="171" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButtonVoirInfoCompetences" min="-2" pref="167" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -429,7 +429,7 @@
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="listePersonnel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboBoxCompetences" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jToggleButtonSupprimerCometence" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonVoirInfoCompetences" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                           <Component id="jButtonModifierCompetence" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -455,7 +455,7 @@
                 <Property name="text" type="java.lang.String" value="Comp&#xe9;tences"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="listePersonnel2">
+            <Component class="javax.swing.JComboBox" name="comboBoxCompetences">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">

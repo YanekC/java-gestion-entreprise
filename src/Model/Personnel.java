@@ -51,4 +51,26 @@ public class Personnel {
     public String toString(){
         return nom+" "+prenom+" "+formatDate.format(dateNaiss.getTime());
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getDateNaiss() {
+        return formatDate.format(dateNaiss.getTime());
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public ArrayList<String> getListeCompetences() {
+        return listeCompetences;
+    }
+    
+    
 }

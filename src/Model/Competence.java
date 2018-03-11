@@ -20,12 +20,21 @@ public class Competence {
         this.libelleFra = libelleFra;
     }
     
+    @Override
     public String toString(){
         return this.idC+" "+this.libelleAng+" "+this.libelleFra;
     }
 
     public String getIdC() {
         return idC;
+    }
+
+    public String getLibelleAng() {
+        return libelleAng;
+    }
+
+    public String getLibelleFra() {
+        return libelleFra;
     }
     
     

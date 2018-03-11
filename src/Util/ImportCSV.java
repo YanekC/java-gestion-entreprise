@@ -26,8 +26,7 @@ public class ImportCSV implements ImportInterface{
     private ArrayList<Competence> listeCompetences;
     private HashMap<Integer,ArrayList<String>> listeCompetencesPerso;
     
-    @Override
-    public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, ArrayList<Personnel> lstPerso, ArrayList<Competence> lstComp) throws Exception{
+    public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, HashMap<Integer, Personnel> lstPerso, ArrayList<Competence> lstComp) throws Exception{
         this.importPersonnel(fPersonnels);
         this.importCompetence(fCompetences);
         this.importCompetencesPerso(fCompetencesPerso);
@@ -38,6 +37,7 @@ public class ImportCSV implements ImportInterface{
         ArrayList<String> indexIdComp = new ArrayList<>();
         for(Competence c : listeCompetences){
             indexIdComp.add(c.getIdC());
+            lstComp.add(c);
         }
         //Maintenant on peut parser la liste de competences et les ajouter a chaque personnel
         for(Map.Entry compPers : listeCompetencesPerso.entrySet()){
@@ -53,10 +53,9 @@ public class ImportCSV implements ImportInterface{
         }
                 
         lstComp = listeCompetences;
-        System.out.println(lstComp);
         
         for(Map.Entry pers : listePersonnels.entrySet()){
-            lstPerso.add((Personnel)pers.getValue());
+            lstPerso.put((Integer)pers.getKey(), (Personnel)pers.getValue());
         }
     }
     
@@ -73,7 +72,6 @@ public class ImportCSV implements ImportInterface{
         try {
             
             br = new BufferedReader(new FileReader(fCompetencesPerso));
-            br.readLine();
             while ((ligne = br.readLine()) != null) {
                 compteurLigne++;
                 
@@ -95,6 +93,8 @@ public class ImportCSV implements ImportInterface{
                     throw new Exception("Fichier CSV Competences par personnel mal formé. Erreur a la ligne : "+ compteurLigne);
                 }
             }
+            
+            br.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -116,7 +116,6 @@ public class ImportCSV implements ImportInterface{
         try {
 
             br = new BufferedReader(new FileReader(fPersonnels));
-            br.readLine();
             while ((ligne = br.readLine()) != null) {
                 compteurLigne++;
                 
@@ -129,7 +128,8 @@ public class ImportCSV implements ImportInterface{
                     throw new Exception("Fichier CSV Personnels mal formé. Erreur a la ligne : "+ compteurLigne);
                 }
             }
-
+            
+            br.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -161,11 +161,16 @@ public class ImportCSV implements ImportInterface{
                     throw new Exception("Fichier CSV Competences mal formé. Erreur a la ligne : "+ compteurLigne);
                 }
             }
-
+            
+            br.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, ArrayList<Personnel> listePersonnels, ArrayList<Competence> listeCompetences) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
