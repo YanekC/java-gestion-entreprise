@@ -26,7 +26,6 @@ public class ImportCSV implements ImportInterface{
     private ArrayList<Competence> listeCompetences;
     private HashMap<Integer,ArrayList<String>> listeCompetencesPerso;
     
-    @Override
     public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, HashMap<Integer, Personnel> lstPerso, ArrayList<Competence> lstComp) throws Exception{
         this.importPersonnel(fPersonnels);
         this.importCompetence(fCompetences);
@@ -169,5 +168,9 @@ public class ImportCSV implements ImportInterface{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, ArrayList<Personnel> listePersonnels, ArrayList<Competence> listeCompetences) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

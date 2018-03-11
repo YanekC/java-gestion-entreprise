@@ -28,6 +28,14 @@ public class Competence {
     public String getIdC() {
         return idC;
     }
+
+    public String getLibelleAng() {
+        return libelleAng;
+    }
+
+    public String getLibelleFra() {
+        return libelleFra;
+    }
     
     
 }

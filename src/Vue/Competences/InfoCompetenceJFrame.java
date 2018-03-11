@@ -5,6 +5,8 @@
  */
 package Vue.Competences;
 
+import Controllers.CompetenceController;
+import Model.Competence;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import javax.swing.JFrame;
@@ -14,17 +16,22 @@ import javax.swing.JFrame;
  * @author guilhem
  */
 public class InfoCompetenceJFrame extends javax.swing.JFrame {
-
-    /**
-     * Creates new form InfoCompetenceJFrame
-     */
+    
     public InfoCompetenceJFrame() {
         initComponents();
         this.setLocationRelativeTo(null); // positionner la fenetre au centre de l'écran
         Container content = this.getContentPane();
         content.setLayout(new FlowLayout(FlowLayout.CENTER));
-        this.setResizable(false); //la fenetre ne peut pas etre redimensionée
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //fermer la JFrame sans arrêter l'application
+    }
+    
+    public void remplirInfoCompetences(String id) throws Exception{
+        CompetenceController cc = new CompetenceController();
+        cc.chargerCSV();
+        Competence leC = cc.findCompetenceById(id);
+        jLabelIdentifiant.setText(leC.getIdC());
+        jLabelLibelleA.setText(leC.getLibelleAng());
+        jLabelLibelleF.setText(leC.getLibelleFra());
     }
 
     /**
@@ -67,7 +74,7 @@ public class InfoCompetenceJFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(67, Short.MAX_VALUE)
+                .addContainerGap(136, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(48, 48, 48))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -100,7 +107,7 @@ public class InfoCompetenceJFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabelLibelleF))
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
