@@ -7,7 +7,10 @@ package Controllers;
 
 import Model.Personnel;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  *
@@ -17,6 +20,11 @@ public class PersonnelController extends BaseController{
     
     public HashMap<Integer, Personnel> getlistePersonnel(){
         
+        return listePersonnels;
+    }
+    
+    public HashMap<Integer, Personnel> getListePersonnelSort(){
+        //listePersonnels unsortMap = new HashMap<String, String>();
         return listePersonnels;
     }
     
@@ -33,5 +41,19 @@ public class PersonnelController extends BaseController{
         
         return p;
     }
+    
+//    public Personnel findById (Integer Id){
+//        Personnel p = null;
+//        
+//        for(Map.Entry<Integer, Personnel> e : listePersonnels.entrySet()){
+//            String np = e.getValue().getNom() + " " + e.getValue().getPrenom();
+//            
+//            if(np.equals(nomPrenom)){
+//                p = e.getValue();
+//            }
+//        }
+//        
+//        return p;
+//    }
     
 }

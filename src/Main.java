@@ -14,9 +14,9 @@ import java.io.File;
  */
 public class Main {
     public static void main(String[] args) {
-        File fPersonnels = new File("static\\liste_personnel.csv");
-        File fCompetences = new File("static\\liste_competences.csv");
-        File fCompetencesPerso = new File("static\\competences_personnel.csv");
+        File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
+        File fCompetences = new File("resources\\csv\\liste_competences.csv");
+        File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
         
         Entreprise ent = new Entreprise(fPersonnels, fCompetences, fCompetencesPerso);
         System.out.println(ent);

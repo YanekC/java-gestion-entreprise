@@ -19,9 +19,9 @@ import java.util.HashMap;
  */
 public class BaseController {
     ImportInterface utilImport = new ImportCSV();
-    File fPersonnels = new File("static\\liste_personnel.csv");
-    File fCompetences = new File("static\\liste_competences.csv");
-    File fCompetencesPerso = new File("static\\competences_personnel.csv");
+    File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
+    File fCompetences = new File("resources\\csv\\liste_competences.csv");
+    File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
     
     HashMap<Integer, Personnel> listePersonnels = new HashMap<>();
     ArrayList<Competence> listeCompetences = new ArrayList();
