@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -67,11 +68,12 @@ public class MenuJFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         OngletPersonnel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        comboboxListePersonnel = new javax.swing.JComboBox<>();
         jButtonVoirInfoPersonnel = new javax.swing.JButton();
         jButtonAjouterPersonnel = new javax.swing.JButton();
         jToggleButtonSupprimerPersonnel = new javax.swing.JToggleButton();
         jButtonModifierPersonnel = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListPersonnel = new javax.swing.JList<>();
         OngletMissions = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         comboboxListeMissions = new javax.swing.JComboBox<>();
@@ -131,8 +133,6 @@ public class MenuJFrame extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Personnel");
 
-        comboboxListePersonnel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jButtonVoirInfoPersonnel.setBackground(new java.awt.Color(0, 51, 255));
         jButtonVoirInfoPersonnel.setForeground(new java.awt.Color(255, 255, 255));
         jButtonVoirInfoPersonnel.setText("Voir les informations");
@@ -169,6 +169,13 @@ public class MenuJFrame extends javax.swing.JFrame {
             }
         });
 
+        jListPersonnel.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jListPersonnel);
+
         javax.swing.GroupLayout OngletPersonnelLayout = new javax.swing.GroupLayout(OngletPersonnel);
         OngletPersonnel.setLayout(OngletPersonnelLayout);
         OngletPersonnelLayout.setHorizontalGroup(
@@ -177,36 +184,34 @@ public class MenuJFrame extends javax.swing.JFrame {
                 .addGap(230, 230, 230)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(OngletPersonnelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OngletPersonnelLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(OngletPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(OngletPersonnelLayout.createSequentialGroup()
-                        .addComponent(comboboxListePersonnel, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonVoirInfoPersonnel, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(OngletPersonnelLayout.createSequentialGroup()
-                        .addGap(141, 141, 141)
-                        .addComponent(jButtonAjouterPersonnel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonModifierPersonnel, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jToggleButtonSupprimerPersonnel)
-                .addGap(14, 14, 14))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addGroup(OngletPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButtonAjouterPersonnel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonVoirInfoPersonnel, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                    .addComponent(jButtonModifierPersonnel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToggleButtonSupprimerPersonnel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(57, 57, 57))
         );
         OngletPersonnelLayout.setVerticalGroup(
             OngletPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(OngletPersonnelLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jLabel2)
-                .addGap(43, 43, 43)
-                .addGroup(OngletPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboboxListePersonnel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButtonSupprimerPersonnel)
-                    .addComponent(jButtonVoirInfoPersonnel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonModifierPersonnel))
-                .addGap(46, 46, 46)
-                .addComponent(jButtonAjouterPersonnel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(OngletPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(OngletPersonnelLayout.createSequentialGroup()
+                        .addComponent(jButtonVoirInfoPersonnel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jButtonModifierPersonnel)
+                        .addGap(18, 18, 18)
+                        .addComponent(jToggleButtonSupprimerPersonnel)
+                        .addGap(33, 33, 33)
+                        .addComponent(jButtonAjouterPersonnel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Personnel", OngletPersonnel);
@@ -384,9 +389,7 @@ public class MenuJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,7 +405,7 @@ public class MenuJFrame extends javax.swing.JFrame {
             public void run() {
                 InfoPersonnelJFrame infosPersonnel = new InfoPersonnelJFrame();
                 try {
-                    infosPersonnel.remplirInfoPersonnel((String) comboboxListePersonnel.getSelectedItem());
+                    infosPersonnel.remplirInfoPersonnel((String) jListPersonnel.getSelectedValue());
                 } catch (Exception ex) {
                     Logger.getLogger(MenuJFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -443,14 +446,11 @@ public class MenuJFrame extends javax.swing.JFrame {
         pc.chargerCSV();
         HashMap<Integer, Personnel> lePersonnel = pc.getlistePersonnel();
         
-        comboboxListePersonnel.removeAllItems();
-        comboboxListePersonnel.addItem(" ");
-        
+        DefaultListModel modele = new DefaultListModel();
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
-            comboboxListePersonnel.addItem(e.getValue().getNom() + " " + e.getValue().getPrenom());
+            modele.addElement(e.getValue().getNom() + " " + e.getValue().getPrenom());
         }
-        
-        comboboxListePersonnel.setSelectedItem(" ");
+        jListPersonnel.setModel(modele);
         
     }
     
@@ -545,6 +545,7 @@ public class MenuJFrame extends javax.swing.JFrame {
         comboBoxCompetences.removeAllItems();
         comboBoxCompetences.addItem(" ");
         
+        DefaultListModel modele = new DefaultListModel();
         for (Competence laC : lesCompetences){
             comboBoxCompetences.addItem(laC.getIdC());
         }
@@ -596,7 +597,6 @@ public class MenuJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel OngletPersonnel;
     private javax.swing.JComboBox<String> comboBoxCompetences;
     private javax.swing.JComboBox<String> comboboxListeMissions;
-    private javax.swing.JComboBox<String> comboboxListePersonnel;
     private javax.swing.JButton jButtonAjouterCompetence;
     private javax.swing.JButton jButtonAjouterMission;
     private javax.swing.JButton jButtonAjouterPersonnel;
@@ -612,6 +612,8 @@ public class MenuJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JList<String> jListPersonnel;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToggleButton jToggleButtonSupprimerCometence;
     private javax.swing.JToggleButton jToggleButtonSupprimerMission;
