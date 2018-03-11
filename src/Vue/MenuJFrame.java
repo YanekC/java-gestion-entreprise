@@ -10,15 +10,15 @@ import Controllers.PersonnelController;
 import Model.Competence;
 import Model.Personnel;
 import Vue.Competences.AjouterCompetenceJFrame;
-import Vue.Competences.InfoCompetenceJFrame;
+import Vue.Competences.AfficherCompetenceJFrame;
 import Vue.Competences.ModifierCompetenceJFrame;
 import Vue.Competences.SupprimerCompetenceJFrame;
 import Vue.Missions.AjouterMissionJFrame;
-import Vue.Missions.InfoMissionJFrame;
+import Vue.Missions.AfficherMissionJFrame;
 import Vue.Missions.ModifierMissionJFrame;
 import Vue.Missions.SupprimerMissionJFrame;
 import Vue.Personnel.AjouterPersonnelJFrame;
-import Vue.Personnel.InfoPersonnelJFrame;
+import Vue.Personnel.AfficherPersonnelJFrame;
 import Vue.Personnel.ModifierPersonnelJFrame;
 import Vue.Personnel.SupprimerPersonnelJFrame;
 import java.awt.Container;
@@ -30,6 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -49,6 +50,7 @@ public class MenuJFrame extends javax.swing.JFrame {
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
         this.remplirPersonnel();
         this.remplirCompetences();
+        this.setTitle("Projet 1");
     }
 
     /**
@@ -132,6 +134,11 @@ public class MenuJFrame extends javax.swing.JFrame {
         jLabel2.setText("Personnel");
 
         comboboxListePersonnel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboboxListePersonnel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboboxListePersonnelActionPerformed(evt);
+            }
+        });
 
         jButtonVoirInfoPersonnel.setBackground(new java.awt.Color(0, 51, 255));
         jButtonVoirInfoPersonnel.setForeground(new java.awt.Color(255, 255, 255));
@@ -144,7 +151,7 @@ public class MenuJFrame extends javax.swing.JFrame {
 
         jButtonAjouterPersonnel.setBackground(new java.awt.Color(0, 102, 0));
         jButtonAjouterPersonnel.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonAjouterPersonnel.setText("Ajouter un Employer");
+        jButtonAjouterPersonnel.setText("Ajouter un Employé");
         jButtonAjouterPersonnel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButtonAjouterPersonnelMouseClicked(evt);
@@ -400,7 +407,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jButtonVoirInfoPersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonVoirInfoPersonnelMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                InfoPersonnelJFrame infosPersonnel = new InfoPersonnelJFrame();
+                AfficherPersonnelJFrame infosPersonnel = new AfficherPersonnelJFrame();
                 try {
                     infosPersonnel.remplirInfoPersonnel((String) comboboxListePersonnel.getSelectedItem());
                 } catch (Exception ex) {
@@ -444,13 +451,13 @@ public class MenuJFrame extends javax.swing.JFrame {
         HashMap<Integer, Personnel> lePersonnel = pc.getlistePersonnel();
         
         comboboxListePersonnel.removeAllItems();
-        comboboxListePersonnel.addItem(" ");
+        comboboxListePersonnel.addItem("Sélectionner un employé"); // Plutôt que " " 
         
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
             comboboxListePersonnel.addItem(e.getValue().getNom() + " " + e.getValue().getPrenom());
         }
         
-        comboboxListePersonnel.setSelectedItem(" ");
+       // comboboxListePersonnel.setSelectedItem(" "); A quoi ça sert ?
         
     }
     
@@ -458,7 +465,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jButtonVoirInfosMissionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonVoirInfosMissionsMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                InfoMissionJFrame infosMission = new InfoMissionJFrame();
+                AfficherMissionJFrame infosMission = new AfficherMissionJFrame();
                 infosMission.setVisible(true);
             }
         });
@@ -499,7 +506,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private void jButtonVoirInfoCompetencesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonVoirInfoCompetencesMouseClicked
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                InfoCompetenceJFrame infoCompetence = new InfoCompetenceJFrame();
+                AfficherCompetenceJFrame infoCompetence = new AfficherCompetenceJFrame();
                 try {
                     infoCompetence.remplirInfoCompetences((String) comboBoxCompetences.getSelectedItem());
                 } catch (Exception ex) {
@@ -536,6 +543,11 @@ public class MenuJFrame extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_jButtonAjouterCompetenceMouseClicked
+
+    private void comboboxListePersonnelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxListePersonnelActionPerformed
+        // TODO add your handling code here:
+        //JOptionPane.showMessageDialog(null, comboboxListePersonnel.getItemAt(0));
+    }//GEN-LAST:event_comboboxListePersonnelActionPerformed
     
     private void remplirCompetences() throws Exception{ //rempli la combobox avec la liste des competences
         CompetenceController cc = new CompetenceController();
