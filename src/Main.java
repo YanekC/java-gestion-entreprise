@@ -19,6 +19,6 @@ public class Main {
         File fCompetencesPerso = new File("static\\competences_personnel.csv");
         
         Entreprise ent = new Entreprise(fPersonnels, fCompetences, fCompetencesPerso);
-        System.out.println(ent);
+        //System.out.println(ent);
     }
 }

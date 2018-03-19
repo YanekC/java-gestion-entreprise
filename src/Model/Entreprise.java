@@ -5,6 +5,8 @@
  */
 package Model;
 
+import Util.ExportCSV;
+import Util.ExportInterface;
 import Util.ImportCSV;
 import Util.ImportInterface;
 import java.io.File;
@@ -33,7 +35,10 @@ public class Entreprise {
         }
         catch(Exception e){
             System.err.println(e.getMessage());
-        }        
+        }
+
+        ExportInterface ei = new ExportCSV();
+        ei.exporter(fPersonnels, fCompetences, fCompetencesPerso, competences, personnels);
     }
     
     public String toString(){
