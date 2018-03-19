@@ -25,6 +25,7 @@ public class ModifierCompetenceJFrame extends javax.swing.JFrame {
         content.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //fermer la JFrame sans arrêter l'application
+        this.setTitle("Modifier une compétence de l'entreprise"); // Set title de la jframe
     }
 
     /**
@@ -46,6 +47,8 @@ public class ModifierCompetenceJFrame extends javax.swing.JFrame {
         jButtonEnregistrer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setName(""); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Modifier la compétence : ");

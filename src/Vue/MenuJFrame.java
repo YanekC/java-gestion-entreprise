@@ -23,6 +23,8 @@ import Vue.Personnel.ModifierPersonnelJFrame;
 import Vue.Personnel.SupprimerPersonnelJFrame;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +38,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author guilhem
+ * @author guilhem, sandeox
  */
 public class MenuJFrame extends javax.swing.JFrame {
     
@@ -52,7 +54,7 @@ public class MenuJFrame extends javax.swing.JFrame {
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
         this.remplirPersonnel();
         this.remplirCompetences();
-        this.setTitle("Projet 1");
+        this.setTitle("Gestionnaire entreprise");
         jListPersonnel.setSelectedIndex(0);
     }
 
@@ -65,7 +67,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jTabPaneEntreprise = new javax.swing.JTabbedPane();
         OngletMenu = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -94,6 +96,12 @@ public class MenuJFrame extends javax.swing.JFrame {
         jButtonAjouterCompetence = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabPaneEntreprise.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabPaneEntrepriseMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Gestionnaire du personnel");
@@ -132,7 +140,7 @@ public class MenuJFrame extends javax.swing.JFrame {
                 .addContainerGap(136, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Menu", OngletMenu);
+        jTabPaneEntreprise.addTab("Menu", OngletMenu);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Personnel");
@@ -235,7 +243,7 @@ public class MenuJFrame extends javax.swing.JFrame {
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Personnel", OngletPersonnel);
+        jTabPaneEntreprise.addTab("Personnel", OngletPersonnel);
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setText("Missions");
@@ -318,7 +326,7 @@ public class MenuJFrame extends javax.swing.JFrame {
                 .addContainerGap(100, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Missions", OngletMissions);
+        jTabPaneEntreprise.addTab("Missions", OngletMissions);
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel6.setText("Compétences");
@@ -404,17 +412,17 @@ public class MenuJFrame extends javax.swing.JFrame {
                     .addGap(84, 84, 84)))
         );
 
-        jTabbedPane1.addTab("Compétences", OngletCompetences);
+        jTabPaneEntreprise.addTab("Compétences", OngletCompetences);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jTabPaneEntreprise, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabPaneEntreprise)
         );
 
         pack();
@@ -481,6 +489,8 @@ public class MenuJFrame extends javax.swing.JFrame {
   
         }     
     }
+    
+    /* -------- jTabPaneCom mouse listener ----------*/
     
 
     
@@ -581,6 +591,22 @@ public class MenuJFrame extends javax.swing.JFrame {
         
       
     }//GEN-LAST:event_jListPersonnelValueChanged
+
+    private void jTabPaneEntrepriseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabPaneEntrepriseMouseClicked
+        // TODO add your handling code here:
+        /*----- Custom Title Frame ----*/
+        
+        
+        switch(jTabPaneEntreprise.getSelectedIndex()){
+            case 0: this.setTitle("Gestionnaire entreprise");break;
+            case 1: this.setTitle("Liste du personnel");break;
+            case 2: this.setTitle("Liste des missions");break;
+            case 3: this.setTitle("Liste des compétences");break;
+            default : break;
+        }
+
+        
+    }//GEN-LAST:event_jTabPaneEntrepriseMouseClicked
     
     private void remplirCompetences() throws Exception{ //rempli la combobox avec la liste des competences
         CompetenceController cc = new CompetenceController();
@@ -659,7 +685,7 @@ public class MenuJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JList<String> jListPersonnel;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabPaneEntreprise;
     private javax.swing.JToggleButton jToggleButtonSupprimerCometence;
     private javax.swing.JToggleButton jToggleButtonSupprimerMission;
     private javax.swing.JToggleButton jToggleButtonSupprimerPersonnel;

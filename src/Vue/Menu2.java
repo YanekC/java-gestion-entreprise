@@ -176,7 +176,7 @@ public class Menu2 extends javax.swing.JFrame {
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(line);
             
             ((DefaultTableModel) jTableDuPersonnel.getModel()).setValueAt(new JButton("test"), ((DefaultTableModel) jTableDuPersonnel.getModel()).getRowCount() - 1, 5);
-            jTableDuPersonnel.getColumn("Modifier").setCellRenderer(new TableComponent()); 
+            //jTableDuPersonnel.getColumn("Modifier").setCellRenderer(new TableComponent()); 
         }
         jTableDuPersonnel.setAutoCreateRowSorter(true);
         

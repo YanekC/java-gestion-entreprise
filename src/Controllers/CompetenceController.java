@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author guilhem
+ * @author guilhem, sandeox
  */
 public class CompetenceController extends BaseController{
     
@@ -30,4 +30,9 @@ public class CompetenceController extends BaseController{
         return result;
     }
     
+    
+    public Competence addCompetence() throws Exception{
+//        listeCompetences.add(e)
+        return null;
+    }
 }

@@ -20,5 +20,7 @@ public class Main {
         
         Entreprise ent = new Entreprise(fPersonnels, fCompetences, fCompetencesPerso);
         System.out.println(ent);
+        
+        
     }
 }
