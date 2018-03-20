@@ -6,6 +6,8 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,6 +15,9 @@ import javax.swing.JOptionPane;
  */
 public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     private int id;
+    private JTable jtB;
+    private int rInd;
+    private int cInd;
     /**
      * Creates new form AjouterPersonnelJFrame
      */
@@ -256,7 +261,10 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         //dispose(); //ferme la fenêtre
     }//GEN-LAST:event_jBtnEnregistrerActionPerformed
 
-    public void remplirFormPersonnel(int id){
+    public void remplirFormPersonnel(int id, JTable jtB, int rI, int cI){
+        this.jtB = jtB;
+        this.rInd=rI;
+        this.cInd=cI;
         if(id==-1){
             setLabel(); //Définir les valeurs vides
         }
@@ -291,7 +299,11 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
            String date = jTextFieldDateEntree.getText();
            Personnel p = new Personnel(nom, prenom, date);
            Entreprise.modifierPersonnel(p, this.id);
-           System.out.println(Entreprise.afficherPersonnel()); 
+           //System.out.println(Entreprise.afficherPersonnel()); 
+           /* ------ Update du Jtable ------*/
+           this.jtB.setValueAt(nom, this.rInd, this.cInd);
+           this.jtB.setValueAt(prenom, this.rInd, this.cInd+1);
+           this.jtB.setValueAt(date, this.rInd, this.cInd+2);
         }
     }
     
@@ -301,8 +313,12 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
            String prenom = jTextFieldPrenom.getText();
            String date = jTextFieldDateEntree.getText();
            Personnel p = new Personnel(nom, prenom, date);
-           Entreprise.addPersonnel(p);
+           int id = Entreprise.addPersonnel(p);
            System.out.println(Entreprise.afficherPersonnel());
+           /*-------- Ajout au Jtable ----------*/
+           String line = id+";"+nom+";"+prenom+";"+date;
+            String[] laLigne = line.split(";");
+           ((DefaultTableModel) this.jtB.getModel()).addRow(laLigne);
         }
     }
     
