@@ -83,7 +83,6 @@ public class Menu2 extends javax.swing.JFrame {
         model.addColumn("Prénom");
         model.addColumn("Date d'embauche");
         model.addColumn("Compétences");
-        model.addColumn("Modifier");
         jTableDuPersonnel.setModel(model);
         jTableDuPersonnel.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableDuPersonnel.addFocusListener(new java.awt.event.FocusAdapter() {
