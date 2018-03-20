@@ -41,7 +41,7 @@ public class Entreprise {
         return personnels.get(id);
     }
   
-    public String toString(){
+    public static String afficherInfoEnt(){
         String s = "";
         s = "Liste des competences de l'entreprise : ";
         for(Map.Entry c : competences.entrySet()){
@@ -60,7 +60,6 @@ public class Entreprise {
     }
     
     public static HashMap<Integer, Personnel> getlistePersonnel(){
-        
         return personnels;
     }
 
