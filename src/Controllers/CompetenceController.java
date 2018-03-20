@@ -6,13 +6,14 @@
 package Controllers;
 
 import Model.Competence;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
  *
  * @author guilhem
  */
-public class CompetenceController extends BaseController{
+public class CompetenceController extends EntrepriseController{
     
     public ArrayList<Competence> getListeCompetences(){
         return listeCompetences;

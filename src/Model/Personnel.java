@@ -49,7 +49,7 @@ public class Personnel {
     
     @Override
     public String toString(){
-        return nom+" "+prenom+" "+formatDate.format(dateNaiss.getTime());
+        return id+" "+nom+" "+prenom+" "+formatDate.format(dateNaiss.getTime());
     }
 
     public String getNom() {

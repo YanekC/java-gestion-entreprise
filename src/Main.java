@@ -1,4 +1,5 @@
 
+import Controllers.EntrepriseController;
 import Model.Entreprise;
 import java.io.File;
 
@@ -14,11 +15,8 @@ import java.io.File;
  */
 public class Main {
     public static void main(String[] args) {
-        File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
-        File fCompetences = new File("resources\\csv\\liste_competences.csv");
-        File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
         
-        Entreprise ent = new Entreprise(fPersonnels, fCompetences, fCompetencesPerso);
+        EntrepriseController ent = new EntrepriseController();
         System.out.println(ent);
     }
 }

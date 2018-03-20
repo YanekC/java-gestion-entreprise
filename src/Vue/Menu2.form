@@ -28,7 +28,10 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jTabbedPane" min="-2" pref="550" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -63,7 +66,7 @@
                       <Component id="jScrollPane1" min="-2" pref="484" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButtonAjouterPersonne" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="54" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="2" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -98,6 +101,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ajouter une personne"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAjouterPersonneActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -113,12 +119,10 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane2" alignment="0" pref="789" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="614" max="32767" attributes="0"/>
                       <Component id="jButtonAjouterCompetence" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButtonSupprimerCompetence" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -126,13 +130,10 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jScrollPane2" min="-2" pref="506" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="478" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButtonAjouterCompetence" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonSupprimerCompetence" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="32" max="32767" attributes="0"/>
+                      <Component id="jButtonAjouterCompetence" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -158,7 +159,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel model2 = new DefaultTableModel();&#xa;    model2.addColumn(&quot;ID&quot;);&#xa;    model2.addColumn(&quot;D&#xe9;nomination anglaise&quot;);&#xa;    model2.addColumn(&quot;D&#xe9;nomination fran&#xe7;aise&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel model2 = new DefaultTableModel();&#xa;    model2.addColumn(&quot;ID&quot;);&#xa;    model2.addColumn(&quot;D&#xe9;nomination anglaise&quot;);&#xa;    model2.addColumn(&quot;D&#xe9;nomination fran&#xe7;aise&quot;);&#xa;    model2.addColumn(&quot;Actions&quot;);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -167,11 +168,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ajouter une comp&#xe9;tence"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButtonSupprimerCompetence">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Supprimer cette comp&#xe9;tence"/>
-              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAjouterCompetenceActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -192,7 +191,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="576" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="524" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
