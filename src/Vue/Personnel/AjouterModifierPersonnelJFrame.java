@@ -39,8 +39,8 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jButtonEnregistrer = new javax.swing.JButton();
+        jLblAddUpdPerso = new javax.swing.JLabel();
+        jBtnEnregistrer = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanelInfosPersonnel = new javax.swing.JPanel();
@@ -61,13 +61,13 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel8.setText("Ajouter le personnel : ");
+        jLblAddUpdPerso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLblAddUpdPerso.setText("Ajouter le personnel : ");
 
-        jButtonEnregistrer.setText("Enregistrer");
-        jButtonEnregistrer.addActionListener(new java.awt.event.ActionListener() {
+        jBtnEnregistrer.setText("Enregistrer");
+        jBtnEnregistrer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEnregistrerActionPerformed(evt);
+                jBtnEnregistrerActionPerformed(evt);
             }
         });
 
@@ -129,7 +129,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
                     .addGroup(jPanelInfosPersonnelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jTextFieldDateEntree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(12, Short.MAX_VALUE))))
+                        .addContainerGap(22, Short.MAX_VALUE))))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Compétences"));
@@ -197,7 +197,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(140, 140, 140)
-                        .addComponent(jLabel8)
+                        .addComponent(jLblAddUpdPerso)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -205,7 +205,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonEnregistrer)))
+                        .addComponent(jBtnEnregistrer)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
@@ -218,14 +218,14 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLblAddUpdPerso, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jPanelInfosPersonnel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonEnregistrer)
+                    .addComponent(jBtnEnregistrer)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addContainerGap())
@@ -245,32 +245,50 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonEnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnregistrerActionPerformed
+    private void jBtnEnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnregistrerActionPerformed
         dispose(); //ferme la fenêtre
-    }//GEN-LAST:event_jButtonEnregistrerActionPerformed
+    }//GEN-LAST:event_jBtnEnregistrerActionPerformed
 
     public void remplirFormPersonnel(int id){
-        PersonnelController pc = new PersonnelController();
-        Personnel p = pc.findById(id);
+        if(id==-1){
+            setLabel(); //Définir les valeurs vides
+        }
+        else{
+            //On modifie !
+           jLblAddUpdPerso.setText("Modifier un Personnel :");
+           jBtnEnregistrer.setText("Modifier");
+           PersonnelController pc = new PersonnelController();
+           Personnel p = pc.findById(id);
+
+           //System.out.println(p);
+
+           jTextFieldNom.setText(p.getNom());
+           jTextFieldPrenom.setText(p.getPrenom());
+           jTextFieldDateEntree.setText(p.getDateNaiss()); 
+        }
         
-        //System.out.println(p);
-        
-        jTextFieldNom.setText(p.getNom());
-        jTextFieldPrenom.setText(p.getPrenom());
-        jTextFieldDateEntree.setText(p.getDateNaiss());
+    }
+    
+    public void setLabel(){
+      //On ajoute !
+            jLblAddUpdPerso.setText("Ajouter un Personnel :");
+            jBtnEnregistrer.setText("Ajouter");
+            jTextFieldNom.setText("");
+            jTextFieldPrenom.setText("");
+            jTextFieldDateEntree.setText("");
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnEnregistrer;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButtonEnregistrer;
     private javax.swing.JButton jButtonSupprimerCompetence;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLblAddUpdPerso;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JPanel jPanel1;

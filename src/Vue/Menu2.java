@@ -28,10 +28,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
- * @author guilhem
+ * @author guilhem, sandeox
  */
 public class Menu2 extends javax.swing.JFrame {
 
@@ -46,6 +47,11 @@ public class Menu2 extends javax.swing.JFrame {
         this.entC = new EntrepriseController(); // dans le but de faire évoluer l'application
         remplirTableauPersonnel();
         remplirTableauCompetences();
+        
+       
+
+        
+        
     }
 
     /**
@@ -62,6 +68,7 @@ public class Menu2 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableDuPersonnel = new javax.swing.JTable();
         jButtonAjouterPersonne = new javax.swing.JButton();
+        jBtnModifier = new javax.swing.JButton();
         jPanelCompetence = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCompetences = new javax.swing.JTable();
@@ -78,6 +85,17 @@ public class Menu2 extends javax.swing.JFrame {
         model.addColumn("Compétences");
         model.addColumn("Modifier");
         jTableDuPersonnel.setModel(model);
+        jTableDuPersonnel.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableDuPersonnel.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTableDuPersonnelFocusLost(evt);
+            }
+        });
+        jTableDuPersonnel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDuPersonnelMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableDuPersonnel);
         jTableDuPersonnel.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -88,6 +106,13 @@ public class Menu2 extends javax.swing.JFrame {
             }
         });
 
+        jBtnModifier.setText("Modifier");
+        jBtnModifier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnModifierActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelPersonnelLayout = new javax.swing.GroupLayout(jPanelPersonnel);
         jPanelPersonnel.setLayout(jPanelPersonnelLayout);
         jPanelPersonnelLayout.setHorizontalGroup(
@@ -95,6 +120,8 @@ public class Menu2 extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPersonnelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBtnModifier)
+                .addGap(18, 18, 18)
                 .addComponent(jButtonAjouterPersonne)
                 .addContainerGap())
         );
@@ -103,7 +130,9 @@ public class Menu2 extends javax.swing.JFrame {
             .addGroup(jPanelPersonnelLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAjouterPersonne)
+                .addGroup(jPanelPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAjouterPersonne)
+                    .addComponent(jBtnModifier))
                 .addGap(0, 2, Short.MAX_VALUE))
         );
 
@@ -177,12 +206,38 @@ public class Menu2 extends javax.swing.JFrame {
     private void jButtonAjouterPersonneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterPersonneActionPerformed
         AjouterModifierPersonnelJFrame ajoutP = new AjouterModifierPersonnelJFrame();
         ajoutP.setVisible(true);
+        ajoutP.remplirFormPersonnel(-1);
     }//GEN-LAST:event_jButtonAjouterPersonneActionPerformed
 
     private void jButtonAjouterCompetenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterCompetenceActionPerformed
         AjouterCompetenceJFrame ajoutC = new AjouterCompetenceJFrame();
         ajoutC.setVisible(true);
     }//GEN-LAST:event_jButtonAjouterCompetenceActionPerformed
+
+    private void jBtnModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModifierActionPerformed
+        /*----- Modifier une personne sélectionné -----*/
+        int rowIndex = jTableDuPersonnel.getSelectedRow(); // Récupère la ligne du champ cliqué
+        int colIndex = 0; // Place sur la column 0 pour récupérer l'ID
+        String idS = jTableDuPersonnel.getModel().getValueAt(rowIndex, colIndex).toString(); //Récupère l'ID (format String)
+        int id = Integer.parseInt(idS); // Parce qu'en 2 ligne ça fait pas de mal
+       // System.out.println("Id ? : "+id);
+        AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame(); // Instanciation de la nouvelle frame
+        apf.setVisible(true); //Rend la frame visible
+        apf.remplirFormPersonnel(id); // Replir avec la fonction en passant l'ID !
+
+        
+    }//GEN-LAST:event_jBtnModifierActionPerformed
+
+    private void jTableDuPersonnelFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableDuPersonnelFocusLost
+
+    }//GEN-LAST:event_jTableDuPersonnelFocusLost
+
+    private void jTableDuPersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDuPersonnelMouseClicked
+        // TODO add your handling code here:
+        /* ------ Récupérer l'ID du champ cliqué -----*/
+         //System.out.println("Ligne : "+rowIndex);
+         //System.out.println("Id ? : "+jTableDuPersonnel.getValueAt(rowIndex, colIndex));
+    }//GEN-LAST:event_jTableDuPersonnelMouseClicked
 
     public void remplirTableauPersonnel() throws Exception{
         HashMap<Integer, Personnel> lePersonnel = entC.getlistePersonnel();
@@ -193,13 +248,20 @@ public class Menu2 extends javax.swing.JFrame {
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
             
-            ((DefaultTableModel) jTableDuPersonnel.getModel()).setValueAt(new JButton("modifier"), ((DefaultTableModel) jTableDuPersonnel.getModel()).getRowCount() - 1, 5);
-            
-            jTableDuPersonnel.getColumn("Modifier").setCellRenderer(new BoutonTabRenderer());
-            jTableDuPersonnel.getColumn("Modifier").setCellEditor(new BoutonTabEditor(new JTextField(), e.getValue().getId()));
-            //System.out.println(e.getValue().getId());
+//            ((DefaultTableModel) jTableDuPersonnel.getModel()).setValueAt(new JButton("modifier"), ((DefaultTableModel) jTableDuPersonnel.getModel()).getRowCount() - 1, 5);
+//            
+//            //Des commentaires guilhem ? Je comprends pas l'utilisation du dossier Components et tout le reste
+//            jTableDuPersonnel.getColumn("Modifier").setCellRenderer(new BoutonTabRenderer());
+//            jTableDuPersonnel.getColumn("Modifier").setCellEditor(new BoutonTabEditor(new JTextField(), e.getValue().getId()));
+//            System.out.println(e.getValue().getId());
         }
         jTableDuPersonnel.setAutoCreateRowSorter(true);
+        
+                
+         /* ---- Masquer column ID ---- */
+        TableColumnModel tcm = jTableDuPersonnel.getColumnModel();
+        tcm.removeColumn(tcm.getColumn(0));
+        
         
     }
     
@@ -257,6 +319,7 @@ public class Menu2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnModifier;
     private javax.swing.JButton jButtonAjouterCompetence;
     private javax.swing.JButton jButtonAjouterPersonne;
     private javax.swing.JPanel jPanelCompetence;

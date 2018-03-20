@@ -13,6 +13,7 @@ import Util.ImportInterface;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,7 +44,17 @@ public class EntrepriseController {
     
     
     public String toString(){
-        return "A faire code liste Perso et comp";
+        String s = "";
+        s = "Liste des competences de l'entreprise : ";
+        for(Competence c : listeCompetences){
+            s += "\n"+c;
+        }
+        s += "\n Liste du personnel : ";
+        for(Map.Entry p : listePersonnels.entrySet()){
+            s += "\n"+p.getKey()+" : "+p.getValue();
+        }
+        
+        return s;
     }
     
 }
