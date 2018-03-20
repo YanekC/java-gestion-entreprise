@@ -18,20 +18,6 @@ import java.util.TreeMap;
  * @author guilhem
  */
 public class PersonnelController extends EntrepriseController{
-
-    public Personnel findByNomPrenom (String nomPrenom){
-        Personnel p = null;
-        
-        for(Map.Entry<Integer, Personnel> e : listePersonnels.entrySet()){
-            String np = e.getValue().getNom() + " " + e.getValue().getPrenom();
-            
-            if(np.equals(nomPrenom)){
-                p = e.getValue();
-            }
-        }
-        
-        return p;
-    }
     
     public Personnel findById (int id){
         Personnel p = null;

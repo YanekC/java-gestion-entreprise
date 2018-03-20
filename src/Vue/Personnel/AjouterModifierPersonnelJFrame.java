@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author guilhem
+ * @author guilhem, sandeox
  */
 public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
 
@@ -27,6 +27,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         content.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //fermer la JFrame sans arrêter l'application
+        
     }
 
     /**
@@ -246,6 +247,11 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnEnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnregistrerActionPerformed
+        String nom = jTextFieldNom.getText();
+        String prenom = jTextFieldPrenom.getText();
+        String date = jTextFieldDateEntree.getText();
+        //int id = Entreprise.toString();
+        Personnel p = new Personnel(nom, prenom, date, 1);
         dispose(); //ferme la fenêtre
     }//GEN-LAST:event_jBtnEnregistrerActionPerformed
 
@@ -266,7 +272,6 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
            jTextFieldPrenom.setText(p.getPrenom());
            jTextFieldDateEntree.setText(p.getDateNaissString()); 
         }
-        
     }
     
     public void setLabel(){

@@ -72,5 +72,16 @@ public class Entreprise {
         return competences;
     }
     
+    public void addPersonnel(Personnel p) {
+        
+    }
+    
+    public int getLastId(){
+       for(Map.Entry p : personnels.entrySet()){
+       }
+       
+       return 1;
+    }
+    
     
 }

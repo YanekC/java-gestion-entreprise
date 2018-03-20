@@ -8,7 +8,7 @@ import java.util.Calendar;
 /**
  * Classe qui implémente un personnel.
  * 
- * @author Yanek, Guilhem, Aléxe
+ * @author Yanek, Guilhem, SanDeox
  */
 public class Personnel {
     
