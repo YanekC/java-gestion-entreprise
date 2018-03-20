@@ -23,10 +23,11 @@ import java.util.Map;
 public class ImportCSV implements ImportInterface{
         
     private HashMap<Integer,Personnel> listePersonnels;
-    private ArrayList<Competence> listeCompetences;
+    private HashMap<String, Competence> listeCompetences;
     private HashMap<Integer,ArrayList<String>> listeCompetencesPerso;
     
-    public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, HashMap<Integer, Personnel> lstPerso, ArrayList<Competence> lstComp) throws Exception{
+    @Override
+    public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, HashMap<Integer, Personnel> lstPerso, HashMap<String, Competence> lstComp) throws Exception{
         this.importPersonnel(fPersonnels);
         this.importCompetence(fCompetences);
         this.importCompetencesPerso(fCompetencesPerso);
@@ -35,9 +36,9 @@ public class ImportCSV implements ImportInterface{
         
         //Creation d'un index contenant les id des competences existantes
         ArrayList<String> indexIdComp = new ArrayList<>();
-        for(Competence c : listeCompetences){
-            indexIdComp.add(c.getIdC());
-            lstComp.add(c);
+        for(Map.Entry c : listeCompetences.entrySet()){
+            indexIdComp.add((String)c.getKey());
+            lstComp.put((String)c.getKey(), (Competence)c.getValue());
         }
         //Maintenant on peut parser la liste de competences et les ajouter a chaque personnel
         for(Map.Entry compPers : listeCompetencesPerso.entrySet()){
@@ -51,8 +52,6 @@ public class ImportCSV implements ImportInterface{
                 }
             }
         }
-                
-        lstComp = listeCompetences;
         
         for(Map.Entry pers : listePersonnels.entrySet()){
             lstPerso.put((Integer)pers.getKey(), (Personnel)pers.getValue());
@@ -122,7 +121,7 @@ public class ImportCSV implements ImportInterface{
                 ligneDecoupee = ligne.split(delimiteur);
                 
                 if(ligneDecoupee.length >= 4){
-                    listePersonnels.put(Integer.parseInt(ligneDecoupee[3]), new Personnel(ligneDecoupee[0], ligneDecoupee[1], ligneDecoupee[2], Integer.parseInt(ligneDecoupee[3])));
+                    listePersonnels.put(Integer.parseInt(ligneDecoupee[3]), new Personnel(ligneDecoupee[0], ligneDecoupee[1], ligneDecoupee[2]));
                 }
                 else{
                     throw new Exception("Fichier CSV Personnels mal formé. Erreur a la ligne : "+ compteurLigne);
@@ -144,7 +143,7 @@ public class ImportCSV implements ImportInterface{
         int compteurLigne = 0;
         String delimiteur = ";";
         String[] ligneDecoupee;
-        listeCompetences = new ArrayList<>();
+        listeCompetences = new HashMap<>();
 
         try {
 
@@ -155,7 +154,7 @@ public class ImportCSV implements ImportInterface{
                 ligneDecoupee = ligne.split(delimiteur);
                 
                 if(ligneDecoupee.length >= 3){
-                    listeCompetences.add(new Competence(ligneDecoupee[0], ligneDecoupee[1], ligneDecoupee[2]));
+                    listeCompetences.put(ligneDecoupee[0], new Competence(ligneDecoupee[1], ligneDecoupee[2]));
                 }
                 else{
                     throw new Exception("Fichier CSV Competences mal formé. Erreur a la ligne : "+ compteurLigne);

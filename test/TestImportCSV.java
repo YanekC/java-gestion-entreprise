@@ -29,7 +29,7 @@ public class TestImportCSV {
         ArrayList<Competence> listeCompetences = new ArrayList();
         
         try{
-            utilImport.importer(fPersonnels, fCompetences, fCompetencesPerso, listePersonnels, listeCompetences);
+          //  utilImport.importer(fPersonnels, fCompetences, fCompetencesPerso, listePersonnels, listeCompetences);
         }
         catch(Exception e){
             System.err.println(e.getMessage());

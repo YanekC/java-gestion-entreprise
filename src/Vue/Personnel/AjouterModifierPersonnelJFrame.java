@@ -1,22 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vue.Personnel;
 
-import Controllers.PersonnelController;
+import Model.Entreprise;
 import Model.Personnel;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author guilhem, sandeox
  */
 public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
-
+    private int id;
     /**
      * Creates new form AjouterPersonnelJFrame
      */
@@ -247,12 +243,17 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnEnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnregistrerActionPerformed
-        String nom = jTextFieldNom.getText();
-        String prenom = jTextFieldPrenom.getText();
-        String date = jTextFieldDateEntree.getText();
-        //int id = Entreprise.toString();
-        Personnel p = new Personnel(nom, prenom, date, 1);
-        dispose(); //ferme la fenêtre
+        //On est en modification
+        if(jBtnEnregistrer.getText()=="Enregistrer"){
+            modifier();
+        }
+        //On est en ajout
+        if(jBtnEnregistrer.getText()=="Ajouter"){
+            ajouter();
+        }
+       
+        
+        //dispose(); //ferme la fenêtre
     }//GEN-LAST:event_jBtnEnregistrerActionPerformed
 
     public void remplirFormPersonnel(int id){
@@ -262,15 +263,15 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         else{
             //On modifie !
            jLblAddUpdPerso.setText("Modifier un Personnel :");
-           jBtnEnregistrer.setText("Modifier");
-           PersonnelController pc = new PersonnelController();
-           Personnel p = pc.findById(id);
+           jBtnEnregistrer.setText("Enregistrer");
+           Personnel p = Entreprise.findPersonnelById(id);
 
            //System.out.println(p);
 
            jTextFieldNom.setText(p.getNom());
            jTextFieldPrenom.setText(p.getPrenom());
            jTextFieldDateEntree.setText(p.getDateNaissString()); 
+           this.id = id; //Stock l'id pour la modification
         }
     }
     
@@ -281,6 +282,52 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             jTextFieldNom.setText("");
             jTextFieldPrenom.setText("");
             jTextFieldDateEntree.setText("");
+    }
+    
+    public void modifier(){
+        if(valide()){
+           String nom = jTextFieldNom.getText();
+           String prenom = jTextFieldPrenom.getText();
+           String date = jTextFieldDateEntree.getText();
+           Personnel p = new Personnel(nom, prenom, date);
+           Entreprise.modifierPersonnel(p, this.id);
+           System.out.println(Entreprise.afficherPersonnel()); 
+        }
+    }
+    
+    public void ajouter(){
+        if(valide()){
+           String nom = jTextFieldNom.getText();
+           String prenom = jTextFieldPrenom.getText();
+           String date = jTextFieldDateEntree.getText();
+           Personnel p = new Personnel(nom, prenom, date);
+           Entreprise.addPersonnel(p);
+           System.out.println(Entreprise.afficherPersonnel());
+        }
+    }
+    
+    public boolean valide(){
+        int ok = 0;
+        //Test du nom
+        if(jTextFieldNom.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Veuillez renseigner le nom du personnel");
+            return false;
+        }
+        else ok++;
+        //Test du prenom
+        if(jTextFieldPrenom.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Veuillez renseigner le prenom du personnel"); 
+            return false;
+        }
+        else ok++;
+        //Test de la date
+        if(jTextFieldDateEntree.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Veuillez renseigner la date d'entrée du personnel"); 
+            return false;
+        }
+        else ok++;
+        //Tout les tests passent
+        return ok==3;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

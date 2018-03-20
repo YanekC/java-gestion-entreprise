@@ -16,7 +16,6 @@ public class Personnel {
     private String nom;
     private String prenom;
     private Calendar dateNaiss;
-    private int id;
     private ArrayList<String> listeCompetences;
     
     /**
@@ -26,10 +25,9 @@ public class Personnel {
      * @param dateNaiss La date de naissance du personnel
      * @param id Identitfiant du personnel
      */
-    public Personnel(String nom, String prenom, String dateNaiss, int id){
+    public Personnel(String nom, String prenom, String dateNaiss){
         this.nom = nom;
         this.prenom = prenom;
-        this.id = id;
         this.listeCompetences = new ArrayList<String>();
         this.dateNaiss = Calendar.getInstance();
         try{
@@ -49,7 +47,7 @@ public class Personnel {
     
     @Override
     public String toString(){
-        return id+" "+nom+" "+prenom+" "+formatDate.format(dateNaiss.getTime());
+        return nom+" "+prenom+" "+formatDate.format(dateNaiss.getTime());
     }
 
     public String getNom() {
@@ -66,10 +64,6 @@ public class Personnel {
     
     public Calendar getDateNaissCalendar() {
         return this.dateNaiss;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public ArrayList<String> getListeCompetences() {
