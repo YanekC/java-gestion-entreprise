@@ -36,7 +36,7 @@ public class ExportCSV implements ExportInterface{
         
         for(Map.Entry e : listePersonnel.entrySet()){
             Personnel p = (Personnel)e.getValue();
-            stringPerso += p.getPrenom()+";"+p.getNom()+";"+Personnel.formatDate.format(p.getDateNaiss().getTime())+";"+e.getKey()+"\n";
+            stringPerso += p.getPrenom()+";"+p.getNom()+";"+Personnel.formatDate.format(p.getDateNaissCalendar().getTime())+";"+e.getKey()+"\n";
             
             competenceConcat = "";
             Iterator it = p.getListeCompetences().iterator();

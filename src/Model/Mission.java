@@ -45,7 +45,18 @@ public class Mission {
     }
     
     public String toString(){
-        String etat = "";
+        String etat = getEtatString();
+        
+        return "Date de debut : "+this.dateDebut+
+                "\nDate de fin estimée : "+this.dateFinEstime+
+                "\nEtat : "+etat+
+                "\nCompetences requises : "+
+                "\nPersonnels participants : "+
+                "\nNombre de personnes requises : "+this.nbPersMin;
+    }
+    
+    public String getEtatString(){
+         String etat = "";
         switch (this.etat){
             case ETAT_PLANIFIE :
                 etat = "Planifée";
@@ -57,13 +68,7 @@ public class Mission {
                 etat = "Terminée";
                 break;
         }
-        
-        return "Date de debut : "+this.dateDebut+
-                "\nDate de fin estimée : "+this.dateFinEstime+
-                "\nEtat : "+etat+
-                "\nCompetences requises : "+
-                "\nPersonnels participants : "+
-                "\nNombre de personnes requises : "+this.nbPersMin;
+        return etat;
     }
     
     public void ajouterCompetence(String c){

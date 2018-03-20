@@ -24,7 +24,11 @@ public class Entreprise {
     HashMap<Integer, Personnel> personnels;
     ArrayList<Mission> missions;
     
-    public Entreprise(File fPersonnels, File fCompetences, File fCompetencesPerso){
+    File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
+    File fCompetences = new File("resources\\csv\\liste_competences.csv");
+    File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
+    
+    public Entreprise(){
         this.competences = new ArrayList<>();
         this.personnels = new HashMap<>();
         this.missions = new ArrayList<>();
@@ -58,4 +62,15 @@ public class Entreprise {
         
         return s;
     }
+    
+    public HashMap<Integer, Personnel> getlistePersonnel(){
+        
+        return personnels;
+    }
+
+    public ArrayList<Competence> getCompetences() {
+        return competences;
+    }
+    
+    
 }

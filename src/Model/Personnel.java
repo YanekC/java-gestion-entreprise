@@ -49,7 +49,7 @@ public class Personnel {
     
     @Override
     public String toString(){
-        return nom+" "+prenom+" "+formatDate.format(dateNaiss.getTime());
+        return id+" "+nom+" "+prenom+" "+formatDate.format(dateNaiss.getTime());
     }
 
     public String getNom() {
@@ -60,8 +60,12 @@ public class Personnel {
         return prenom;
     }
 
-    public Calendar getDateNaiss() {
-        return dateNaiss;
+    public String getDateNaissString() {
+        return formatDate.format(dateNaiss.getTime());
+    }
+    
+    public Calendar getDateNaissCalendar() {
+        return this.dateNaiss;
     }
 
     public int getId() {
