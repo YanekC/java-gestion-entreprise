@@ -10,23 +10,17 @@ package Model;
  * @author guilhem
  */
 public class Competence {
-    private String idC;
     private String libelleAng;
     private String libelleFra;
     
-    public Competence(String idC, String libelleAng, String libelleFra){
-        this.idC = idC;
+    public Competence(String libelleAng, String libelleFra){
         this.libelleAng = libelleAng;
         this.libelleFra = libelleFra;
     }
     
     @Override
     public String toString(){
-        return this.idC+" "+this.libelleAng+" "+this.libelleFra;
-    }
-
-    public String getIdC() {
-        return idC;
+        return this.libelleAng+" "+this.libelleFra;
     }
 
     public String getLibelleAng() {

@@ -5,9 +5,6 @@
  */
 package Vue;
 
-import Controllers.CompetenceController;
-import Controllers.EntrepriseController;
-import Controllers.PersonnelController;
 import Model.Competence;
 import Model.Entreprise;
 import Model.Personnel;
@@ -16,6 +13,7 @@ import Vue.Components.BoutonTabEditor;
 import Vue.Components.BoutonTabRenderer;
 import Vue.Personnel.AjouterModifierPersonnelJFrame;
 import java.awt.BorderLayout;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,15 +34,21 @@ import javax.swing.table.TableColumnModel;
  */
 public class Menu2 extends javax.swing.JFrame {
 
-    private EntrepriseController entC;
+    private Entreprise entC;
     /**
      * Creates new form test
      */
     public Menu2() throws Exception {
+        
+        File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
+        File fCompetences = new File("resources\\csv\\liste_competences.csv");
+        File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
+        
         initComponents();
         this.setLocationRelativeTo(null); // positionner la fenetre au centre de l'écran
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
-        this.entC = new EntrepriseController(); // dans le but de faire évoluer l'application
+        // dans le but de faire évoluer l'application
+        Entreprise.chargerFichiers(fPersonnels, fCompetences, fCompetencesPerso);
         remplirTableauPersonnel();
         remplirTableauCompetences();
         
@@ -244,7 +248,7 @@ public class Menu2 extends javax.swing.JFrame {
         System.out.println(entC.getlistePersonnel());
         
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
-            String line = e.getValue().getId()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString();
+            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString();
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
             
@@ -266,11 +270,11 @@ public class Menu2 extends javax.swing.JFrame {
     }
     
     public void remplirTableauCompetences() throws Exception {
-        CompetenceController cc = new CompetenceController();
-        ArrayList<Competence> lesCompetences = cc.getListeCompetences();
+        HashMap<String, Competence> lesCompetences = Entreprise.getCompetences();
         
-        for(Competence c : lesCompetences){
-            String line = c.getIdC()+";"+c.getLibelleAng()+";"+c.getLibelleFra();
+        for(Map.Entry c : lesCompetences.entrySet()){
+            Competence cpt = (Competence)c.getValue();
+            String line = c.getKey()+";"+cpt.getLibelleAng()+";"+cpt.getLibelleFra();
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableCompetences.getModel()).addRow(laLigne);
         }

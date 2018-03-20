@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vue.Personnel;
 
-import Controllers.PersonnelController;
+import Model.Entreprise;
 import Model.Personnel;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -257,8 +252,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             //On modifie !
            jLblAddUpdPerso.setText("Modifier un Personnel :");
            jBtnEnregistrer.setText("Modifier");
-           PersonnelController pc = new PersonnelController();
-           Personnel p = pc.findById(id);
+           Personnel p = Entreprise.findById(id);
 
            //System.out.println(p);
 

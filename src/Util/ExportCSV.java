@@ -23,15 +23,16 @@ import java.util.Map;
 public class ExportCSV implements ExportInterface{
 
     @Override
-    public boolean exporter(File fPersonnels, File fCompetences, File fCompetencesPerso, ArrayList<Competence> listeCompetences, HashMap<Integer, Personnel> listePersonnel) {
+    public boolean exporter(File fPersonnels, File fCompetences, File fCompetencesPerso, HashMap<String, Competence> listeCompetences, HashMap<Integer, Personnel> listePersonnel) {
         
         String stringPerso = "";
         String stringCompetence = "";
         String stringCompetencesPerso = "";
         String competenceConcat = "";
         
-        for(Competence c : listeCompetences){
-            stringCompetence += c.getIdC()+";"+c.getLibelleAng()+";"+c.getLibelleFra()+"\n";
+        for(Map.Entry c : listeCompetences.entrySet()){
+            Competence cpt = (Competence)c.getValue();
+            stringCompetence += c.getKey()+";"+cpt.getLibelleAng()+";"+cpt.getLibelleFra()+"\n";
         }
         
         for(Map.Entry e : listePersonnel.entrySet()){
@@ -52,29 +53,23 @@ public class ExportCSV implements ExportInterface{
         }
         
         try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter(fPersonnels));
-            writer.write(stringPerso);
-
-            writer.close();
-        }catch(IOException ioe){
-            System.err.println(ioe.getMessage());
+            //Ecriture dans le fichier personnel
+            BufferedWriter writerPerso = new BufferedWriter(new FileWriter(fPersonnels));
+            writerPerso.write(stringPerso);
+            writerPerso.close();
+            
+            //Ecriture dans le fichier competence
+            BufferedWriter writerCpt = new BufferedWriter(new FileWriter(fCompetences));
+            writerCpt.write(stringCompetence);
+            writerCpt.close();
+            
+            //Ecriture dans le fichier competence_perso
+            BufferedWriter writerCptPers = new BufferedWriter(new FileWriter(fCompetencesPerso));
+            writerCptPers.write(stringCompetencesPerso);
+            writerCptPers.close();
+            
         }
-        
-        try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter(fCompetences));
-            writer.write(stringCompetence);
-
-            writer.close();
-        }catch(IOException ioe){
-            System.err.println(ioe.getMessage());
-        }
-        
-        try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter(fCompetencesPerso));
-            writer.write(stringCompetencesPerso);
-
-            writer.close();
-        }catch(IOException ioe){
+        catch(IOException ioe){
             System.err.println(ioe.getMessage());
         }
         
