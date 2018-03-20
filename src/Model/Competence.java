@@ -35,7 +35,5 @@ public class Competence {
 
     public String getLibelleFra() {
         return libelleFra;
-    }
-    
-    
+    }    
 }

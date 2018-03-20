@@ -12,7 +12,7 @@ import java.util.Calendar;
  */
 public class Personnel {
     
-    static SimpleDateFormat formatDate = new SimpleDateFormat( "dd/MM/yyyy" );
+    public static SimpleDateFormat formatDate = new SimpleDateFormat( "dd/MM/yyyy" );
     private String nom;
     private String prenom;
     private Calendar dateNaiss;
@@ -60,8 +60,12 @@ public class Personnel {
         return prenom;
     }
 
-    public String getDateNaiss() {
+    public String getDateNaissString() {
         return formatDate.format(dateNaiss.getTime());
+    }
+    
+    public Calendar getDateNaissCalendar() {
+        return this.dateNaiss;
     }
 
     public int getId() {

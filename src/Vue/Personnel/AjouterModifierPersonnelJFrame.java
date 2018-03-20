@@ -264,7 +264,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
 
            jTextFieldNom.setText(p.getNom());
            jTextFieldPrenom.setText(p.getPrenom());
-           jTextFieldDateEntree.setText(p.getDateNaiss()); 
+           jTextFieldDateEntree.setText(p.getDateNaissString()); 
         }
         
     }
