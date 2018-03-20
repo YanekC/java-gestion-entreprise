@@ -26,7 +26,7 @@ public class TestImportCSV {
         File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
         
         HashMap<Integer, Personnel> listePersonnels = new HashMap<>();
-        ArrayList<Competence> listeCompetences = new ArrayList();
+        HashMap<String, Competence> listeCompetences = new HashMap<>();
         
         try{
             utilImport.importer(fPersonnels, fCompetences, fCompetencesPerso, listePersonnels, listeCompetences);
@@ -37,7 +37,7 @@ public class TestImportCSV {
         }
         
         System.out.println("----------Competences----------");
-        for(Competence c : listeCompetences){
+        for(Map.Entry c : listeCompetences.entrySet()){
             System.out.println(c);
         }
         
