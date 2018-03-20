@@ -47,11 +47,6 @@ public class Menu2 extends javax.swing.JFrame {
         this.entC = new EntrepriseController(); // dans le but de faire évoluer l'application
         remplirTableauPersonnel();
         remplirTableauCompetences();
-        
-       
-
-        
-        
     }
 
     /**
@@ -223,8 +218,6 @@ public class Menu2 extends javax.swing.JFrame {
         AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame(); // Instanciation de la nouvelle frame
         apf.setVisible(true); //Rend la frame visible
         apf.remplirFormPersonnel(id); // Replir avec la fonction en passant l'ID !
-
-        
     }//GEN-LAST:event_jBtnModifierActionPerformed
 
     private void jTableDuPersonnelFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableDuPersonnelFocusLost
