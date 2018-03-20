@@ -73,7 +73,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
 
         jButton2.setText("Annuler");
 
-        jButton3.setText("Supprimer la persone");
+        jButton3.setText("Supprimer la personne");
 
         jPanelInfosPersonnel.setBorder(javax.swing.BorderFactory.createTitledBorder("Informations générales"));
 
