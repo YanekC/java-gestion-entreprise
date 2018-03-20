@@ -209,7 +209,10 @@ public class Menu2 extends javax.swing.JFrame {
     private void jButtonAjouterPersonneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterPersonneActionPerformed
         AjouterModifierPersonnelJFrame ajoutP = new AjouterModifierPersonnelJFrame();
         ajoutP.setVisible(true);
-        ajoutP.remplirFormPersonnel(-1);
+        int rowIndex = jTableDuPersonnel.getSelectedRow(); // Récupère la ligne du champ cliqué
+        int colIndex = 0;
+        /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+        ajoutP.remplirFormPersonnel(-1, jTableDuPersonnel, rowIndex, colIndex);
     }//GEN-LAST:event_jButtonAjouterPersonneActionPerformed
 
     private void jButtonAjouterCompetenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterCompetenceActionPerformed
@@ -226,7 +229,8 @@ public class Menu2 extends javax.swing.JFrame {
        // System.out.println("Id ? : "+id);
         AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame(); // Instanciation de la nouvelle frame
         apf.setVisible(true); //Rend la frame visible
-        apf.remplirFormPersonnel(id); // Replir avec la fonction en passant l'ID !
+        /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+        apf.remplirFormPersonnel(id, jTableDuPersonnel, rowIndex, colIndex); 
 
         
     }//GEN-LAST:event_jBtnModifierActionPerformed

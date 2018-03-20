@@ -81,9 +81,10 @@ public class Entreprise {
         return competences;
     }
     
-    public static void addPersonnel(Personnel p) {
+    public static int addPersonnel(Personnel p) {
          int id = getLastId()+1;
          personnels.put(id, p);
+         return id;
          
     }
     
