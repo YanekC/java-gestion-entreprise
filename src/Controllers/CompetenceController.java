@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author guilhem
+ * @author guilhem, sandeox
  */
 public class CompetenceController extends EntrepriseController{
     
@@ -31,4 +31,9 @@ public class CompetenceController extends EntrepriseController{
         return result;
     }
     
+    
+    public Competence addCompetence() throws Exception{
+//        listeCompetences.add(e)
+        return null;
+    }
 }
