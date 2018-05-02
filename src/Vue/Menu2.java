@@ -13,6 +13,8 @@ import Vue.Components.BoutonTabEditor;
 import Vue.Components.BoutonTabRenderer;
 import Vue.Personnel.AjouterModifierPersonnelJFrame;
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -255,12 +257,38 @@ public class Menu2 extends javax.swing.JFrame {
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
             
-//            ((DefaultTableModel) jTableDuPersonnel.getModel()).setValueAt(new JButton("modifier"), ((DefaultTableModel) jTableDuPersonnel.getModel()).getRowCount() - 1, 5);
-//            
-//            //Des commentaires guilhem ? Je comprends pas l'utilisation du dossier Components et tout le reste
-//            jTableDuPersonnel.getColumn("Modifier").setCellRenderer(new BoutonTabRenderer());
-//            jTableDuPersonnel.getColumn("Modifier").setCellEditor(new BoutonTabEditor(new JTextField(), e.getValue().getId()));
-//            System.out.println(e.getValue().getId());
+            jTableDuPersonnel.addMouseMotionListener(new MouseMotionAdapter(){
+                @Override
+                public void mouseMoved(MouseEvent evt){
+                    java.awt.Point p = evt.getPoint();
+                    int rowIndex = jTableDuPersonnel.rowAtPoint(p);
+                    int colIndex = 0;
+                    
+                    String id = jTableDuPersonnel.getValueAt(rowIndex, colIndex).toString();
+                    
+                    HashMap<String, Competence> listeCompetences = Entreprise.getCompetences();
+                    
+                    Personnel lePerso = Entreprise.findPersonnelById(Integer.valueOf(id));
+                    ArrayList<String> listeComp = lePerso.getListeCompetences();
+                    
+                    String value ="<html>"; //obligé de mettre des balises html pour le saut à la ligne du tooltip
+                    
+                    for(String laC : listeComp){
+                        for(Map.Entry<String, Competence> laCompetence: listeCompetences.entrySet()){
+                            String laComp = laCompetence.getKey();
+                            if(laC.equals(laComp)){
+                                value += laCompetence.getValue().getLibelleFra()+"<br/>";
+                            }
+                        }
+                    }
+                    value += "</html>";
+                    
+                    if(jTableDuPersonnel.columnAtPoint(p) == 4){
+                        jTableDuPersonnel.setToolTipText(value);
+                    }
+                    
+                }
+            });
         }
         jTableDuPersonnel.setAutoCreateRowSorter(true);
         
