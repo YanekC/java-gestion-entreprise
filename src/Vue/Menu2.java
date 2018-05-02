@@ -9,8 +9,6 @@ import Model.Competence;
 import Model.Entreprise;
 import Model.Personnel;
 import Vue.Competences.AjouterCompetenceJFrame;
-import Vue.Components.BoutonTabEditor;
-import Vue.Components.BoutonTabRenderer;
 import Vue.Personnel.AjouterModifierPersonnelJFrame;
 import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
@@ -253,7 +251,7 @@ public class Menu2 extends javax.swing.JFrame {
         System.out.println(entC.getlistePersonnel());
         
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
-            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString();
+            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+e.getValue().getListeCompetences().size();
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
             
@@ -291,12 +289,6 @@ public class Menu2 extends javax.swing.JFrame {
             });
         }
         jTableDuPersonnel.setAutoCreateRowSorter(true);
-        
-                
-         /* ---- Masquer column ID ---- */
-        TableColumnModel tcm = jTableDuPersonnel.getColumnModel();
-        tcm.removeColumn(tcm.getColumn(0));
-        
         
     }
     
