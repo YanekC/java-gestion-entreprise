@@ -5,17 +5,15 @@
  */
 package Vue;
 
-import Controllers.CompetenceController;
-import Controllers.EntrepriseController;
-import Controllers.PersonnelController;
 import Model.Competence;
 import Model.Entreprise;
 import Model.Personnel;
 import Vue.Competences.AjouterCompetenceJFrame;
-import Vue.Components.BoutonTabEditor;
-import Vue.Components.BoutonTabRenderer;
 import Vue.Personnel.AjouterModifierPersonnelJFrame;
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,15 +34,21 @@ import javax.swing.table.TableColumnModel;
  */
 public class Menu2 extends javax.swing.JFrame {
 
-    private EntrepriseController entC;
+    private Entreprise entC;
     /**
      * Creates new form test
      */
     public Menu2() throws Exception {
+        
+        File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
+        File fCompetences = new File("resources\\csv\\liste_competences.csv");
+        File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
+        
         initComponents();
         this.setLocationRelativeTo(null); // positionner la fenetre au centre de l'écran
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
-        this.entC = new EntrepriseController(); // dans le but de faire évoluer l'application
+        // dans le but de faire évoluer l'application
+        Entreprise.chargerFichiers(fPersonnels, fCompetences, fCompetencesPerso);
         remplirTableauPersonnel();
         remplirTableauCompetences();
     }
@@ -200,7 +204,10 @@ public class Menu2 extends javax.swing.JFrame {
     private void jButtonAjouterPersonneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterPersonneActionPerformed
         AjouterModifierPersonnelJFrame ajoutP = new AjouterModifierPersonnelJFrame();
         ajoutP.setVisible(true);
-        ajoutP.remplirFormPersonnel(-1);
+        int rowIndex = jTableDuPersonnel.getSelectedRow(); // Récupère la ligne du champ cliqué
+        int colIndex = 0;
+        /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+        ajoutP.remplirFormPersonnel(-1, jTableDuPersonnel, rowIndex, colIndex);
     }//GEN-LAST:event_jButtonAjouterPersonneActionPerformed
 
     private void jButtonAjouterCompetenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterCompetenceActionPerformed
@@ -217,7 +224,10 @@ public class Menu2 extends javax.swing.JFrame {
        // System.out.println("Id ? : "+id);
         AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame(); // Instanciation de la nouvelle frame
         apf.setVisible(true); //Rend la frame visible
-        apf.remplirFormPersonnel(id); // Replir avec la fonction en passant l'ID !
+        /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+        apf.remplirFormPersonnel(id, jTableDuPersonnel, rowIndex, colIndex); 
+
+        
     }//GEN-LAST:event_jBtnModifierActionPerformed
 
     private void jTableDuPersonnelFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableDuPersonnelFocusLost
@@ -236,33 +246,53 @@ public class Menu2 extends javax.swing.JFrame {
         System.out.println(entC.getlistePersonnel());
         
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
-            String line = e.getValue().getId()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString();
+            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+e.getValue().getListeCompetences().size();
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
             
-//            ((DefaultTableModel) jTableDuPersonnel.getModel()).setValueAt(new JButton("modifier"), ((DefaultTableModel) jTableDuPersonnel.getModel()).getRowCount() - 1, 5);
-//            
-//            //Des commentaires guilhem ? Je comprends pas l'utilisation du dossier Components et tout le reste
-//            jTableDuPersonnel.getColumn("Modifier").setCellRenderer(new BoutonTabRenderer());
-//            jTableDuPersonnel.getColumn("Modifier").setCellEditor(new BoutonTabEditor(new JTextField(), e.getValue().getId()));
-//            System.out.println(e.getValue().getId());
+            jTableDuPersonnel.addMouseMotionListener(new MouseMotionAdapter(){
+                @Override
+                public void mouseMoved(MouseEvent evt){
+                    java.awt.Point p = evt.getPoint();
+                    int rowIndex = jTableDuPersonnel.rowAtPoint(p);
+                    int colIndex = 0;
+                    
+                    String id = jTableDuPersonnel.getValueAt(rowIndex, colIndex).toString();
+                    
+                    HashMap<String, Competence> listeCompetences = Entreprise.getCompetences();
+                    
+                    Personnel lePerso = Entreprise.findPersonnelById(Integer.valueOf(id));
+                    ArrayList<String> listeComp = lePerso.getListeCompetences();
+                    
+                    String value ="<html>"; //obligé de mettre des balises html pour le saut à la ligne du tooltip
+                    
+                    for(String laC : listeComp){
+                        for(Map.Entry<String, Competence> laCompetence: listeCompetences.entrySet()){
+                            String laComp = laCompetence.getKey();
+                            if(laC.equals(laComp)){
+                                value += laCompetence.getValue().getLibelleFra()+"<br/>";
+                            }
+                        }
+                    }
+                    value += "</html>";
+                    
+                    if(jTableDuPersonnel.columnAtPoint(p) == 4){
+                        jTableDuPersonnel.setToolTipText(value);
+                    }
+                    
+                }
+            });
         }
         jTableDuPersonnel.setAutoCreateRowSorter(true);
-        
-                
-         /* ---- Masquer column ID ---- */
-        TableColumnModel tcm = jTableDuPersonnel.getColumnModel();
-        tcm.removeColumn(tcm.getColumn(0));
-        
         
     }
     
     public void remplirTableauCompetences() throws Exception {
-        CompetenceController cc = new CompetenceController();
-        ArrayList<Competence> lesCompetences = cc.getListeCompetences();
+        HashMap<String, Competence> lesCompetences = Entreprise.getCompetences();
         
-        for(Competence c : lesCompetences){
-            String line = c.getIdC()+";"+c.getLibelleAng()+";"+c.getLibelleFra();
+        for(Map.Entry c : lesCompetences.entrySet()){
+            Competence cpt = (Competence)c.getValue();
+            String line = c.getKey()+";"+cpt.getLibelleAng()+";"+cpt.getLibelleFra();
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableCompetences.getModel()).addRow(laLigne);
         }

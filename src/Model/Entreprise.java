@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import Util.ExportCSV;
@@ -15,24 +10,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
- * @author Yanek
+ * La classe entreprise permet de centraliser les listes de competences et de personnel
+ * @author Yanek, SanDeox
  */
 public class Entreprise {
     
-    ArrayList<Competence> competences;
-    HashMap<Integer, Personnel> personnels;
-    ArrayList<Mission> missions;
+    private static Entreprise ent = new Entreprise();
     
-    File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
-    File fCompetences = new File("resources\\csv\\liste_competences.csv");
-    File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
+    private static HashMap<String, Competence> competences;
+    private static HashMap<Integer, Personnel> personnels;
+    private static ArrayList<Mission> missions;
     
-    public Entreprise(){
-        this.competences = new ArrayList<>();
-        this.personnels = new HashMap<>();
-        this.missions = new ArrayList<>();
+    private Entreprise(){
+        competences = new HashMap<>();
+        personnels = new HashMap<>();
+        missions = new ArrayList<>();
+    }
         
+    public static void chargerFichiers(File fPersonnels, File fCompetences, File fCompetencesPerso){
         ImportInterface i = new ImportCSV();
         try{
             i.importer(fPersonnels, fCompetences, fCompetencesPerso, personnels, competences);
@@ -40,16 +35,18 @@ public class Entreprise {
         catch(Exception e){
             System.err.println(e.getMessage());
         }
-
-        ExportInterface ei = new ExportCSV();
-        ei.exporter(fPersonnels, fCompetences, fCompetencesPerso, competences, personnels);
     }
     
-    public String toString(){
+    public static Personnel findPersonnelById (int id){
+        return personnels.get(id); // retourne la personne par l'id de l'hashmap
+    }
+  
+    
+    public static String afficher(){
         String s = "";
         s = "Liste des competences de l'entreprise : ";
-        for(Competence c : competences){
-            s += "\n"+c;
+        for(Map.Entry c : competences.entrySet()){
+            s += "\n"+c.getKey()+" : "+c.getValue();
         }
         s += "\n Liste du personnel : ";
         for(Map.Entry p : personnels.entrySet()){
@@ -63,13 +60,45 @@ public class Entreprise {
         return s;
     }
     
-    public HashMap<Integer, Personnel> getlistePersonnel(){
+    public static String afficherPersonnel(){
+        String s = "";
+        s = "Liste des Personnels de l'entreprise : ";
+        s += "\n Liste du personnel : ";
+        for(Map.Entry p : personnels.entrySet()){
+            s += "\n"+p.getKey()+" : "+p.getValue();
+        }
+        
+        return s;
+    }
+    
+    public static HashMap<Integer, Personnel> getlistePersonnel(){
         
         return personnels;
     }
 
-    public ArrayList<Competence> getCompetences() {
+    public static HashMap<String, Competence> getCompetences() {
+        
         return competences;
+    }
+    
+    public static int addPersonnel(Personnel p) {
+         int id = getLastId()+1;
+         personnels.put(id, p);
+         return id;
+         
+    }
+    
+    public static void modifierPersonnel (Personnel p, int id){
+         personnels.put(id, p);
+    }
+    
+    
+    public static int getLastId(){
+        int id=0;
+        for(Map.Entry p : personnels.entrySet()){
+             id=(Integer) p.getKey();
+        }
+        return id;
     }
     
     

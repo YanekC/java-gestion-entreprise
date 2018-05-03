@@ -17,5 +17,5 @@ import java.util.HashMap;
  */
 public interface ExportInterface {
     
-    boolean exporter(File fPersonnels, File fCompetences, File fCompetencesPerso, ArrayList<Competence> listeCompetences, HashMap<Integer, Personnel> listePersonnel);
+    boolean exporter(File fPersonnels, File fCompetences, File fCompetencesPerso, HashMap<String, Competence> listeCompetences, HashMap<Integer, Personnel> listePersonnel);
 }
