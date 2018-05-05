@@ -9,6 +9,7 @@ import Model.Personnel;
 import java.io.File;
 import java.util.ArrayList;
 import Model.Competence;
+import Model.Mission;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,12 +26,40 @@ public class ImportCSV implements ImportInterface{
     private HashMap<Integer,Personnel> listePersonnels;
     private HashMap<String, Competence> listeCompetences;
     private HashMap<Integer,ArrayList<String>> listeCompetencesPerso;
+    private HashMap<Integer,Mission> listeMission;
+    private HashMap<Integer,ArrayList<String>> listeCompetencesMission;
+    private HashMap<Integer,ArrayList<String>> listePersoMission;
     
     @Override
-    public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, HashMap<Integer, Personnel> lstPerso, HashMap<String, Competence> lstComp) throws Exception{
+    public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, File fMission, File fCompetenceMission, File fPersonnelMission,
+            HashMap<Integer, Personnel> lstPerso, HashMap<String, Competence> lstComp,
+            HashMap<Integer, Mission> lstMission) throws Exception{
         this.importPersonnel(fPersonnels);
         this.importCompetence(fCompetences);
         this.importCompetencesPerso(fCompetencesPerso);
+        this.importMission(fMission);
+        this.importCompetencesMission(fCompetenceMission);
+        this.importPersoMission(fPersonnelMission);
+        
+        for(Map.Entry compMission : listeCompetencesMission.entrySet()){
+            Integer k = (Integer)compMission.getKey();
+            
+            if(listeMission.containsKey(k)){
+                for(String c : (ArrayList<String>)compMission.getValue()){
+                    listeMission.get(k).ajouterCompetence(c);
+                }
+            }
+        }
+        for(Map.Entry persoMission : listePersoMission.entrySet()){
+            Integer k = (Integer)persoMission.getKey();
+            
+            if(listeMission.containsKey(k)){
+                for(String p : (ArrayList<String>)persoMission.getValue()){
+                    listeMission.get(k).ajouterPersonnel(p);
+                }
+            }
+        }
+        
         
         //Remplissage des competences dans le personnel
         
@@ -55,6 +84,9 @@ public class ImportCSV implements ImportInterface{
         
         for(Map.Entry pers : listePersonnels.entrySet()){
             lstPerso.put((Integer)pers.getKey(), (Personnel)pers.getValue());
+        }
+        for(Map.Entry miss : listeMission.entrySet()){
+            lstMission.put((Integer)miss.getKey(), (Mission)miss.getValue());
         }
     }
     
@@ -168,8 +200,126 @@ public class ImportCSV implements ImportInterface{
             e.printStackTrace();
         }
     }
+    
+    private void importMission(File fMission) throws Exception{
+        
+        BufferedReader br = null;
+        String ligne = "";
+        int compteurLigne = 0;
+        String delimiteur = ";";
+        String[] ligneDecoupee;
+        listeMission = new HashMap<>();
 
-    public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, ArrayList<Personnel> listePersonnels, ArrayList<Competence> listeCompetences) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+
+            br = new BufferedReader(new FileReader(fMission));
+            while ((ligne = br.readLine()) != null) {
+                compteurLigne++;
+                
+                ligneDecoupee = ligne.split(delimiteur);
+                
+                if(ligneDecoupee.length >= 6){
+                    listeMission.put(Integer.parseInt(ligneDecoupee[0]), new Mission(ligneDecoupee[1], ligneDecoupee[2], ligneDecoupee[3], ligneDecoupee[4], Integer.parseInt(ligneDecoupee[5])));
+                }
+                else{
+                    throw new Exception("Fichier CSV Competences mal formé. Erreur a la ligne : "+ compteurLigne);
+                }
+            }
+            
+            br.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+    
+    private void importCompetencesMission(File fCompetencesMission) throws Exception{
+        BufferedReader br = null;
+        String ligne = "";
+        int compteurLigne = 0;
+        String delimiteur = ";";
+        String[] ligneDecoupee;
+        listeCompetencesMission = new HashMap<>();
+        ArrayList<String> competencesLigne;
+        Integer idLigne;
+
+        try {
+            
+            br = new BufferedReader(new FileReader(fCompetencesMission));
+            while ((ligne = br.readLine()) != null) {
+                compteurLigne++;
+                
+                //Initialisation des valeur a null
+                competencesLigne = new ArrayList<>();
+                idLigne = null;
+                
+                //Decoupe de la ligne en cours de process
+                ligneDecoupee = ligne.split(delimiteur);
+                
+                if(ligneDecoupee.length >= 1){
+                    idLigne = Integer.parseInt(ligneDecoupee[0]);
+                    for(int i = 1; i < ligneDecoupee.length; i++){
+                        competencesLigne.add(ligneDecoupee[i]);
+                    }
+                    listeCompetencesMission.put(idLigne, competencesLigne);
+                }
+                else{
+                    throw new Exception("Fichier CSV Competences par personnel mal formé. Erreur a la ligne : "+ compteurLigne);
+                }
+            }
+            
+            br.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void importPersoMission(File fPersoMission) throws Exception{
+        BufferedReader br = null;
+        String ligne = "";
+        int compteurLigne = 0;
+        String delimiteur = ";";
+        String[] ligneDecoupee;
+        listePersoMission = new HashMap<>();
+        ArrayList<String> persoLigne;
+        Integer idLigne;
+
+        try {
+            
+            br = new BufferedReader(new FileReader(fPersoMission));
+            while ((ligne = br.readLine()) != null) {
+                compteurLigne++;
+                
+                //Initialisation des valeur a null
+                persoLigne = new ArrayList<>();
+                idLigne = null;
+                
+                //Decoupe de la ligne en cours de process
+                ligneDecoupee = ligne.split(delimiteur);
+                
+                if(ligneDecoupee.length >= 1){
+                    idLigne = Integer.parseInt(ligneDecoupee[0]);
+                    for(int i = 1; i < ligneDecoupee.length; i++){
+                        persoLigne.add(ligneDecoupee[i]);
+                    }
+                    listePersoMission.put(idLigne, persoLigne);
+                }
+                else{
+                    throw new Exception("Fichier CSV Competences par personnel mal formé. Erreur a la ligne : "+ compteurLigne);
+                }
+            }
+            
+            br.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

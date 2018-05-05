@@ -34,7 +34,6 @@ import javax.swing.table.TableColumnModel;
  */
 public class Menu2 extends javax.swing.JFrame {
 
-    private Entreprise entC;
     /**
      * Creates new form test
      */
@@ -43,12 +42,15 @@ public class Menu2 extends javax.swing.JFrame {
         File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
         File fCompetences = new File("resources\\csv\\liste_competences.csv");
         File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
+        File fMission = new File("resources\\csv\\liste_missions.csv");
+        File fCompetenceMission = new File("resources\\csv\\competence_mission.csv");
+        File fPersonnelMission = new File("resources\\csv\\personnel_mission.csv");
         
         initComponents();
         this.setLocationRelativeTo(null); // positionner la fenetre au centre de l'écran
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
         // dans le but de faire évoluer l'application
-        Entreprise.chargerFichiers(fPersonnels, fCompetences, fCompetencesPerso);
+        Entreprise.chargerFichiers(fPersonnels, fCompetences, fCompetencesPerso, fMission, fCompetenceMission, fPersonnelMission);
         remplirTableauPersonnel();
         remplirTableauCompetences();
         
@@ -78,6 +80,9 @@ public class Menu2 extends javax.swing.JFrame {
         jTableCompetences = new javax.swing.JTable();
         jButtonAjouterCompetence = new javax.swing.JButton();
         jPanelMission = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableMissions = new javax.swing.JTable();
+        jButtonAjoutMission = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -178,15 +183,47 @@ public class Menu2 extends javax.swing.JFrame {
 
         jTabbedPane.addTab("Gestion des compétences", jPanelCompetence);
 
+        jTableMissions.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTableMissions);
+
+        jButtonAjoutMission.setText("Ajouter une Mission");
+        jButtonAjoutMission.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAjoutMissionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelMissionLayout = new javax.swing.GroupLayout(jPanelMission);
         jPanelMission.setLayout(jPanelMissionLayout);
         jPanelMissionLayout.setHorizontalGroup(
             jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 789, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMissionLayout.createSequentialGroup()
+                .addContainerGap(652, Short.MAX_VALUE)
+                .addComponent(jButtonAjoutMission)
+                .addContainerGap())
+            .addGroup(jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE))
         );
         jPanelMissionLayout.setVerticalGroup(
             jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 524, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMissionLayout.createSequentialGroup()
+                .addContainerGap(488, Short.MAX_VALUE)
+                .addComponent(jButtonAjoutMission)
+                .addContainerGap())
+            .addGroup(jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelMissionLayout.createSequentialGroup()
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 51, Short.MAX_VALUE)))
         );
 
         jTabbedPane.addTab("Gestion des missions", jPanelMission);
@@ -243,9 +280,13 @@ public class Menu2 extends javax.swing.JFrame {
          //System.out.println("Id ? : "+jTableDuPersonnel.getValueAt(rowIndex, colIndex));
     }//GEN-LAST:event_jTableDuPersonnelMouseClicked
 
+    private void jButtonAjoutMissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutMissionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAjoutMissionActionPerformed
+
     public void remplirTableauPersonnel() throws Exception{
-        HashMap<Integer, Personnel> lePersonnel = entC.getlistePersonnel();
-        System.out.println(entC.getlistePersonnel());
+        HashMap<Integer, Personnel> lePersonnel = Entreprise.getlistePersonnel();
+        System.out.println(Entreprise.getlistePersonnel());
         
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
             String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString();
@@ -324,6 +365,7 @@ public class Menu2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnModifier;
+    private javax.swing.JButton jButtonAjoutMission;
     private javax.swing.JButton jButtonAjouterCompetence;
     private javax.swing.JButton jButtonAjouterPersonne;
     private javax.swing.JPanel jPanelCompetence;
@@ -331,8 +373,10 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelPersonnel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTable jTableCompetences;
     private javax.swing.JTable jTableDuPersonnel;
+    private javax.swing.JTable jTableMissions;
     // End of variables declaration//GEN-END:variables
 }

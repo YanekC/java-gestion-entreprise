@@ -19,21 +19,34 @@ public class Entreprise {
     
     private static HashMap<String, Competence> competences;
     private static HashMap<Integer, Personnel> personnels;
-    private static ArrayList<Mission> missions;
+    private static HashMap<Integer, Mission> missions;
     
     private Entreprise(){
         competences = new HashMap<>();
         personnels = new HashMap<>();
-        missions = new ArrayList<>();
+        missions = new HashMap<>();
     }
         
-    public static void chargerFichiers(File fPersonnels, File fCompetences, File fCompetencesPerso){
+    public static void chargerFichiers(File fPersonnels, File fCompetences, File fCompetencesPerso, File fMission, File fCompetenceMission, File fPersonnelMission){
         ImportInterface i = new ImportCSV();
         try{
-            i.importer(fPersonnels, fCompetences, fCompetencesPerso, personnels, competences);
+            i.importer(fPersonnels, fCompetences, fCompetencesPerso, fMission, fCompetenceMission, fPersonnelMission, personnels, competences, missions);
         }
         catch(Exception e){
             System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public static void sauverFichiers(File fPersonnels, File fCompetences, File fCompetencesPerso, File fMission, File fCompetenceMission, File fPersonnelMission){
+        ExportInterface e = new ExportCSV();
+        
+        try{
+            e.exporter(fPersonnels, fCompetences, fCompetencesPerso, fMission, fCompetenceMission, fPersonnelMission, competences, personnels, missions);
+        }
+        catch(Exception ex){
+            System.err.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
     
@@ -52,8 +65,8 @@ public class Entreprise {
             s += "\n"+p.getKey()+" : "+p.getValue();
         }
         s += "\n Liste des missions : ";
-        for (Mission m : missions) {
-            s += "\n"+m;
+        for (Map.Entry m : missions.entrySet()) {
+            s += "\n"+m.getKey()+" : "+m.getValue();
         }
         
         return s;
