@@ -92,7 +92,6 @@ public class Menu2 extends javax.swing.JFrame {
         model.addColumn("Prénom");
         model.addColumn("Date d'embauche");
         model.addColumn("Compétences");
-        model.addColumn("Modifier");
         jTableDuPersonnel.setModel(model);
         jTableDuPersonnel.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableDuPersonnel.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -257,16 +256,22 @@ public class Menu2 extends javax.swing.JFrame {
 
     private void jBtnModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModifierActionPerformed
         /*----- Modifier une personne sélectionné -----*/
-        int rowIndex = jTableDuPersonnel.getSelectedRow(); // Récupère la ligne du champ cliqué
-        int colIndex = 0; // Place sur la column 0 pour récupérer l'ID
-        String idS = jTableDuPersonnel.getModel().getValueAt(rowIndex, colIndex).toString(); //Récupère l'ID (format String)
-        int id = Integer.parseInt(idS); // Parce qu'en 2 ligne ça fait pas de mal
-       // System.out.println("Id ? : "+id);
-        AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame(); // Instanciation de la nouvelle frame
-        apf.setVisible(true); //Rend la frame visible
-        apf.remplirFormPersonnel(id); // Replir avec la fonction en passant l'ID !
-
-        
+        //Get the column 0 (here ID) from the model whenever it's sort or not (due to issue on sort)
+        Object colZeroValue = (jTableDuPersonnel.getModel().getValueAt(jTableDuPersonnel.convertRowIndexToModel(jTableDuPersonnel.getSelectedRow()), 0));
+        System.out.println(colZeroValue.getClass());
+        //Get the id
+        try{
+           //parse object to string then int
+           String stringId = (String) colZeroValue;
+           int id = Integer.parseInt(stringId);
+           //Load Frame with selected ID
+            AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame();
+            apf.setVisible(true);
+            apf.remplirFormPersonnel(id); // Replir avec la fonction en passant l'ID !
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_jBtnModifierActionPerformed
 
     private void jTableDuPersonnelFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableDuPersonnelFocusLost
@@ -274,10 +279,7 @@ public class Menu2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableDuPersonnelFocusLost
 
     private void jTableDuPersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDuPersonnelMouseClicked
-        // TODO add your handling code here:
-        /* ------ Récupérer l'ID du champ cliqué -----*/
-         //System.out.println("Ligne : "+rowIndex);
-         //System.out.println("Id ? : "+jTableDuPersonnel.getValueAt(rowIndex, colIndex));
+        
     }//GEN-LAST:event_jTableDuPersonnelMouseClicked
 
     private void jButtonAjoutMissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutMissionActionPerformed
@@ -293,12 +295,6 @@ public class Menu2 extends javax.swing.JFrame {
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
             
-//            ((DefaultTableModel) jTableDuPersonnel.getModel()).setValueAt(new JButton("modifier"), ((DefaultTableModel) jTableDuPersonnel.getModel()).getRowCount() - 1, 5);
-//            
-//            //Des commentaires guilhem ? Je comprends pas l'utilisation du dossier Components et tout le reste
-//            jTableDuPersonnel.getColumn("Modifier").setCellRenderer(new BoutonTabRenderer());
-//            jTableDuPersonnel.getColumn("Modifier").setCellEditor(new BoutonTabEditor(new JTextField(), e.getValue().getId()));
-//            System.out.println(e.getValue().getId());
         }
         jTableDuPersonnel.setAutoCreateRowSorter(true);
         

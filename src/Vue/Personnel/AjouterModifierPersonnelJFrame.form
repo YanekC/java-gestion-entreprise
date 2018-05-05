@@ -110,7 +110,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Supprimer la persone"/>
+            <Property name="text" type="java.lang.String" value="Supprimer la personne"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanelInfosPersonnel">
