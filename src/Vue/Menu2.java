@@ -51,6 +51,8 @@ public class Menu2 extends javax.swing.JFrame {
         Entreprise.chargerFichiers(fPersonnels, fCompetences, fCompetencesPerso);
         remplirTableauPersonnel();
         remplirTableauCompetences();
+        
+        jBtnModifier.setEnabled(false);
     }
 
     /**
@@ -272,7 +274,7 @@ public class Menu2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableDuPersonnelFocusLost
 
     private void jTableDuPersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDuPersonnelMouseClicked
-        
+        jBtnModifier.setEnabled(true);
     }//GEN-LAST:event_jTableDuPersonnelMouseClicked
 
     public void remplirTableauPersonnel() throws Exception{
