@@ -258,7 +258,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         }
        
         
-        //dispose(); //ferme la fenêtre
+        dispose(); //ferme la fenêtre
     }//GEN-LAST:event_jBtnEnregistrerActionPerformed
 
     public void remplirFormPersonnel(int id, JTable jtB, int rI, int cI){
