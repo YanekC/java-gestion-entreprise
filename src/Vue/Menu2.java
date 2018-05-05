@@ -275,6 +275,7 @@ public class Menu2 extends javax.swing.JFrame {
 
     private void jTableDuPersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDuPersonnelMouseClicked
         jBtnModifier.setEnabled(true);
+        
     }//GEN-LAST:event_jTableDuPersonnelMouseClicked
 
     public void remplirTableauPersonnel() throws Exception{
@@ -282,10 +283,23 @@ public class Menu2 extends javax.swing.JFrame {
         System.out.println(entC.getlistePersonnel());
         
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
-            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+e.getValue().getListeCompetences().size();
+            
+            /*---- Pour avoir la première compétence de chaque personnel ----*/
+            String competences = null;
+            ArrayList<String> listeCompPerso = e.getValue().getListeCompetences();
+            
+            for(Map.Entry<String, Competence> laCompetence : Entreprise.getCompetences().entrySet()){
+                if(listeCompPerso.get(0).equals(laCompetence.getKey())){
+                    competences = laCompetence.getValue().getLibelleFra();
+                }
+            }
+            
+            /*---- Remplir chaque ligne avec un String avec un ';' comme séparateur de cellule ----*/
+            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+"ⓘ "+competences;
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
             
+            /*---- Tooltip sur la cellule des compétences pour chaque personnel ----*/
             jTableDuPersonnel.addMouseMotionListener(new MouseMotionAdapter(){
                 @Override
                 public void mouseMoved(MouseEvent evt){
@@ -300,7 +314,7 @@ public class Menu2 extends javax.swing.JFrame {
                     
                     HashMap<String, Competence> listeCompetences = Entreprise.getCompetences();
                     
-                    Personnel lePerso = Entreprise.findPersonnelById(Integer.valueOf(id));
+                    Personnel lePerso = Entreprise.findPersonnelById(id);
                     ArrayList<String> listeComp = lePerso.getListeCompetences();
                     
                     String value ="<html>"; //obligé de mettre des balises html pour le saut à la ligne du tooltip
@@ -317,17 +331,20 @@ public class Menu2 extends javax.swing.JFrame {
                     
                     if(jTableDuPersonnel.columnAtPoint(p) == jTableDuPersonnel.getColumnCount() -1){
                         jTableDuPersonnel.setToolTipText(value);
+                    }else{
+                        jTableDuPersonnel.setToolTipText(null);
                     }
                     
                 }
             });
         }
         
+        /*---- Pouvoir ré-ordonner l'affichage d'une colonne ----*/
         jTableDuPersonnel.setAutoCreateRowSorter(true);
+        
          /* ---- Masquer column ID ---- */
         TableColumnModel tcm = jTableDuPersonnel.getColumnModel();
         tcm.removeColumn(tcm.getColumn(0));
-        
     }
     
     public void remplirTableauCompetences() throws Exception {
