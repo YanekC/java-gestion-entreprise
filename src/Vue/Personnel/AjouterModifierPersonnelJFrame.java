@@ -1,9 +1,13 @@
 package Vue.Personnel;
 
+import Model.Competence;
 import Model.Entreprise;
 import Model.Personnel;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -28,7 +32,6 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         content.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //fermer la JFrame sans arrêter l'application
-        
     }
 
     /**
@@ -41,7 +44,6 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLblAddUpdPerso = new javax.swing.JLabel();
         jBtnEnregistrer = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -54,17 +56,14 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jTextFieldDateEntree = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jListCompetences = new javax.swing.JList<>();
         jButtonSupprimerCompetence = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        jListAjouterCompetence = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLblAddUpdPerso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLblAddUpdPerso.setText("Ajouter le personnel : ");
 
         jBtnEnregistrer.setText("Enregistrer");
         jBtnEnregistrer.addActionListener(new java.awt.event.ActionListener() {
@@ -136,23 +135,23 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Compétences"));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jListCompetences.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(jListCompetences);
 
         jButtonSupprimerCompetence.setText("Supprimer");
 
         jLabel1.setText("Ajouter une compétence :");
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+        jListAjouterCompetence.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(jListAjouterCompetence);
 
         jButton1.setText("Ajouter");
 
@@ -168,10 +167,10 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonSupprimerCompetence))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -185,9 +184,11 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -196,18 +197,12 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(jLblAddUpdPerso)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBtnEnregistrer)))
+                .addContainerGap()
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jBtnEnregistrer)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
@@ -219,13 +214,11 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLblAddUpdPerso, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(19, 19, 19)
                 .addComponent(jPanelInfosPersonnel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnEnregistrer)
                     .addComponent(jButton2)
@@ -270,7 +263,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         }
         else{
             //On modifie !
-           jLblAddUpdPerso.setText("Modifier un Personnel :");
+           this.setTitle("Modifier un Personnel");
            jBtnEnregistrer.setText("Enregistrer");
            Personnel p = Entreprise.findPersonnelById(id);
 
@@ -280,16 +273,39 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
            jTextFieldPrenom.setText(p.getPrenom());
            jTextFieldDateEntree.setText(p.getDateNaissString()); 
            this.id = id; //Stock l'id pour la modification
+           remplirListeCompentences(p);
+           
         }
     }
     
+    public void remplirListeCompentences(Personnel p){
+        /*---- Remplir la liste des compétences et et la liste des compétences à ajouter ----*/
+        
+        DefaultListModel model = new DefaultListModel();
+        DefaultListModel model2 = new DefaultListModel();
+        HashMap<String, Competence> listeCompetences = Entreprise.getCompetences();
+        
+        for(String comp : p.getListeCompetences()){ // parcour la liste des id des compétences de la personne
+            for(Map.Entry<String, Competence> laCompetence: listeCompetences.entrySet()){ // parcours toute la liste des compétences de l'entreprise
+                if(comp.equals(laCompetence.getKey())){ // si l'id de la compétence de la personne égale à un id de la liste de l'entreprise
+                    model.addElement(laCompetence.getValue().getLibelleFra()); // alors on ajoute le libellé français correspondant dans la jList
+                }else{ // sinon la compétence est présente dans la liste des compétences qui n'appartiennent pas au personnel
+                    model2.addElement(laCompetence.getValue().getLibelleFra());
+                }
+            }
+        }
+        
+        jListCompetences.setModel(model);
+        jListAjouterCompetence.setModel(model2);
+    }
+    
     public void setLabel(){
-      //On ajoute !
-            jLblAddUpdPerso.setText("Ajouter un Personnel :");
-            jBtnEnregistrer.setText("Ajouter");
-            jTextFieldNom.setText("");
-            jTextFieldPrenom.setText("");
-            jTextFieldDateEntree.setText("");
+        //On ajoute !
+        this.setTitle("Ajouter un Personnel");
+        jBtnEnregistrer.setText("Ajouter");
+        jTextFieldNom.setText("");
+        jTextFieldPrenom.setText("");
+        jTextFieldDateEntree.setText("");
     }
     
     public void modifier(){
@@ -356,9 +372,8 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLblAddUpdPerso;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
+    private javax.swing.JList<String> jListAjouterCompetence;
+    private javax.swing.JList<String> jListCompetences;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelInfosPersonnel;
