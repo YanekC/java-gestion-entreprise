@@ -9,10 +9,10 @@ import Model.Competence;
 import Model.Entreprise;
 import Model.Personnel;
 import Vue.Competences.AjouterCompetenceJFrame;
-import Vue.Components.BoutonTabEditor;
-import Vue.Components.BoutonTabRenderer;
 import Vue.Personnel.AjouterModifierPersonnelJFrame;
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -246,32 +246,67 @@ public class Menu2 extends javax.swing.JFrame {
     private void jButtonAjouterPersonneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterPersonneActionPerformed
         AjouterModifierPersonnelJFrame ajoutP = new AjouterModifierPersonnelJFrame();
         ajoutP.setVisible(true);
-        ajoutP.remplirFormPersonnel(-1);
+        int rowIndex = jTableDuPersonnel.getSelectedRow(); // Récupère la ligne du champ cliqué
+        int colIndex = 0;
+        /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+        ajoutP.remplirFormPersonnel(-1, jTableDuPersonnel, rowIndex, colIndex);
     }//GEN-LAST:event_jButtonAjouterPersonneActionPerformed
 
     private void jButtonAjouterCompetenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterCompetenceActionPerformed
         AjouterCompetenceJFrame ajoutC = new AjouterCompetenceJFrame();
         ajoutC.setVisible(true);
     }//GEN-LAST:event_jButtonAjouterCompetenceActionPerformed
-
-    private void jBtnModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModifierActionPerformed
-        /*----- Modifier une personne sélectionné -----*/
+    
+    private int getColZeroValueHover(int row, int col){
+        //get row pointed of pointer
+        int rowIndex = row;
+        //get column 0 (here ID)
+        int colIndex = col;
         //Get the column 0 (here ID) from the model whenever it's sort or not (due to issue on sort)
-        Object colZeroValue = (jTableDuPersonnel.getModel().getValueAt(jTableDuPersonnel.convertRowIndexToModel(jTableDuPersonnel.getSelectedRow()), 0));
-        System.out.println(colZeroValue.getClass());
+        Object colZeroValue = (jTableDuPersonnel.getModel().getValueAt(jTableDuPersonnel.convertRowIndexToModel(row), col));
+        //System.out.println(colZeroValue.getClass()); 
+        int id = 0;
         //Get the id
         try{
            //parse object to string then int
            String stringId = (String) colZeroValue;
-           int id = Integer.parseInt(stringId);
-           //Load Frame with selected ID
-            AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame();
-            apf.setVisible(true);
-            apf.remplirFormPersonnel(id); // Replir avec la fonction en passant l'ID !
+           id = Integer.parseInt(stringId);
+        return id;
         }
         catch(Exception e){
             System.out.println(e.getMessage());
+        }    
+        return id;
+    }
+    
+    private int getColZeroValueSelected(){
+        //Get the column 0 (here ID) from the model whenever it's sort or not (due to issue on sort)
+        Object colZeroValue = (jTableDuPersonnel.getModel().getValueAt(jTableDuPersonnel.convertRowIndexToModel(jTableDuPersonnel.getSelectedRow()), 0));
+        //System.out.println(colZeroValue.getClass()); 
+        int id = 0;
+        //Get the id
+        try{
+           //parse object to string then int
+           String stringId = (String) colZeroValue;
+           id = Integer.parseInt(stringId);
+        return id;
         }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }    
+        return id;
+    }
+        
+    private void jBtnModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModifierActionPerformed
+        /*----- Modifier une personne sélectionné -----*/
+
+        //Get the id
+        int id = getColZeroValueSelected();
+        //Load Frame with selected ID
+        AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame();
+        apf.setVisible(true);
+        /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+        apf.remplirFormPersonnel(id, jTableDuPersonnel,jTableDuPersonnel.getSelectedRow(), 0);     
     }//GEN-LAST:event_jBtnModifierActionPerformed
 
     private void jTableDuPersonnelFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableDuPersonnelFocusLost
@@ -291,18 +326,51 @@ public class Menu2 extends javax.swing.JFrame {
         System.out.println(Entreprise.getlistePersonnel());
         
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
-            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString();
+            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+e.getValue().getListeCompetences().size();
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
             
+            jTableDuPersonnel.addMouseMotionListener(new MouseMotionAdapter(){
+                @Override
+                public void mouseMoved(MouseEvent evt){
+                    //mouse pointer
+                    java.awt.Point p = evt.getPoint();
+                    //get row pointed of pointer
+                    int rowIndex = jTableDuPersonnel.rowAtPoint(p);
+                    //get column 0 (here ID)
+                    int colIndex = 0;
+                    //get current id hover
+                    int id = getColZeroValueHover(rowIndex, colIndex);
+                    
+                    HashMap<String, Competence> listeCompetences = Entreprise.getCompetences();
+                    
+                    Personnel lePerso = Entreprise.findPersonnelById(Integer.valueOf(id));
+                    ArrayList<String> listeComp = lePerso.getListeCompetences();
+                    
+                    String value ="<html>"; //obligé de mettre des balises html pour le saut à la ligne du tooltip
+                    
+                    for(String laC : listeComp){
+                        for(Map.Entry<String, Competence> laCompetence: listeCompetences.entrySet()){
+                            String laComp = laCompetence.getKey();
+                            if(laC.equals(laComp)){
+                                value += laCompetence.getValue().getLibelleFra()+"<br/>";
+                            }
+                        }
+                    }
+                    value += "</html>";
+                    
+                    if(jTableDuPersonnel.columnAtPoint(p) == jTableDuPersonnel.getColumnCount() -1){
+                        jTableDuPersonnel.setToolTipText(value);
+                    }
+                    
+                }
+            });
         }
-        jTableDuPersonnel.setAutoCreateRowSorter(true);
         
-                
+        jTableDuPersonnel.setAutoCreateRowSorter(true);
          /* ---- Masquer column ID ---- */
         TableColumnModel tcm = jTableDuPersonnel.getColumnModel();
         tcm.removeColumn(tcm.getColumn(0));
-        
         
     }
     

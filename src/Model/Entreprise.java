@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * La classe entreprise permet de centraliser les listes de competences et de personnel
- * @author Yanek
+ * @author Yanek, SanDeox
  */
 public class Entreprise {
     
@@ -50,8 +50,8 @@ public class Entreprise {
         }
     }
     
-    public static Personnel findById (int id){
-        return personnels.get(id);
+    public static Personnel findPersonnelById (int id){
+        return personnels.get(id); // retourne la personne par l'id de l'hashmap
     }
   
     public static String afficherInfoEnt(){
@@ -72,12 +72,44 @@ public class Entreprise {
         return s;
     }
     
+    public static String afficherPersonnel(){
+        String s = "";
+        s = "Liste des Personnels de l'entreprise : ";
+        s += "\n Liste du personnel : ";
+        for(Map.Entry p : personnels.entrySet()){
+            s += "\n"+p.getKey()+" : "+p.getValue();
+        }
+        
+        return s;
+    }
+    
     public static HashMap<Integer, Personnel> getlistePersonnel(){
         return personnels;
     }
 
     public static HashMap<String, Competence> getCompetences() {
+        
         return competences;
+    }
+    
+    public static int addPersonnel(Personnel p) {
+         int id = getLastId()+1;
+         personnels.put(id, p);
+         return id;
+         
+    }
+    
+    public static void modifierPersonnel (Personnel p, int id){
+         personnels.put(id, p);
+    }
+    
+    
+    public static int getLastId(){
+        int id=0;
+        for(Map.Entry p : personnels.entrySet()){
+             id=(Integer) p.getKey();
+        }
+        return id;
     }
     
     

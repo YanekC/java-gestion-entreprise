@@ -5,13 +5,19 @@ import Model.Personnel;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author guilhem
+ * @author guilhem, sandeox
  */
 public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
-
+    private int id;
+    private JTable jtB;
+    private int rInd;
+    private int cInd;
     /**
      * Creates new form AjouterPersonnelJFrame
      */
@@ -22,6 +28,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         content.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //fermer la JFrame sans arrêter l'application
+        
     }
 
     /**
@@ -241,26 +248,39 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnEnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnregistrerActionPerformed
+        //On est en modification
+        if(jBtnEnregistrer.getText()=="Enregistrer"){
+            modifier();
+        }
+        //On est en ajout
+        if(jBtnEnregistrer.getText()=="Ajouter"){
+            ajouter();
+        }
+       
+        
         dispose(); //ferme la fenêtre
     }//GEN-LAST:event_jBtnEnregistrerActionPerformed
 
-    public void remplirFormPersonnel(int id){
+    public void remplirFormPersonnel(int id, JTable jtB, int rI, int cI){
+        this.jtB = jtB;
+        this.rInd=rI;
+        this.cInd=cI;
         if(id==-1){
             setLabel(); //Définir les valeurs vides
         }
         else{
             //On modifie !
            jLblAddUpdPerso.setText("Modifier un Personnel :");
-           jBtnEnregistrer.setText("Modifier");
-           Personnel p = Entreprise.findById(id);
+           jBtnEnregistrer.setText("Enregistrer");
+           Personnel p = Entreprise.findPersonnelById(id);
 
            //System.out.println(p);
 
            jTextFieldNom.setText(p.getNom());
            jTextFieldPrenom.setText(p.getPrenom());
            jTextFieldDateEntree.setText(p.getDateNaissString()); 
+           this.id = id; //Stock l'id pour la modification
         }
-        
     }
     
     public void setLabel(){
@@ -270,6 +290,60 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             jTextFieldNom.setText("");
             jTextFieldPrenom.setText("");
             jTextFieldDateEntree.setText("");
+    }
+    
+    public void modifier(){
+        if(valide()){
+           String nom = jTextFieldNom.getText();
+           String prenom = jTextFieldPrenom.getText();
+           String date = jTextFieldDateEntree.getText();
+           Personnel p = new Personnel(nom, prenom, date);
+           Entreprise.modifierPersonnel(p, this.id);
+           //System.out.println(Entreprise.afficherPersonnel()); 
+           /* ------ Update du Jtable ------*/
+           this.jtB.setValueAt(nom, this.rInd, this.cInd);
+           this.jtB.setValueAt(prenom, this.rInd, this.cInd+1);
+           this.jtB.setValueAt(date, this.rInd, this.cInd+2);
+        }
+    }
+    
+    public void ajouter(){
+        if(valide()){
+           String nom = jTextFieldNom.getText();
+           String prenom = jTextFieldPrenom.getText();
+           String date = jTextFieldDateEntree.getText();
+           Personnel p = new Personnel(nom, prenom, date);
+           int id = Entreprise.addPersonnel(p);
+           System.out.println(Entreprise.afficherPersonnel());
+           /*-------- Ajout au Jtable ----------*/
+           String line = id+";"+nom+";"+prenom+";"+date;
+            String[] laLigne = line.split(";");
+           ((DefaultTableModel) this.jtB.getModel()).addRow(laLigne);
+        }
+    }
+    
+    public boolean valide(){
+        int ok = 0;
+        //Test du nom
+        if(jTextFieldNom.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Veuillez renseigner le nom du personnel");
+            return false;
+        }
+        else ok++;
+        //Test du prenom
+        if(jTextFieldPrenom.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Veuillez renseigner le prenom du personnel"); 
+            return false;
+        }
+        else ok++;
+        //Test de la date
+        if(jTextFieldDateEntree.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Veuillez renseigner la date d'entrée du personnel"); 
+            return false;
+        }
+        else ok++;
+        //Tout les tests passent
+        return ok==3;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
