@@ -56,6 +56,8 @@ public class Menu2 extends javax.swing.JFrame {
         remplirTableauCompetences();
         
         jBtnModifier.setEnabled(false);
+        //Empecher la modification 
+        jTableDuPersonnel.setDefaultEditor(Object.class, null);
         
         /* ----- Mise à jour des CSV à la fermeture de l'application -------- */
         Runtime.getRuntime().addShutdownHook(new Thread()
@@ -328,14 +330,14 @@ public class Menu2 extends javax.swing.JFrame {
         HashMap<Integer, Personnel> lePersonnel = entC.getlistePersonnel();
         
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
-            
-            /*---- Si le personnel n'a aucune compétence ----*/
+           /*---- Si le personnel n'a aucune compétence ----*/
             String comp = null;
-            if(e.getValue().getListeCompetences().size() == 0){
-                comp = "Aucune compétence";
-            }else{
-                comp = ""+e.getValue().getListeCompetences().size();
+            if(e.getValue().getListeCompetences().isEmpty()){
+                comp = "0";
             }
+            else{
+                comp = ""+e.getValue().getListeCompetences().size();
+                }
             
             String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+"ⓘ "+comp;
             String[] laLigne = line.split(";");

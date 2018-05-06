@@ -54,9 +54,11 @@ public class ExportCSV implements ExportInterface{
         
         //Personnel\\
         for(Map.Entry e : listePersonnel.entrySet()){
+
             Personnel p = (Personnel)e.getValue();
+            System.out.println(p);
             stringPerso += p.getNom()+";"+p.getPrenom()+";"+Personnel.formatDate.format(p.getDateNaissCalendar().getTime())+";"+e.getKey()+"\n";
-            
+
             String competenceConcat = "";
             Iterator it = p.getListeCompetences().iterator();
             if(it.hasNext()){
@@ -64,10 +66,10 @@ public class ExportCSV implements ExportInterface{
                 while(it.hasNext()){
                     competenceConcat += ";"+it.next();
                 }
-                competenceConcat += "\n";
             }
-            
-            stringCompetencesPerso += (Integer)e.getKey()+";"+competenceConcat;
+
+            stringCompetencesPerso += (Integer)e.getKey()+";"+competenceConcat+"\n";
+
         }
         
         //Missions\\
