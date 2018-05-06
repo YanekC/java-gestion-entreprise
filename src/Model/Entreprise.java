@@ -146,6 +146,9 @@ public class Entreprise {
     }
 
     public static HashMap<Integer, Mission> getMissions() {
+        for(Map.Entry m : missions.entrySet()){
+            ((Mission)m.getValue()).updateEtat();
+        }
         return missions;
     }
     
