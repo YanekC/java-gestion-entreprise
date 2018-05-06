@@ -3,9 +3,12 @@ package Vue.Personnel;
 import Model.Competence;
 import Model.Entreprise;
 import Model.Personnel;
+import static Model.Personnel.formatDate;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.DefaultListModel;
@@ -255,7 +258,10 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     private void jBtnEnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnregistrerActionPerformed
         //On est en modification
         if(jBtnEnregistrer.getText()=="Enregistrer"){
-            modifier();
+            try{
+               modifier(); 
+            }catch(Exception e){System.err.println(e.getMessage());}
+            
         }
         //On est en ajout
         if(jBtnEnregistrer.getText()=="Ajouter"){
@@ -275,6 +281,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             p.supprimerCompetence(id);
             //Upd both List
             remplirListesCompetences(p);
+            jListCompetences.setSelectedIndex(0);
         }
     }//GEN-LAST:event_jButtonSupprimerCompetenceActionPerformed
 
@@ -438,19 +445,25 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jBtnDeletePers.setVisible(false);
     }
     
-    public int updateJtableCompetence(){
-       /* --- not working --- */
-         return 5;
+    public String updateJtableCompetence(){
+       /* --- ⓘ update col competence--- */
+         Personnel p = Entreprise.findPersonnelById(id);
+         int nbCompetence = p.getListeCompetences().size();
+         return "ⓘ "+nbCompetence;
     }
-    public void modifier(){
+    public void modifier() throws ParseException{
         if(valide()){
-            //Récupère les champs
+            //Récupère les champs nom et prénom
            String nom = jTextFieldNom.getText();
            String prenom = jTextFieldPrenom.getText();
+           //Récupère la date
+           Calendar dateNaissance = Calendar.getInstance();
+           dateNaissance.setTime(formatDate.parse(jTextFieldDateEntree.getText()));
            String date = jTextFieldDateEntree.getText();
-           //Créer le personnel temporaire pour le modifier
-           Personnel p = new Personnel(nom, prenom, date);
-           Entreprise.modifierPersonnel(p, this.id);
+           
+           
+           //upd the personnel with corresponding value
+           Entreprise.updBasicValuePersonnel(this.id, nom, prenom, dateNaissance);
            //System.out.println(Entreprise.afficherPersonnel()); 
            
            /* ------ Update du Jtable ------*/
@@ -458,7 +471,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
            this.jtB.setValueAt(prenom, this.rInd, this.cInd+1);
            this.jtB.setValueAt(date, this.rInd, this.cInd+2);
            //update du Jtable pour le tooltip competence
-           int competence = updateJtableCompetence();
+           String competence = updateJtableCompetence();
            this.jtB.setValueAt(competence, this.rInd, this.cInd+3);
            dispose(); //ferme la fenêtre
         }
@@ -524,21 +537,30 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Veuillez renseigner le nom du personnel");
             return false;
         }
-        else ok++;
+        else{ok++;}
         //Test du prenom
         if(jTextFieldPrenom.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Veuillez renseigner le prenom du personnel"); 
             return false;
         }
-        else ok++;
+        else{ok++;}
         //Test de la date
         if(jTextFieldDateEntree.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Veuillez renseigner la date d'entrée du personnel"); 
             return false;
         }
-        else ok++;
+        else{ok++;}
+        try{
+            Calendar dateNaissance = Calendar.getInstance();
+            dateNaissance.setTime(formatDate.parse(jTextFieldDateEntree.getText()));
+            ok++;
+        }
+        catch(ParseException e){
+            JOptionPane.showMessageDialog(null, "La date n'est pas au format dd/MM/yyyy"); 
+            e.printStackTrace();
+        }
         //Tout les tests passent
-        return ok==3;
+        return ok==4;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

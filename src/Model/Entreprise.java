@@ -6,6 +6,7 @@ import Util.ImportCSV;
 import Util.ImportInterface;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -105,9 +106,13 @@ public class Entreprise {
         personnels.remove(id, p);
     }
     
-    public static void modifierPersonnel (Personnel p, int id){
-         personnels.put(id, p);
+    public static void updBasicValuePersonnel (int id, String nom, String prenom, Calendar dateNaiss){
+        HashMap<Integer, Personnel> personnelsUPD = personnels;
+        personnelsUPD.get(id).setNom(nom);
+        personnelsUPD.get(id).setPrenom(prenom);
+        personnelsUPD.get(id).setDateNaiss(dateNaiss);
     }
+    
     
     
     public static int getLastId(){
