@@ -9,6 +9,7 @@ import Model.Personnel;
 import java.io.File;
 import java.util.ArrayList;
 import Model.Competence;
+import Model.Mission;
 
 import java.util.HashMap;
 
@@ -27,6 +28,7 @@ public interface ImportInterface {
      * @param listePersonnels L'arraylist regroupant le personnel dans l'appli
      * @param listeCompetences L'arrayList regroupant les competences de l'appli
      */
-    void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, 
-            HashMap<Integer, Personnel> listePersonnels, HashMap<String, Competence> listeCompetences) throws Exception;    
+    void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, File fMission, File fCompetenceMission, File fPersonnelMission,
+            HashMap<Integer, Personnel> listePersonnels, HashMap<String, Competence> listeCompetences,
+            HashMap<Integer, Mission> listeMission) throws Exception;    
 }

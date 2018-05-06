@@ -5,9 +5,13 @@
  */
 package Model;
 
+import static Model.Personnel.formatDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 import java.util.regex.*;
 
 //@TODO Ajouter des constante pour l'état
@@ -17,6 +21,10 @@ import java.util.regex.*;
  * @author guilhem
  */
 public class Mission {
+    
+    public static SimpleDateFormat formatDate = new SimpleDateFormat( "dd/MM/yyyy" );
+    
+    private String nom;
     private Calendar dateDebut;
     private Calendar dateFinEstime;
     private Calendar dateFinReel;
@@ -29,29 +37,48 @@ public class Mission {
     public final int ETAT_EN_COURS = 1;
     public final int ETAT_TERMINE = 2;
 
-    public Mission(Date dateDebut, Date dateFinEstime, Date dateFinReel, int etat, ArrayList<Competence> listeCompetences, ArrayList<Personnel> listePersonnels, int nbPersMin) {
+    public Mission(String nom, String dateDebut, String dateFinEstime, String dateFinReel, int nbPersMin) {
+        
+        this.nom = nom;
         
         this.dateDebut = Calendar.getInstance();
-        this.dateDebut.setTime(dateDebut);
         this.dateFinEstime = Calendar.getInstance();
-        this.dateFinEstime.setTime(dateFinEstime);
         this.dateFinReel = Calendar.getInstance();
-        this.dateFinReel.setTime(dateFinReel);
         
-        this.etat = etat;
-        this.listeCompetences = null;
-        this.listePersonnels = null;
+        try{
+            this.dateDebut.setTime(formatDate.parse(dateDebut));
+            this.dateFinEstime.setTime(formatDate.parse(dateFinEstime));
+            this.dateFinReel.setTime(formatDate.parse(dateFinReel));
+        }
+        catch(ParseException e){
+            e.printStackTrace();
+        }
+        
+        this.listeCompetences = new ArrayList<>();
+        this.listePersonnels = new ArrayList<>();
         this.nbPersMin = nbPersMin;
+        this.updateEtat();
     }
     
+    @Override
     public String toString(){
         String etat = getEtatString();
         
-        return "Date de debut : "+this.dateDebut+
-                "\nDate de fin estimée : "+this.dateFinEstime+
+        String lcomp = "";
+        String lmis = "";
+        
+        for(String c : listeCompetences){
+            lcomp += c+",";
+        }
+        for(String p : listePersonnels){
+            lmis += p+",";
+        }
+        
+        return "Date de debut : "+formatDate.format(this.dateDebut.getTime())+
+                "\nDate de fin estimée : "+formatDate.format(this.dateFinEstime.getTime())+
                 "\nEtat : "+etat+
-                "\nCompetences requises : "+
-                "\nPersonnels participants : "+
+                "\nCompetences requises : "+lmis+
+                "\nPersonnels participants : "+lcomp+
                 "\nNombre de personnes requises : "+this.nbPersMin;
     }
     
@@ -117,11 +144,53 @@ public class Mission {
         }
     }
     
-    public ArrayList<String> getListePersonnel() {
+    /**
+     * 
+     * @return la liste des ids des personnels
+     */
+    public ArrayList<String> getListePersonnels() {
         ArrayList<String> ret = new ArrayList<>();
         for(String s : listePersonnels){
             ret.add(s);
         }
         return ret;
     }
+    
+    public void updateEtat(){
+        Calendar today = Calendar.getInstance();
+        //On demarre la mission que si il y a assez de personnel
+        if(dateDebut.before(today) && listePersonnels.size() >= nbPersMin){
+            this.etat = ETAT_EN_COURS;
+            if(this.dateFinReel.before(today)){
+                this.etat = ETAT_TERMINE;
+            }
+        }
+        else{
+            this.etat = ETAT_PLANIFIE;
+        }
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getDateDebutString() {
+        return formatDate.format(dateDebut.getTime());
+    }
+
+    public String getDateFinEstimeString() {
+        return formatDate.format(dateFinEstime.getTime());
+    }
+
+    public String getDateFinReelString() {
+        return formatDate.format(dateFinReel.getTime());
+    }
+
+    public int getNbPersMin() {
+        return nbPersMin;
+    }
+    
+    
+    
+    
 }

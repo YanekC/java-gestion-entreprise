@@ -43,12 +43,15 @@ public class Menu2 extends javax.swing.JFrame {
         File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
         File fCompetences = new File("resources\\csv\\liste_competences.csv");
         File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
+        File fMission = new File("resources\\csv\\liste_missions.csv");
+        File fCompetenceMission = new File("resources\\csv\\competence_mission.csv");
+        File fPersonnelMission = new File("resources\\csv\\personnel_mission.csv");
         
         initComponents();
         this.setLocationRelativeTo(null); // positionner la fenetre au centre de l'écran
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
         // dans le but de faire évoluer l'application
-        Entreprise.chargerFichiers(fPersonnels, fCompetences, fCompetencesPerso);
+        Entreprise.chargerFichiers(fPersonnels, fCompetences, fCompetencesPerso, fMission, fCompetenceMission, fPersonnelMission);
         remplirTableauPersonnel();
         remplirTableauCompetences();
         
@@ -60,7 +63,13 @@ public class Menu2 extends javax.swing.JFrame {
             @Override
             public void run()
             {
-                
+                File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
+                File fCompetences = new File("resources\\csv\\liste_competences.csv");
+                File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
+                File fMission = new File("resources\\csv\\liste_missions.csv");
+                File fCompetenceMission = new File("resources\\csv\\competence_mission.csv");
+                File fPersonnelMission = new File("resources\\csv\\personnel_mission.csv");
+                Entreprise.sauverFichiers(fPersonnels, fCompetences, fCompetencesPerso, fMission, fCompetenceMission, fPersonnelMission);
             }
         });
     }
@@ -183,18 +192,6 @@ public class Menu2 extends javax.swing.JFrame {
         );
 
         jTabbedPane.addTab("Gestion des compétences", jPanelCompetence);
-
-        javax.swing.GroupLayout jPanelMissionLayout = new javax.swing.GroupLayout(jPanelMission);
-        jPanelMission.setLayout(jPanelMissionLayout);
-        jPanelMissionLayout.setHorizontalGroup(
-            jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 789, Short.MAX_VALUE)
-        );
-        jPanelMissionLayout.setVerticalGroup(
-            jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 529, Short.MAX_VALUE)
-        );
-
         jTabbedPane.addTab("Gestion des missions", jPanelMission);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
