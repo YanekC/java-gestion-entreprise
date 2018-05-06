@@ -91,11 +91,11 @@ public class Menu2 extends javax.swing.JFrame {
         jTableDuPersonnel = new javax.swing.JTable();
         jButtonAjouterPersonne = new javax.swing.JButton();
         jBtnModifier = new javax.swing.JButton();
+        jPanelMission = new javax.swing.JPanel();
         jPanelCompetence = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCompetences = new javax.swing.JTable();
         jButtonAjouterCompetence = new javax.swing.JButton();
-        jPanelMission = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,6 +158,7 @@ public class Menu2 extends javax.swing.JFrame {
         );
 
         jTabbedPane.addTab("Gestion du personel", jPanelPersonnel);
+        jTabbedPane.addTab("Gestion des missions", jPanelMission);
 
         DefaultTableModel model2 = new DefaultTableModel();
         model2.addColumn("ID");
@@ -194,7 +195,6 @@ public class Menu2 extends javax.swing.JFrame {
         );
 
         jTabbedPane.addTab("Gestion des compétences", jPanelCompetence);
-        jTabbedPane.addTab("Gestion des missions", jPanelMission);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
