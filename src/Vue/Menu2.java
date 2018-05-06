@@ -161,10 +161,8 @@ public class Menu2 extends javax.swing.JFrame {
         jTabbedPane.addTab("Gestion des missions", jPanelMission);
 
         DefaultTableModel model2 = new DefaultTableModel();
-        model2.addColumn("ID");
         model2.addColumn("Dénomination anglaise");
         model2.addColumn("Dénomination française");
-        model2.addColumn("Actions");
         jTableCompetences.setModel(model2);
         jScrollPane2.setViewportView(jTableCompetences);
 
@@ -362,7 +360,7 @@ public class Menu2 extends javax.swing.JFrame {
         
         for(Map.Entry c : lesCompetences.entrySet()){
             Competence cpt = (Competence)c.getValue();
-            String line = c.getKey()+";"+cpt.getLibelleAng()+";"+cpt.getLibelleFra();
+            String line = cpt.getLibelleAng()+";"+cpt.getLibelleFra();
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableCompetences.getModel()).addRow(laLigne);
         }

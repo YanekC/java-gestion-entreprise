@@ -190,7 +190,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel model2 = new DefaultTableModel();&#xa;    model2.addColumn(&quot;ID&quot;);&#xa;    model2.addColumn(&quot;D&#xe9;nomination anglaise&quot;);&#xa;    model2.addColumn(&quot;D&#xe9;nomination fran&#xe7;aise&quot;);&#xa;    model2.addColumn(&quot;Actions&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel model2 = new DefaultTableModel();&#xa;    model2.addColumn(&quot;D&#xe9;nomination anglaise&quot;);&#xa;    model2.addColumn(&quot;D&#xe9;nomination fran&#xe7;aise&quot;);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
