@@ -319,6 +319,8 @@ public class Menu2 extends javax.swing.JFrame {
                     
                     if(jTableDuPersonnel.columnAtPoint(p) == jTableDuPersonnel.getColumnCount() -1){
                         jTableDuPersonnel.setToolTipText(value);
+                    }else{
+                        jTableDuPersonnel.setToolTipText(null);
                     }
                     
                 }
@@ -330,7 +332,19 @@ public class Menu2 extends javax.swing.JFrame {
 
         
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
-            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+e.getValue().getListeCompetences().size();
+            
+            
+            /*---- Pour avoir la première compétence de chaque personnel ----*/
+            String competences = null;
+            ArrayList<String> listeCompPerso = e.getValue().getListeCompetences();
+            
+            for(Map.Entry<String, Competence> laCompetence : Entreprise.getCompetences().entrySet()){
+                if(listeCompPerso.get(0).equals(laCompetence.getKey())){
+                    competences = laCompetence.getValue().getLibelleFra();
+                }
+            }
+            
+            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+"ⓘ "+competences;
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
             
