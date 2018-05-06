@@ -7,6 +7,7 @@ package Vue;
 
 import Model.Competence;
 import Model.Entreprise;
+import Model.Mission;
 import Model.Personnel;
 import Vue.Competences.AjouterCompetenceJFrame;
 import Vue.Missions.AjouterMissionJFrame;
@@ -95,7 +96,7 @@ public class Menu2 extends javax.swing.JFrame {
         jBtnModifier = new javax.swing.JButton();
         jPanelMission = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableMission = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanelCompetence = new javax.swing.JPanel();
@@ -172,8 +173,8 @@ public class Menu2 extends javax.swing.JFrame {
         modelMissions.addColumn("Nb de personnels associés");
         modelMissions.addColumn("Nb de personnels nécessaires");
         modelMissions.addColumn("Etat");
-        jTable1.setModel(modelMissions);
-        jScrollPane3.setViewportView(jTable1);
+        jTableMission.setModel(modelMissions);
+        jScrollPane3.setViewportView(jTableMission);
 
         jButton1.setText("Ajouter une mission");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -407,7 +408,14 @@ public class Menu2 extends javax.swing.JFrame {
         
     }
     
-    public void remplirTableauMissions(){
+    public void remplirTableauMissions() throws Exception {
+        
+        for(Map.Entry m : Entreprise.getMissions().entrySet()){
+            Mission miss = (Mission)m.getValue();
+            String[] line = {String.valueOf(m.getKey()), miss.getNom(), miss.getDateDebutString(), miss.getDateFinEstimeString(), miss.getDateFinReelString(), miss.getEtatString()};
+            ((DefaultTableModel) jTableMission.getModel()).addRow(line);
+        }
+        jTableMission.setAutoCreateRowSorter(true);
         
     }
     
@@ -477,8 +485,8 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTableCompetences;
     private javax.swing.JTable jTableDuPersonnel;
+    private javax.swing.JTable jTableMission;
     // End of variables declaration//GEN-END:variables
 }

@@ -144,6 +144,10 @@ public class Entreprise {
         }
         return idC;
     }
+
+    public static HashMap<Integer, Mission> getMissions() {
+        return missions;
+    }
     
     
 }

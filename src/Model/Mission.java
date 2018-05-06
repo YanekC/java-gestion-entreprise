@@ -159,7 +159,13 @@ public class Mission {
     public void updateEtat(){
         Calendar today = Calendar.getInstance();
         //On demarre la mission que si il y a assez de personnel
-        if(dateDebut.before(today) && listePersonnels.size() >= nbPersMin){
+        
+        System.out.println(formatDate.format(dateDebut.getTime()));
+        System.out.println(formatDate.format(today.getTime()));
+        System.out.println(formatDate.format(dateFinReel.getTime()));
+        
+        
+        if(dateDebut.before(today)){
             this.etat = ETAT_EN_COURS;
             if(this.dateFinReel.before(today)){
                 this.etat = ETAT_TERMINE;
