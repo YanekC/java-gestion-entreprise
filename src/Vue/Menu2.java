@@ -412,7 +412,7 @@ public class Menu2 extends javax.swing.JFrame {
         
         for(Map.Entry m : Entreprise.getMissions().entrySet()){
             Mission miss = (Mission)m.getValue();
-            String[] line = {String.valueOf(m.getKey()), miss.getNom(), miss.getDateDebutString(), miss.getDateFinEstimeString(), miss.getDateFinReelString(), miss.getEtatString()};
+            String[] line = {miss.getNom(), miss.getDateDebutString(), miss.getDateFinEstimeString(), miss.getDateFinReelString(), String.valueOf(miss.getNbPersMin()), miss.getEtatString()};
             ((DefaultTableModel) jTableMission.getModel()).addRow(line);
         }
         jTableMission.setAutoCreateRowSorter(true);
