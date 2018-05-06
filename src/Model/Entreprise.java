@@ -150,6 +150,9 @@ public class Entreprise {
         return missions;
     }
     
+    /*
+    * Retourne les personnels ayant le plus de competences en commun avec la mission
+    */
     public static ArrayList<Integer> getPersonnelSuggere(int idMission){
         
         ArrayList<Integer> ret = new ArrayList<>();
@@ -159,27 +162,37 @@ public class Entreprise {
         Mission m = missions.get(idMission);
         
         for(Map.Entry p : personnels.entrySet()){
-            Personnel personnel = (Personnel)p.getValue();
-            int nbMatchComp = 0;
-                        
-            for(String compMiss : m.getListeCompetences()){
-                for(String compPers : personnel.getListeCompetences()){
-                    
-                    if(compMiss.equals(compPers)){
-                        nbMatchComp++;
+            
+            //Si la personne n'a pas deja été attribué a la mission
+            if(!m.persoParticipe((Integer)p.getKey())){
+
+                Personnel personnel = (Personnel)p.getValue();
+                int nbMatchComp = 0;
+                
+                for(String compMiss : m.getListeCompetences()){
+                    for(String compPers : personnel.getListeCompetences()){
+
+                        if(compMiss.equals(compPers)){
+                            nbMatchComp++;
+                        }
                     }
                 }
+                tablePersonnelSugg.put((Integer)p.getKey(), nbMatchComp);
             }
-            tablePersonnelSugg.put((Integer)p.getKey(), nbMatchComp);
         }
         
         for(Map.Entry perso : sortByComparator(tablePersonnelSugg, false).entrySet()){
             ret.add((Integer)perso.getKey());
         }
+        
+        System.out.println(ret);
         return ret;
     }
     
     
+    
+    
+    //Tri d'une map
     private static Map<Integer, Integer> sortByComparator(Map<Integer, Integer> unsortMap, final boolean order)
     {
 

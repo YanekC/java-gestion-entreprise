@@ -195,7 +195,16 @@ public class Mission {
         return nbPersMin;
     }
     
-    
+    public boolean persoParticipe(Integer idPers){
+        boolean ret = false;
+        for(String p : listePersonnels){
+            if(Integer.parseInt(p) == idPers){
+                ret = true;
+                break;
+            }
+        }
+        return ret;
+    }
     
     
 }
