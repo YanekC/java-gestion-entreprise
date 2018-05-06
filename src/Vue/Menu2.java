@@ -327,7 +327,7 @@ public class Menu2 extends javax.swing.JFrame {
     
     public void remplirTableauPersonnel() throws Exception{
         HashMap<Integer, Personnel> lePersonnel = entC.getlistePersonnel();
-        System.out.println(entC.getlistePersonnel());
+
         
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
             String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+e.getValue().getListeCompetences().size();

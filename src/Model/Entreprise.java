@@ -101,6 +101,10 @@ public class Entreprise {
          
     }
     
+    public static void removePersonnel (Personnel p, int id) {
+        personnels.remove(id, p);
+    }
+    
     public static void modifierPersonnel (Personnel p, int id){
          personnels.put(id, p);
     }

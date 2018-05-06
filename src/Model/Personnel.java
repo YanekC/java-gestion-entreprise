@@ -23,7 +23,6 @@ public class Personnel {
      * @param nom Le nom du personnel
      * @param prenom Le prenom du personnel
      * @param dateNaiss La date de naissance du personnel
-     * @param id Identitfiant du personnel
      */
     public Personnel(String nom, String prenom, String dateNaiss){
         this.nom = nom;

@@ -47,8 +47,8 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jBtnEnregistrer = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jBtnCancel = new javax.swing.JButton();
+        jBtnDeletePers = new javax.swing.JButton();
         jPanelInfosPersonnel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldNom = new javax.swing.JTextField();
@@ -56,14 +56,14 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jTextFieldPrenom = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldDateEntree = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        jPanelCompetence = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListCompetences = new javax.swing.JList<>();
         jButtonSupprimerCompetence = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListAjouterCompetence = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        jBtnAddCompetence = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,9 +74,19 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Annuler");
+        jBtnCancel.setText("Annuler");
+        jBtnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnCancelActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Supprimer la personne");
+        jBtnDeletePers.setText("Supprimer la personne");
+        jBtnDeletePers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnDeletePersActionPerformed(evt);
+            }
+        });
 
         jPanelInfosPersonnel.setBorder(javax.swing.BorderFactory.createTitledBorder("Informations générales"));
 
@@ -135,13 +145,8 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
                         .addContainerGap(22, Short.MAX_VALUE))))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Compétences"));
+        jPanelCompetence.setBorder(javax.swing.BorderFactory.createTitledBorder("Compétences"));
 
-        jListCompetences.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jListCompetences);
 
         jButtonSupprimerCompetence.setText("Supprimer");
@@ -153,51 +158,46 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Ajouter une compétence :");
 
-        jListAjouterCompetence.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(jListAjouterCompetence);
 
-        jButton1.setText("Ajouter");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBtnAddCompetence.setText("Ajouter");
+        jBtnAddCompetence.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBtnAddCompetenceActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelCompetenceLayout = new javax.swing.GroupLayout(jPanelCompetence);
+        jPanelCompetence.setLayout(jPanelCompetenceLayout);
+        jPanelCompetenceLayout.setHorizontalGroup(
+            jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCompetenceLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelCompetenceLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonSupprimerCompetence))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelCompetenceLayout.createSequentialGroup()
+                        .addGroup(jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnAddCompetence, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanelCompetenceLayout.setVerticalGroup(
+            jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCompetenceLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonSupprimerCompetence)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jBtnAddCompetence)
+                    .addGroup(jPanelCompetenceLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -210,16 +210,16 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnDeletePers, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtnEnregistrer)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelCompetence, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelInfosPersonnel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
@@ -229,12 +229,12 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jPanelInfosPersonnel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelCompetence, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnEnregistrer)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jBtnCancel)
+                    .addComponent(jBtnDeletePers, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -261,9 +261,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         if(jBtnEnregistrer.getText()=="Ajouter"){
             ajouter();
         }
-       
-        
-        dispose(); //ferme la fenêtre
+      
     }//GEN-LAST:event_jBtnEnregistrerActionPerformed
     
 
@@ -280,7 +278,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSupprimerCompetenceActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBtnAddCompetenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddCompetenceActionPerformed
          if(!jListAjouterCompetence.isSelectionEmpty()){
             //Get the actual person
             Personnel p = Entreprise.findPersonnelById(id);
@@ -291,7 +289,46 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             remplirListesCompetences(p);
             jListAjouterCompetence.setSelectedIndex(0);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBtnAddCompetenceActionPerformed
+
+    private void jBtnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelActionPerformed
+        dispose(); //ferme la fenêtre
+    }//GEN-LAST:event_jBtnCancelActionPerformed
+
+    private void jBtnDeletePersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDeletePersActionPerformed
+        //Get the actual person
+        try{
+        Personnel p = Entreprise.findPersonnelById(id);
+        Entreprise.removePersonnel(p, id);
+        int rowToDel = this.jtB.convertRowIndexToModel(rInd);
+        ((DefaultTableModel)this.jtB.getModel()).removeRow(rowToDel);
+        }catch(Exception e){System.out.println(e.getMessage());}
+        jtB.setColumnSelectionInterval(0,0);
+        jtB.setRowSelectionInterval(0,0);
+        dispose();
+    }//GEN-LAST:event_jBtnDeletePersActionPerformed
+    
+    public void remplirCompetenceEmpty(){
+       /*--- Fill Empty Competences ---- */
+       //Define the two model
+       DefaultListModel emptyCompetences = new DefaultListModel();
+       DefaultListModel fullCompetences = new DefaultListModel();
+       //Define the two hashMap
+       HashMap<String, Competence> emptySkill = new HashMap();
+       HashMap<String, Competence> fullSkill = Entreprise.getCompetences();
+       //Fill the map with skill
+       for(Map.Entry<String, Competence> competence : fullSkill.entrySet()) {
+            try{
+                    String libFra = competence.getValue().getLibelleFra();
+                    //Set the hasmap with the competence
+                    fullCompetences.addElement(libFra);  
+            }catch(Exception e){System.out.println(e.getMessage());}
+            
+        }
+       jListCompetences.setModel(emptyCompetences);
+       jListAjouterCompetence.setModel(fullCompetences);
+    }
+    
 
     public void remplirFormPersonnel(int id, JTable jtB, int rI, int cI){
         this.jtB = jtB;
@@ -299,6 +336,8 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         this.cInd=cI;
         if(id==-1){
             setLabel(); //Définir les valeurs vides
+            remplirCompetenceEmpty();
+            jPanelCompetence.setVisible(false);
         }
         else{
             //On modifie !
@@ -383,7 +422,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     public void remplirListesCompetences(Personnel p){
         /* --- Remplir compétences du personnel --- */
         HashMap<String, Competence> personnalCompetence = remplirMesCompetences(p);
-        System.out.println(personnalCompetence);
+        //System.out.println(personnalCompetence);
         /* --- Remplir les compétences non acquise avec les compétences du personnel--- */
         remplirListesCompetencesNonAcquise(personnalCompetence);
         
@@ -396,36 +435,86 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jTextFieldNom.setText("");
         jTextFieldPrenom.setText("");
         jTextFieldDateEntree.setText("");
+        jBtnDeletePers.setVisible(false);
     }
     
+    public int updateJtableCompetence(){
+       /* --- not working --- */
+         return 5;
+    }
     public void modifier(){
         if(valide()){
+            //Récupère les champs
            String nom = jTextFieldNom.getText();
            String prenom = jTextFieldPrenom.getText();
            String date = jTextFieldDateEntree.getText();
+           //Créer le personnel temporaire pour le modifier
            Personnel p = new Personnel(nom, prenom, date);
            Entreprise.modifierPersonnel(p, this.id);
-           System.out.println(Entreprise.afficherPersonnel()); 
+           //System.out.println(Entreprise.afficherPersonnel()); 
+           
            /* ------ Update du Jtable ------*/
            this.jtB.setValueAt(nom, this.rInd, this.cInd);
            this.jtB.setValueAt(prenom, this.rInd, this.cInd+1);
            this.jtB.setValueAt(date, this.rInd, this.cInd+2);
+           //update du Jtable pour le tooltip competence
+           int competence = updateJtableCompetence();
+           this.jtB.setValueAt(competence, this.rInd, this.cInd+3);
+           dispose(); //ferme la fenêtre
         }
     }
     
+    public int getRowById(JTable model, int jtId) {
+        
+        int found = 0;
+        int idToFound = -1;
+
+        for (int i = model.getRowCount() - 1; i >= 0; --i) {
+            try{
+                Object colIdValue = model.getModel().getValueAt(jtB.convertRowIndexToModel(i), 0);
+                 
+                   //parse object to string then int
+                   String stringId = (String) colIdValue;
+                    idToFound = Integer.parseInt(stringId);
+                    //System.out.println("idToFind"+idToFound);
+            }catch(Exception e){} 
+                if (idToFound == jtId) {
+                    found = i;
+                    //System.out.println("fund"+found);
+                    break;
+                }
+           
+        }
+        return found;
+    }
+    
     public void ajouter(){
+        /* ---- Valide alors je l'ajoute ---- */
         if(valide()){
            String nom = jTextFieldNom.getText();
            String prenom = jTextFieldPrenom.getText();
            String date = jTextFieldDateEntree.getText();
            Personnel p = new Personnel(nom, prenom, date);
-           int id = Entreprise.addPersonnel(p);
-           System.out.println(Entreprise.afficherPersonnel());
+           int idP = Entreprise.addPersonnel(p);
+
            /*-------- Ajout au Jtable ----------*/
-           String line = id+";"+nom+";"+prenom+";"+date;
+           String line = idP+";"+nom+";"+prenom+";"+date;
             String[] laLigne = line.split(";");
            ((DefaultTableModel) this.jtB.getModel()).addRow(laLigne);
-        }
+           // Focus sur la row pour la ré-ouvrir
+           int rowTofocus = getRowById(jtB, idP);
+           jtB.setColumnSelectionInterval(0,0);
+           jtB.setRowSelectionInterval(0,0);
+           jtB.changeSelection(rowTofocus, ICONIFIED, rootPaneCheckingEnabled, rootPaneCheckingEnabled);
+            
+           /* ---- Reload la frame pour passer en mode modifier et ajouter les compétences --- */
+            //Load Frame with selected ID
+            AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame();
+            apf.setVisible(true);
+            /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+            apf.remplirFormPersonnel(idP, jtB,jtB.getSelectedRow(), 0);   
+            dispose(); //ferme la fenêtre
+            }
     }
     
     public boolean valide(){
@@ -453,10 +542,10 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnAddCompetence;
+    private javax.swing.JButton jBtnCancel;
+    private javax.swing.JButton jBtnDeletePers;
     private javax.swing.JButton jBtnEnregistrer;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonSupprimerCompetence;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -465,7 +554,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     private javax.swing.JList<String> jListAjouterCompetence;
     private javax.swing.JList<String> jListCompetences;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelCompetence;
     private javax.swing.JPanel jPanelInfosPersonnel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
