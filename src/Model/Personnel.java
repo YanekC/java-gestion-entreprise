@@ -74,6 +74,20 @@ public class Personnel {
     public ArrayList<String> getListeCompetences() {
         return listeCompetences;
     }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public void setDateNaiss(Calendar dateNaiss) {
+        this.dateNaiss = dateNaiss;
+    }
+    
+    
     
     
 }

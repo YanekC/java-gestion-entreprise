@@ -220,6 +220,7 @@ public class Menu2 extends javax.swing.JFrame {
         int colIndex = 0;
         /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
         ajoutP.remplirFormPersonnel(-1, jTableDuPersonnel, rowIndex, colIndex);
+        jBtnModifier.setEnabled(true);
     }//GEN-LAST:event_jButtonAjouterPersonneActionPerformed
 
     private void jButtonAjouterCompetenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterCompetenceActionPerformed
