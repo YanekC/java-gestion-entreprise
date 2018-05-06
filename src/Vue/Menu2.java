@@ -143,7 +143,7 @@ public class Menu2 extends javax.swing.JFrame {
                 .addGroup(jPanelPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAjouterPersonne)
                     .addComponent(jBtnModifier))
-                .addGap(0, 2, Short.MAX_VALUE))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Gestion du personel", jPanelPersonnel);
@@ -179,7 +179,7 @@ public class Menu2 extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonAjouterCompetence)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Gestion des compétences", jPanelCompetence);
@@ -192,7 +192,7 @@ public class Menu2 extends javax.swing.JFrame {
         );
         jPanelMissionLayout.setVerticalGroup(
             jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 524, Short.MAX_VALUE)
+            .addGap(0, 529, Short.MAX_VALUE)
         );
 
         jTabbedPane.addTab("Gestion des missions", jPanelMission);
@@ -329,10 +329,18 @@ public class Menu2 extends javax.swing.JFrame {
     
     public void remplirTableauPersonnel() throws Exception{
         HashMap<Integer, Personnel> lePersonnel = entC.getlistePersonnel();
-
         
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
-            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+"ⓘ "+e.getValue().getListeCompetences().size();
+            
+            /*---- Si le personnel n'a aucune compétence ----*/
+            String comp = null;
+            if(e.getValue().getListeCompetences().size() == 0){
+                comp = "aucune compétence";
+            }else{
+                comp = ""+e.getValue().getListeCompetences().size();
+            }
+            
+            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+"ⓘ "+comp;
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
             
