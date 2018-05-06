@@ -302,7 +302,7 @@ public class Menu2 extends javax.swing.JFrame {
                     
                     HashMap<String, Competence> listeCompetences = Entreprise.getCompetences();
                     
-                    Personnel lePerso = Entreprise.findPersonnelById(Integer.valueOf(id));
+                    Personnel lePerso = Entreprise.findPersonnelById(id);
                     ArrayList<String> listeComp = lePerso.getListeCompetences();
                     
                     String value ="<html>"; //obligé de mettre des balises html pour le saut à la ligne du tooltip
@@ -332,19 +332,7 @@ public class Menu2 extends javax.swing.JFrame {
 
         
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
-            
-            
-            /*---- Pour avoir la première compétence de chaque personnel ----*/
-            String competences = null;
-            ArrayList<String> listeCompPerso = e.getValue().getListeCompetences();
-            
-            for(Map.Entry<String, Competence> laCompetence : Entreprise.getCompetences().entrySet()){
-                if(listeCompPerso.get(0).equals(laCompetence.getKey())){
-                    competences = laCompetence.getValue().getLibelleFra();
-                }
-            }
-            
-            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+"ⓘ "+competences;
+            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+"ⓘ "+e.getValue().getListeCompetences().size();
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
             
