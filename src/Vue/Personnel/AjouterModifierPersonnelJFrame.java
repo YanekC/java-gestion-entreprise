@@ -5,10 +5,12 @@ import Model.Entreprise;
 import Model.Personnel;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -143,6 +145,11 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jListCompetences);
 
         jButtonSupprimerCompetence.setText("Supprimer");
+        jButtonSupprimerCompetence.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSupprimerCompetenceActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Ajouter une compétence :");
 
@@ -154,6 +161,11 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jListAjouterCompetence);
 
         jButton1.setText("Ajouter");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -253,6 +265,33 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         
         dispose(); //ferme la fenêtre
     }//GEN-LAST:event_jBtnEnregistrerActionPerformed
+    
+
+    private void jButtonSupprimerCompetenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerCompetenceActionPerformed
+        if(!jListCompetences.isSelectionEmpty()){
+            //Get the actual person
+            Personnel p = Entreprise.findPersonnelById(id);
+            //Switch to ID to upd
+            String id = Entreprise.getIdCompetenceByFrName(jListCompetences.getSelectedValue());
+            //System.out.println("ID :"+id);
+            p.supprimerCompetence(id);
+            //Upd both List
+            remplirListesCompetences(p);
+        }
+    }//GEN-LAST:event_jButtonSupprimerCompetenceActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         if(!jListAjouterCompetence.isSelectionEmpty()){
+            //Get the actual person
+            Personnel p = Entreprise.findPersonnelById(id);
+            //Switch to ID to upd
+            String id = Entreprise.getIdCompetenceByFrName(jListAjouterCompetence.getSelectedValue());
+            p.ajouterCompetence(id);
+            //Upd both List
+            remplirListesCompetences(p);
+            jListAjouterCompetence.setSelectedIndex(0);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void remplirFormPersonnel(int id, JTable jtB, int rI, int cI){
         this.jtB = jtB;
@@ -273,30 +312,81 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
            jTextFieldPrenom.setText(p.getPrenom());
            jTextFieldDateEntree.setText(p.getDateNaissString()); 
            this.id = id; //Stock l'id pour la modification
-           remplirListeCompentences(p);
+           remplirListesCompetences(p);
            
         }
     }
     
-    public void remplirListeCompentences(Personnel p){
-        /*---- Remplir la liste des compétences et et la liste des compétences à ajouter ----*/
+    public HashMap remplirMesCompetences(Personnel p){
+        /*---- Fill known skill ------*/
+        //Define model
+        DefaultListModel modelListeCompetence = new DefaultListModel();
+        //Get skill from Enterprise in Hashmap
+        HashMap<String, Competence> competences = Entreprise.getPersonnelCompetence(p);
+        //Loop the hashmap lulz
+        try{
+            
         
-        DefaultListModel model = new DefaultListModel();
-        DefaultListModel model2 = new DefaultListModel();
-        HashMap<String, Competence> listeCompetences = Entreprise.getCompetences();
-        
-        for(String comp : p.getListeCompetences()){ // parcour la liste des id des compétences de la personne
-            for(Map.Entry<String, Competence> laCompetence: listeCompetences.entrySet()){ // parcours toute la liste des compétences de l'entreprise
-                if(comp.equals(laCompetence.getKey())){ // si l'id de la compétence de la personne égale à un id de la liste de l'entreprise
-                    model.addElement(laCompetence.getValue().getLibelleFra()); // alors on ajoute le libellé français correspondant dans la jList
-                }else{ // sinon la compétence est présente dans la liste des compétences qui n'appartiennent pas au personnel
-                    model2.addElement(laCompetence.getValue().getLibelleFra());
-                }
-            }
+        for(Map.Entry<String, Competence> competence : competences.entrySet()) {
+            //Fr lib
+            String libFra = competence.getValue().getLibelleFra();
+            modelListeCompetence.addElement(libFra);
+            
         }
         
-        jListCompetences.setModel(model);
-        jListAjouterCompetence.setModel(model2);
+        }catch(Exception e){System.out.println(e.getMessage());}
+        //Set the model on the IHM
+        jListCompetences.setModel(modelListeCompetence);
+       
+        //System.out.println(competences);
+        return competences;
+    }
+    
+    public HashMap getUnknownCompetence(HashMap<String, Competence> knownCompetence){
+       /*--- Get unknown skill ---- */
+       //New Hashmap
+       HashMap<String, Competence> unknownSkill = new HashMap();
+       //Get all skill from enterprise
+       HashMap<String, Competence> competencesEnterprise = Entreprise.getCompetences();
+       //compare with skill of the personnal
+       for(Map.Entry<String, Competence> competence : competencesEnterprise.entrySet()) {
+            try{
+               if(!knownCompetence.containsKey(competence.getKey())){
+                   //Fr lib
+                    String libFra = competence.getValue().getLibelleFra();
+                    //Set the hasmap with the competence
+                    unknownSkill.put(competence.getKey(), competencesEnterprise.get(competence.getKey()));
+               }
+            }catch(Exception e){System.out.println(e.getMessage());}
+            
+        }
+       return unknownSkill;
+    }
+    
+    public void remplirListesCompetencesNonAcquise(HashMap<String, Competence> knownCompetence){
+        /*---- Fill unknown skill ------*/
+        //Define model
+        DefaultListModel modelAddCompetence = new DefaultListModel();
+        HashMap<String, Competence> unknownCompetences = getUnknownCompetence(knownCompetence);
+        for(Map.Entry<String, Competence> competence : unknownCompetences.entrySet()) {
+            try{
+                //Fr lib
+                String libFra = competence.getValue().getLibelleFra();
+                modelAddCompetence.addElement(libFra);
+            }catch(Exception e){System.out.println(e.getMessage());}
+            
+        }
+        //Set the model in the IHM
+        jListAjouterCompetence.setModel(modelAddCompetence);
+    }
+    
+    public void remplirListesCompetences(Personnel p){
+        /* --- Remplir compétences du personnel --- */
+        HashMap<String, Competence> personnalCompetence = remplirMesCompetences(p);
+        System.out.println(personnalCompetence);
+        /* --- Remplir les compétences non acquise avec les compétences du personnel--- */
+        remplirListesCompetencesNonAcquise(personnalCompetence);
+        
     }
     
     public void setLabel(){
@@ -315,7 +405,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
            String date = jTextFieldDateEntree.getText();
            Personnel p = new Personnel(nom, prenom, date);
            Entreprise.modifierPersonnel(p, this.id);
-           //System.out.println(Entreprise.afficherPersonnel()); 
+           System.out.println(Entreprise.afficherPersonnel()); 
            /* ------ Update du Jtable ------*/
            this.jtB.setValueAt(nom, this.rInd, this.cInd);
            this.jtB.setValueAt(prenom, this.rInd, this.cInd+1);

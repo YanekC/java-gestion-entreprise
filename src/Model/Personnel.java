@@ -45,6 +45,12 @@ public class Personnel {
         }
     }
     
+    public void supprimerCompetence(String c){
+        if(this.listeCompetences.contains(c)){
+            this.listeCompetences.remove(c);
+        }
+    }
+    
     @Override
     public String toString(){
         return nom+" "+prenom+" "+formatDate.format(dateNaiss.getTime());

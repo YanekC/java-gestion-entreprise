@@ -53,8 +53,18 @@ public class Menu2 extends javax.swing.JFrame {
         remplirTableauCompetences();
         
         jBtnModifier.setEnabled(false);
+        
+        /* ----- Mise à jour des CSV à la fermeture de l'application -------- */
+        Runtime.getRuntime().addShutdownHook(new Thread()
+        {
+            @Override
+            public void run()
+            {
+                
+            }
+        });
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -276,17 +286,9 @@ public class Menu2 extends javax.swing.JFrame {
     private void jTableDuPersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDuPersonnelMouseClicked
         jBtnModifier.setEnabled(true);
     }//GEN-LAST:event_jTableDuPersonnelMouseClicked
-
-    public void remplirTableauPersonnel() throws Exception{
-        HashMap<Integer, Personnel> lePersonnel = entC.getlistePersonnel();
-        System.out.println(entC.getlistePersonnel());
-        
-        for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
-            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+e.getValue().getListeCompetences().size();
-            String[] laLigne = line.split(";");
-            ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
-            
-            jTableDuPersonnel.addMouseMotionListener(new MouseMotionAdapter(){
+    
+    public void setToolTipCompetence(){
+         jTableDuPersonnel.addMouseMotionListener(new MouseMotionAdapter(){
                 @Override
                 public void mouseMoved(MouseEvent evt){
                     //mouse pointer
@@ -321,9 +323,25 @@ public class Menu2 extends javax.swing.JFrame {
                     
                 }
             });
+    }
+    
+    public void remplirTableauPersonnel() throws Exception{
+        HashMap<Integer, Personnel> lePersonnel = entC.getlistePersonnel();
+        System.out.println(entC.getlistePersonnel());
+        
+        for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
+            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+e.getValue().getListeCompetences().size();
+            String[] laLigne = line.split(";");
+            ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
+            
+            /* --- Ajouter le tool tip de compétence --- */
+            setToolTipCompetence();
+           
         }
         
+        
         jTableDuPersonnel.setAutoCreateRowSorter(true);
+        
          /* ---- Masquer column ID ---- */
         TableColumnModel tcm = jTableDuPersonnel.getColumnModel();
         tcm.removeColumn(tcm.getColumn(0));

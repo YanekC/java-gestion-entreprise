@@ -81,6 +81,19 @@ public class Entreprise {
         return competences;
     }
     
+    public static HashMap<String, Competence> getPersonnelCompetence(Personnel p){
+        HashMap<String, Competence> competenceAcquise = new HashMap();
+        // parcours la liste des id des compétences de la personne
+        for(String idCompetence : p.getListeCompetences()){
+            try{
+                if(competences.containsKey(idCompetence)){
+                    competenceAcquise.put(idCompetence,competences.get(idCompetence));
+                }
+            }catch(Exception e){System.out.println(e.getMessage());}
+        }
+        return competenceAcquise;
+    }
+    
     public static int addPersonnel(Personnel p) {
          int id = getLastId()+1;
          personnels.put(id, p);
@@ -99,6 +112,17 @@ public class Entreprise {
              id=(Integer) p.getKey();
         }
         return id;
+    }
+    
+    public static String getIdCompetenceByFrName(String nameFr){
+        String idC = "";
+        for(Map.Entry<String, Competence> c : competences.entrySet()){
+             if(nameFr.equals(c.getValue().getLibelleFra())){
+                idC = c.getKey();
+                break;
+             }
+        }
+        return idC;
     }
     
     
