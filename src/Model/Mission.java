@@ -18,7 +18,7 @@ import java.util.regex.*;
 
 /**
  *
- * @author guilhem
+ * @author guilhem, SanDeox
  */
 public class Mission {
     
@@ -36,6 +36,7 @@ public class Mission {
     public final int ETAT_PLANIFIE = 0;
     public final int ETAT_EN_COURS = 1;
     public final int ETAT_TERMINE = 2;
+    public final int ETAT_EN_PREPARATION = 3;
 
     public Mission(String nom, String dateDebut, String dateFinEstime, String dateFinReel, int nbPersMin) {
         
@@ -93,6 +94,9 @@ public class Mission {
                 break;
             case ETAT_TERMINE : 
                 etat = "Terminée";
+                break;
+            case ETAT_EN_PREPARATION : 
+                etat = "En préparation";
                 break;
         }
         return etat;
