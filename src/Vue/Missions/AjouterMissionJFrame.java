@@ -329,6 +329,11 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jButton5.setText("Supprimer la mission");
 
         jButton6.setText("Annuler");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Enregistrer");
 
@@ -412,6 +417,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     private void jButtonEndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEndActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonEndActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

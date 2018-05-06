@@ -61,6 +61,8 @@ public class Menu2 extends javax.swing.JFrame {
         jBtnModifier.setEnabled(false);
         //Empecher la modification 
         jTableDuPersonnel.setDefaultEditor(Object.class, null);
+        jTableCompetences.setDefaultEditor(Object.class, null);
+        jTableMission.setDefaultEditor(Object.class, null);
         
         /* ----- Mise à jour des CSV à la fermeture de l'application -------- */
         Runtime.getRuntime().addShutdownHook(new Thread()
@@ -102,7 +104,6 @@ public class Menu2 extends javax.swing.JFrame {
         jPanelCompetence = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCompetences = new javax.swing.JTable();
-        jButtonAjouterCompetence = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -216,30 +217,17 @@ public class Menu2 extends javax.swing.JFrame {
         jTableCompetences.setModel(model2);
         jScrollPane2.setViewportView(jTableCompetences);
 
-        jButtonAjouterCompetence.setText("Ajouter une compétence");
-        jButtonAjouterCompetence.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAjouterCompetenceActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanelCompetenceLayout = new javax.swing.GroupLayout(jPanelCompetence);
         jPanelCompetence.setLayout(jPanelCompetenceLayout);
         jPanelCompetenceLayout.setHorizontalGroup(
             jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCompetenceLayout.createSequentialGroup()
-                .addContainerGap(614, Short.MAX_VALUE)
-                .addComponent(jButtonAjouterCompetence)
-                .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
         );
         jPanelCompetenceLayout.setVerticalGroup(
             jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCompetenceLayout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAjouterCompetence)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 44, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Gestion des compétences", jPanelCompetence);
@@ -257,11 +245,6 @@ public class Menu2 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButtonAjouterCompetenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterCompetenceActionPerformed
-        AjouterCompetenceJFrame ajoutC = new AjouterCompetenceJFrame();
-        ajoutC.setVisible(true);
-    }//GEN-LAST:event_jButtonAjouterCompetenceActionPerformed
 
     private void jBtnModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModifierActionPerformed
         /*----- Modifier une personne sélectionné -----*/
@@ -476,7 +459,6 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JButton jBtnModifier;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButtonAjouterCompetence;
     private javax.swing.JButton jButtonAjouterPersonne;
     private javax.swing.JPanel jPanelCompetence;
     private javax.swing.JPanel jPanelMission;
