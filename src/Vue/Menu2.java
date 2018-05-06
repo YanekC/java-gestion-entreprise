@@ -59,6 +59,7 @@ public class Menu2 extends javax.swing.JFrame {
         remplirTableauCompetences();
         
         jBtnModifier.setEnabled(false);
+        jButtonModifierMissions.setEnabled(false);
         //Empecher la modification 
         jTableDuPersonnel.setDefaultEditor(Object.class, null);
         jTableCompetences.setDefaultEditor(Object.class, null);
@@ -100,7 +101,7 @@ public class Menu2 extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableMission = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonModifierMissions = new javax.swing.JButton();
         jPanelCompetence = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCompetences = new javax.swing.JTable();
@@ -175,6 +176,11 @@ public class Menu2 extends javax.swing.JFrame {
         modelMissions.addColumn("Personnel Néccessaire");
         modelMissions.addColumn("Etat");
         jTableMission.setModel(modelMissions);
+        jTableMission.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMissionMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableMission);
 
         jButton1.setText("Ajouter une mission");
@@ -184,10 +190,10 @@ public class Menu2 extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Modifier");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonModifierMissions.setText("Modifier");
+        jButtonModifierMissions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonModifierMissionsActionPerformed(evt);
             }
         });
 
@@ -198,7 +204,7 @@ public class Menu2 extends javax.swing.JFrame {
             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMissionLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(jButtonModifierMissions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18))
@@ -210,7 +216,7 @@ public class Menu2 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButtonModifierMissions))
                 .addContainerGap())
         );
 
@@ -286,7 +292,7 @@ public class Menu2 extends javax.swing.JFrame {
         ajoutM.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonModifierMissionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierMissionsActionPerformed
          /*----- Modifier une personne sélectionné -----*/
 
         //Get the id
@@ -296,7 +302,11 @@ public class Menu2 extends javax.swing.JFrame {
         apf.setVisible(true);
         /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
         apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonModifierMissionsActionPerformed
+
+    private void jTableMissionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMissionMouseClicked
+        jButtonModifierMissions.setEnabled(true);
+    }//GEN-LAST:event_jTableMissionMouseClicked
     
     private int getColZeroValueHover(int row, int col){
         //get row pointed of pointer
@@ -319,8 +329,6 @@ public class Menu2 extends javax.swing.JFrame {
         }    
         return id;
     }
-    
-    
     
     private int getColZeroValueSelectedMission(){
         //Get the column 0 (here ID) from the model whenever it's sort or not (due to issue on sort)
@@ -499,8 +507,8 @@ public class Menu2 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnModifier;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAjouterPersonne;
+    private javax.swing.JButton jButtonModifierMissions;
     private javax.swing.JPanel jPanelCompetence;
     private javax.swing.JPanel jPanelMission;
     private javax.swing.JPanel jPanelPersonnel;
