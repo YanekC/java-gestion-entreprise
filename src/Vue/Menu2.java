@@ -301,20 +301,19 @@ public class Menu2 extends javax.swing.JFrame {
                     //get current id hover
                     int id = getColZeroValueHover(rowIndex, colIndex);
                     
-                    HashMap<String, Competence> listeCompetences = Entreprise.getCompetences();
-                    
+                    //Get the personnel
                     Personnel lePerso = Entreprise.findPersonnelById(id);
-                    ArrayList<String> listeComp = lePerso.getListeCompetences();
+                    //Get competence of this personnel
+                    HashMap<String, Competence> competences = Entreprise.getPersonnelCompetence(lePerso);
                     
                     String value ="<html>"; //obligé de mettre des balises html pour le saut à la ligne du tooltip
-                    
-                    for(String laC : listeComp){
-                        for(Map.Entry<String, Competence> laCompetence: listeCompetences.entrySet()){
-                            String laComp = laCompetence.getKey();
-                            if(laC.equals(laComp)){
-                                value += laCompetence.getValue().getLibelleFra()+"<br/>";
-                            }
-                        }
+                    if(competences.isEmpty()){
+                        value += "Aucune compétence";
+                    }
+                    else{
+                       for(Map.Entry<String, Competence> laCompetence: competences.entrySet()){
+                            value += laCompetence.getValue().getLibelleFra()+"<br/>";
+                       } 
                     }
                     value += "</html>";
                     
@@ -336,7 +335,7 @@ public class Menu2 extends javax.swing.JFrame {
             /*---- Si le personnel n'a aucune compétence ----*/
             String comp = null;
             if(e.getValue().getListeCompetences().size() == 0){
-                comp = "aucune compétence";
+                comp = "Aucune compétence";
             }else{
                 comp = ""+e.getValue().getListeCompetences().size();
             }
