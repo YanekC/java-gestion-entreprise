@@ -5,10 +5,7 @@ import Util.ExportInterface;
 import Util.ImportCSV;
 import Util.ImportInterface;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * La classe entreprise permet de centraliser les listes de competences et de personnel
@@ -144,6 +141,7 @@ public class Entreprise {
         }
         return idC;
     }
+    
 
     public static HashMap<Integer, Mission> getMissions() {
         for(Map.Entry m : missions.entrySet()){
@@ -152,5 +150,66 @@ public class Entreprise {
         return missions;
     }
     
+    public static ArrayList<Integer> getPersonnelSuggere(int idMission){
+        
+        ArrayList<Integer> ret = new ArrayList<>();
+        //HashMaps contenant l'id d'un perso et le nb de competences qu'il a en commun avec la mission
+        HashMap<Integer, Integer> tablePersonnelSugg = new HashMap<>();
+        
+        Mission m = missions.get(idMission);
+        
+        for(Map.Entry p : personnels.entrySet()){
+            Personnel personnel = (Personnel)p.getValue();
+            int nbMatchComp = 0;
+                        
+            for(String compMiss : m.getListeCompetences()){
+                for(String compPers : personnel.getListeCompetences()){
+                    
+                    if(compMiss.equals(compPers)){
+                        nbMatchComp++;
+                    }
+                }
+            }
+            tablePersonnelSugg.put((Integer)p.getKey(), nbMatchComp);
+        }
+        
+        for(Map.Entry perso : sortByComparator(tablePersonnelSugg, false).entrySet()){
+            ret.add((Integer)perso.getKey());
+        }
+        return ret;
+    }
     
+    
+    private static Map<Integer, Integer> sortByComparator(Map<Integer, Integer> unsortMap, final boolean order)
+    {
+
+        List<Map.Entry<Integer, Integer>> list = new LinkedList<Map.Entry<Integer, Integer>>(unsortMap.entrySet());
+
+        // Sorting the list based on values
+        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer>>()
+        {
+            public int compare(Map.Entry<Integer, Integer> o1,
+                    Map.Entry<Integer, Integer> o2)
+            {
+                if (order)
+                {
+                    return o1.getValue().compareTo(o2.getValue());
+                }
+                else
+                {
+                    return o2.getValue().compareTo(o1.getValue());
+
+                }
+            }
+        });
+
+        // Maintaining insertion order with the help of LinkedList
+        Map<Integer, Integer> sortedMap = new LinkedHashMap<Integer, Integer>();
+        for (Map.Entry<Integer, Integer> entry : list)
+        {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        return sortedMap;
+    }
 }

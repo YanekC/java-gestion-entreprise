@@ -61,6 +61,8 @@ public class Menu2 extends javax.swing.JFrame {
         remplirTableauMissions();
         remplirTableauCompetences();
         
+        Entreprise.getPersonnelSuggere(1);
+        
         jBtnModifier.setEnabled(false);
         //Empecher la modification 
         jTableDuPersonnel.setDefaultEditor(Object.class, null);
