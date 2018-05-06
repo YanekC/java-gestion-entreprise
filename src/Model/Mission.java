@@ -6,6 +6,7 @@
 package Model;
 
 import static Model.Personnel.formatDate;
+import Util.DateModulable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -161,7 +162,7 @@ public class Mission {
     }
     
     public void updateEtat(){
-        Calendar today = Calendar.getInstance();
+        Calendar today = DateModulable.getDate();
         //On demarre la mission que si il y a assez de personnel
         
         System.out.println(formatDate.format(dateDebut.getTime()));
