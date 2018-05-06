@@ -43,8 +43,7 @@ public class Menu2 extends javax.swing.JFrame {
      */
     public Menu2() throws Exception {
         
-        //Modification de la date de l'appli pour les tests :
-        DateModulable.inc(0, 0, -10);
+        
         
         File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
         File fCompetences = new File("resources\\csv\\liste_competences.csv");
@@ -108,6 +107,12 @@ public class Menu2 extends javax.swing.JFrame {
         jPanelCompetence = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCompetences = new javax.swing.JTable();
+        jPanelModifDate = new javax.swing.JPanel();
+        jTextFieldDate = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jButtonJour = new javax.swing.JButton();
+        jButtonMois = new javax.swing.JButton();
+        jButtonAn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -236,6 +241,66 @@ public class Menu2 extends javax.swing.JFrame {
 
         jTabbedPane.addTab("Gestion des compétences", jPanelCompetence);
 
+        jTextFieldDate.setText(DateModulable.getDateString());
+
+        jLabel1.setText("Date actuelle : ");
+
+        jButtonJour.setText("+1 jour");
+        jButtonJour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonJourActionPerformed(evt);
+            }
+        });
+
+        jButtonMois.setText("+1 mois");
+        jButtonMois.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMoisActionPerformed(evt);
+            }
+        });
+
+        jButtonAn.setText("+1 an");
+        jButtonAn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelModifDateLayout = new javax.swing.GroupLayout(jPanelModifDate);
+        jPanelModifDate.setLayout(jPanelModifDateLayout);
+        jPanelModifDateLayout.setHorizontalGroup(
+            jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelModifDateLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonJour)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelModifDateLayout.createSequentialGroup()
+                        .addComponent(jButtonMois)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonAn)))
+                .addContainerGap(522, Short.MAX_VALUE))
+        );
+        jPanelModifDateLayout.setVerticalGroup(
+            jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelModifDateLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonJour)
+                    .addComponent(jButtonMois)
+                    .addComponent(jButtonAn))
+                .addContainerGap(408, Short.MAX_VALUE))
+        );
+
+        jTabbedPane.addTab("Modifier la date", jPanelModifDate);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -284,6 +349,21 @@ public class Menu2 extends javax.swing.JFrame {
         AjouterMissionJFrame ajoutM = new AjouterMissionJFrame();
         ajoutM.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButtonJourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonJourActionPerformed
+        DateModulable.inc(1, 0, 0);
+        updateDate();
+    }//GEN-LAST:event_jButtonJourActionPerformed
+
+    private void jButtonMoisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMoisActionPerformed
+        DateModulable.inc(0, 1, 0);
+        updateDate();
+    }//GEN-LAST:event_jButtonMoisActionPerformed
+
+    private void jButtonAnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnActionPerformed
+        DateModulable.inc(0, 0, 1);
+        updateDate();
+    }//GEN-LAST:event_jButtonAnActionPerformed
     
     private int getColZeroValueHover(int row, int col){
         //get row pointed of pointer
@@ -367,6 +447,8 @@ public class Menu2 extends javax.swing.JFrame {
     public void remplirTableauPersonnel() throws Exception{
         HashMap<Integer, Personnel> lePersonnel = entC.getlistePersonnel();
         
+        
+        
         for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
            /*---- Si le personnel n'a aucune compétence ----*/
             String comp = null;
@@ -397,6 +479,9 @@ public class Menu2 extends javax.swing.JFrame {
     
     public void remplirTableauMissions() throws Exception {
         
+        DefaultTableModel modelMission = (DefaultTableModel) jTableMission.getModel();
+        modelMission.setRowCount(0);
+        
         for(Map.Entry m : Entreprise.getMissions().entrySet()){
             Mission miss = (Mission)m.getValue();
             String[] line = {miss.getNom(), miss.getDateDebutString(), miss.getDateFinEstimeString(), miss.getDateFinReelString(), String.valueOf(miss.getNbPersMin()), miss.getEtatString()};
@@ -417,6 +502,16 @@ public class Menu2 extends javax.swing.JFrame {
         }
         jTableCompetences.setAutoCreateRowSorter(true);
         
+    }
+    
+    private void updateDate(){
+        System.out.println(DateModulable.getDateString());
+        jTextFieldDate.setText(DateModulable.getDateString());
+        try {
+            remplirTableauMissions();
+        } catch (Exception ex) {
+            Logger.getLogger(Menu2.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
@@ -464,8 +559,13 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAjouterPersonne;
+    private javax.swing.JButton jButtonAn;
+    private javax.swing.JButton jButtonJour;
+    private javax.swing.JButton jButtonMois;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanelCompetence;
     private javax.swing.JPanel jPanelMission;
+    private javax.swing.JPanel jPanelModifDate;
     private javax.swing.JPanel jPanelPersonnel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -474,5 +574,6 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JTable jTableCompetences;
     private javax.swing.JTable jTableDuPersonnel;
     private javax.swing.JTable jTableMission;
+    private javax.swing.JTextField jTextFieldDate;
     // End of variables declaration//GEN-END:variables
 }

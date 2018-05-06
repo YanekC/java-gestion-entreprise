@@ -163,12 +163,6 @@ public class Mission {
     
     public void updateEtat(){
         Calendar today = DateModulable.getDate();
-        //On demarre la mission que si il y a assez de personnel
-        
-        System.out.println(formatDate.format(dateDebut.getTime()));
-        System.out.println(formatDate.format(today.getTime()));
-        System.out.println(formatDate.format(dateFinReel.getTime()));
-        
         
         if(dateDebut.before(today)){
             this.etat = ETAT_EN_COURS;

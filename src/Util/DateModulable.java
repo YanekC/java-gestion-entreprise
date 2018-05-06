@@ -5,6 +5,7 @@
  */
 package Util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -12,6 +13,9 @@ import java.util.Calendar;
  * @author Yanek
  */
 public class DateModulable {
+    
+    public static SimpleDateFormat formatDate = new SimpleDateFormat( "dd/MM/yyyy" );
+    
     private static Calendar date = Calendar.getInstance();
     
     /*
@@ -19,6 +23,13 @@ public class DateModulable {
     */
     public static Calendar getDate(){
         return date;
+    }
+    
+    /*
+    * Retourne la date au format string
+    */
+    public static String getDateString(){
+        return formatDate.format(date.getTime());
     }
     
     /*
@@ -36,7 +47,7 @@ public class DateModulable {
      * @param annee Nombre d'année a modifier
      */
     public static void inc(int jour, int mois, int annee){
-        date.add(Calendar.HOUR, jour);
+        date.add(Calendar.DATE, jour);
         date.add(Calendar.MONTH, mois);
         date.add(Calendar.YEAR, annee);
     }
