@@ -59,6 +59,7 @@ public class Menu2 extends javax.swing.JFrame {
         remplirTableauCompetences();
         
         jBtnModifier.setEnabled(false);
+        jButton2.setEnabled(false);
         //Empecher la modification 
         jTableDuPersonnel.setDefaultEditor(Object.class, null);
         jTableCompetences.setDefaultEditor(Object.class, null);
@@ -175,6 +176,11 @@ public class Menu2 extends javax.swing.JFrame {
         modelMissions.addColumn("Personnel Néccessaire");
         modelMissions.addColumn("Etat");
         jTableMission.setModel(modelMissions);
+        jTableMission.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMissionMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableMission);
 
         jButton1.setText("Ajouter une mission");
@@ -297,6 +303,10 @@ public class Menu2 extends javax.swing.JFrame {
         /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
         apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTableMissionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMissionMouseClicked
+        jButton2.setEnabled(true);
+    }//GEN-LAST:event_jTableMissionMouseClicked
     
     private int getColZeroValueHover(int row, int col){
         //get row pointed of pointer
