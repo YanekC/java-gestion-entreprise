@@ -76,10 +76,89 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
            jTextDateDeb.setText(m.getDateDebutString());
            jTextDateFin.setText(m.getDateFinEstimeString());
            this.id = id; //Stock l'id pour la modification
+           /* ---- Set current etat of the mission ------*/
+           setEtatOfTheMission(m.getEtatString());
            remplirListesCompetencesMission(m);
+           remplirListesParticipants(m);
            
         }
     }
+    
+    public void remplirListesParticipants(Mission m){
+        /* --- Remplir participant de la mission --- */
+        HashMap<String, Personnel> missionCompetence = remplirMesPersonnels(m);
+        //System.out.println(personnalCompetence);
+        /* --- Remplir les compétences non acquise avec les compétences de la mission --- */
+        remplirListesParticipantsPotentiel(missionCompetence);
+    }
+    
+    public void remplirListesCompetencesNonAcquise(Mission m){
+        
+    }
+    
+    public HashMap remplirMesPersonnels(Mission m){
+         /*---- Fill personnel added to the Mission ------*/
+       //Define model
+        DefaultListModel modelListePersonnel = new DefaultListModel();
+        //Get skill from Enterprise in Hashmap
+        HashMap<String, Personnel> personnels = Entreprise.getMissionPersonnel(m);
+        //Loop the hashmap lulz
+        try{
+            
+        
+        for(Map.Entry<String, Personnel> personnel : personnels.entrySet()) {
+            //Nom
+            String nomPers = personnel.getValue().getNom()+" "+ personnel.getValue().getPrenom();
+            modelListePersonnel.addElement(nomPers);
+        }
+        }catch(Exception e){System.out.println(e.getMessage());}
+        //Set the model on the IHM
+        jListParticipant.setModel(modelListePersonnel);
+       
+        //System.out.println(competences);
+        return personnels;
+    }
+    
+    public void remplirListesParticipantsPotentiel(HashMap<String, Personnel> addedPersonnel){
+         /*---- Fill Personnel ------*/
+        //Define model
+        DefaultListModel modelAddCompetence = new DefaultListModel();
+        HashMap<String, Personnel> unaddedPersonnel = getUnAddedPersonnel(addedPersonnel);
+        for(Map.Entry<String, Personnel> personnel : unaddedPersonnel.entrySet()) {
+            try{
+                //Nom
+            String nomPers = personnel.getValue().getNom()+" "+ personnel.getValue().getPrenom();
+            modelAddCompetence.addElement(nomPers);
+            }catch(Exception e){System.out.println(e.getMessage());}
+            
+        }
+        //Set the model in the IHM
+        jListAjouterParticipant.setModel(modelAddCompetence);
+    }
+    
+    public HashMap getUnAddedPersonnel(HashMap<String, Personnel> addedPersonnel){
+       /*--- Get unknown skill ---- */
+       //New Hashmap
+       HashMap<Integer, Personnel> unAddedPersonnel= new HashMap();
+       //Get all skill from enterprise
+       HashMap<Integer, Personnel> personnelEntreprise = Entreprise.getlistePersonnel();
+       //compare with skill of the mission
+       for(Map.Entry<Integer, Personnel> personnel : personnelEntreprise.entrySet()) {
+            try{
+               if(!addedPersonnel.containsKey(personnel.getKey())){
+                    //Nom
+                    String nomPers = personnel.getValue().getNom()+" "+ personnel.getValue().getPrenom();
+                    //Set the hasmap with the competence
+                    unAddedPersonnel.put(personnel.getKey(), personnelEntreprise.get(personnel.getKey()));
+                    //unAddedPersonnel.put(idPersonnels,personnels.get(idPersonnels));
+               }
+            }catch(Exception e){System.out.println(e.getMessage());}
+            
+        }
+       return unAddedPersonnel;
+    }
+    
+    
     
     public void remplirListesCompetencesMission(Mission m){
         /* --- Remplir compétences de la mission --- */
@@ -175,19 +254,27 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     
     public void setEtatOfTheMission(String etat){
         switch(etat){
-            case "Planifée" : setEnableButton(Color.yellow, jButtonEnd, jButtonInProg, jButtonPrepare);break;
-            case "En cours" : setEnableButton(Color.blue, jButtonEnd, jButtonPlan, jButtonPrepare);break;
-            case "Terminée" : setEnableButton(Color.green, jButtonPlan, jButtonInProg, jButtonPrepare);break;
-            case "En préparation" : setEnableButton(Color.magenta, jButtonEnd, jButtonInProg, jButtonPlan);break;
+            case "Planifée" : setEnableButton(Color.yellow, jButtonEnd, jButtonInProg, jButtonPrepare,jButtonPlan);break;
+            case "En cours" : disableMission();setEnableButton(Color.blue, jButtonEnd, jButtonPlan, jButtonPrepare, jButtonInProg);break;
+            case "Terminée" : disableMission();setEnableButton(Color.green, jButtonPlan, jButtonInProg, jButtonPrepare, jButtonEnd);break;
+            case "En préparation" : setEnableButton(Color.magenta, jButtonEnd, jButtonInProg, jButtonPlan, jButtonPrepare);break;
             default:break;
         }
-        
     }
     
-    public void setEnableButton(Color color, JButton jBtn1, JButton jBtn2, JButton jBtn3){
+    public void disableMission(){
+        jTextDateDeb.setEnabled(false);
+        jTextDateFin.setEnabled(false);
+        jButton1.setEnabled(false);
+        jButton2.setEnabled(false);
+        jButton3.setEnabled(false);
+        jButton4.setEnabled(false);
+    }
+    public void setEnableButton(Color color, JButton jBtn1, JButton jBtn2, JButton jBtn3, JButton jBtnToEnable){
         jBtn1.setEnabled(false);
         jBtn2.setEnabled(false);
         jBtn3.setEnabled(false);
+        jBtnToEnable.setEnabled(true);
         getContentPane().setBackground(color);
     }
     
@@ -222,9 +309,9 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jButtonEnd = new javax.swing.JButton();
         jPanelParticipants = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
+        jListParticipant = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList4 = new javax.swing.JList<>();
+        jListAjouterParticipant = new javax.swing.JList<>();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanelValidation = new javax.swing.JPanel();
@@ -409,21 +496,26 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
 
         jPanelParticipants.setBorder(javax.swing.BorderFactory.createTitledBorder("Participants"));
 
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
+        jListParticipant.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane3.setViewportView(jList3);
+        jScrollPane3.setViewportView(jListParticipant);
 
-        jList4.setModel(new javax.swing.AbstractListModel<String>() {
+        jListAjouterParticipant.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane4.setViewportView(jList4);
+        jScrollPane4.setViewportView(jListAjouterParticipant);
 
         jButton3.setText("Supprimer");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Ajouter");
 
@@ -604,6 +696,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             ajouter();
         }
     }//GEN-LAST:event_jBtnEnregistrerActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
     
     public boolean valide(){
         int ok = 0;
@@ -674,10 +770,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonPrepare;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList3;
-    private javax.swing.JList<String> jList4;
     private javax.swing.JList<String> jListAjouterCompetence;
+    private javax.swing.JList<String> jListAjouterParticipant;
     private javax.swing.JList<String> jListCompetences;
+    private javax.swing.JList<String> jListParticipant;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelCompetences;
     private javax.swing.JPanel jPanelGauche;

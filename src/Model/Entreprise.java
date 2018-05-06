@@ -123,6 +123,19 @@ public class Entreprise {
         return competenceRecquise;
     }
     
+    public static  HashMap<String, Personnel> getMissionPersonnel(Mission m){
+        HashMap<String, Personnel> personnnelRaccorde = new HashMap();
+        // parcours la liste des id des compétences de la personne
+        for(String idPersonnels : m.getListePersonnels()){
+            try{
+                if(personnels.containsKey(idPersonnels)){
+                    personnnelRaccorde.put(idPersonnels,personnels.get(idPersonnels));
+                }
+            }catch(Exception e){System.out.println(e.getMessage());}
+        }
+        return personnnelRaccorde;
+    }
+    
     public static int addPersonnel(Personnel p) {
          int id = getLastId()+1;
          personnels.put(id, p);
