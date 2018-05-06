@@ -196,6 +196,14 @@ public class Mission {
         return formatDate.format(dateFinReel.getTime());
     }
 
+    public void setDateDebut(Calendar dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public void setDateFinEstime(Calendar dateFinEstime) {
+        this.dateFinEstime = dateFinEstime;
+    }
+
     public int getNbPersMin() {
         return nbPersMin;
     }

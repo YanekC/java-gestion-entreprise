@@ -165,14 +165,14 @@ public class Menu2 extends javax.swing.JFrame {
                 .addGap(0, 16, Short.MAX_VALUE))
         );
 
-        jTabbedPane.addTab("Gestion du personel", jPanelPersonnel);
+        jTabbedPane.addTab("Gestion du personnel", jPanelPersonnel);
 
         DefaultTableModel modelMissions = new DefaultTableModel();
         modelMissions.addColumn("Id");
         modelMissions.addColumn("Nom de la mission");
         modelMissions.addColumn("Date de début");
         modelMissions.addColumn("Date de fin estimée");
-        modelMissions.addColumn("Personnels nécessaires");
+        modelMissions.addColumn("Personnel Néccessaire");
         modelMissions.addColumn("Etat");
         jTableMission.setModel(modelMissions);
         jScrollPane3.setViewportView(jTableMission);
@@ -295,7 +295,7 @@ public class Menu2 extends javax.swing.JFrame {
         AjouterMissionJFrame apf = new AjouterMissionJFrame();
         apf.setVisible(true);
         /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-        apf.remplirFormMission(id, jTableDuPersonnel,jTableDuPersonnel.getSelectedRow(), 0);
+        apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0);
     }//GEN-LAST:event_jButton2ActionPerformed
     
     private int getColZeroValueHover(int row, int col){

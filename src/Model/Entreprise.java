@@ -110,6 +110,19 @@ public class Entreprise {
         return competenceAcquise;
     }
     
+    public static  HashMap<String, Competence> getMissionCompetence(Mission m){
+         HashMap<String, Competence> competenceRecquise = new HashMap();
+        // parcours la liste des id des compétences de la personne
+        for(String idCompetence : m.getListeCompetences()){
+            try{
+                if(competences.containsKey(idCompetence)){
+                    competenceRecquise.put(idCompetence,competences.get(idCompetence));
+                }
+            }catch(Exception e){System.out.println(e.getMessage());}
+        }
+        return competenceRecquise;
+    }
+    
     public static int addPersonnel(Personnel p) {
          int id = getLastId()+1;
          personnels.put(id, p);
@@ -126,6 +139,12 @@ public class Entreprise {
         personnelsUPD.get(id).setNom(nom);
         personnelsUPD.get(id).setPrenom(prenom);
         personnelsUPD.get(id).setDateNaiss(dateNaiss);
+    }
+    
+    public static void updBasicValueMission (int id, Calendar dateDeb, Calendar dateFin){
+        HashMap<Integer, Mission> missionsUPD = missions;
+        missionsUPD.get(id).setDateDebut(dateDeb);
+        missionsUPD.get(id).setDateFinEstime(dateFin);
     }
     
     

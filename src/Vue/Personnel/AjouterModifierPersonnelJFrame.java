@@ -452,6 +452,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
          int nbCompetence = p.getListeCompetences().size();
          return "ⓘ "+nbCompetence;
     }
+    
     public void modifier() throws ParseException{
         if(valide()){
             //Récupère les champs nom et prénom

@@ -40,8 +40,8 @@
         <Container class="javax.swing.JPanel" name="jPanelPersonnel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Gestion du personel">
-                <Property name="tabTitle" type="java.lang.String" value="Gestion du personel"/>
+              <JTabbedPaneConstraints tabName="Gestion du personnel">
+                <Property name="tabTitle" type="java.lang.String" value="Gestion du personnel"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -175,7 +175,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel modelMissions = new DefaultTableModel();&#xa;    modelMissions.addColumn(&quot;Id&quot;);&#xa;    modelMissions.addColumn(&quot;Nom de la mission&quot;);&#xa;    modelMissions.addColumn(&quot;Date de d&#xe9;but&quot;);&#xa;    modelMissions.addColumn(&quot;Date de fin estim&#xe9;e&quot;);&#xa;    modelMissions.addColumn(&quot;Personnels n&#xe9;cessaires&quot;);&#xa;    modelMissions.addColumn(&quot;Etat&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel modelMissions = new DefaultTableModel();&#xa;    modelMissions.addColumn(&quot;Id&quot;);&#xa;    modelMissions.addColumn(&quot;Nom de la mission&quot;);&#xa;    modelMissions.addColumn(&quot;Date de d&#xe9;but&quot;);&#xa;    modelMissions.addColumn(&quot;Date de fin estim&#xe9;e&quot;);&#xa;    modelMissions.addColumn(&quot;Personnel N&#xe9;ccessaire&quot;);&#xa;    modelMissions.addColumn(&quot;Etat&quot;);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
