@@ -9,6 +9,7 @@ import Model.Competence;
 import Model.Entreprise;
 import Model.Mission;
 import Model.Personnel;
+import Util.DateModulable;
 import Vue.Competences.AjouterCompetenceJFrame;
 import Vue.Missions.AjouterMissionJFrame;
 import Vue.Personnel.AjouterModifierPersonnelJFrame;
@@ -41,6 +42,9 @@ public class Menu2 extends javax.swing.JFrame {
      * Creates new form test
      */
     public Menu2() throws Exception {
+        
+        //Modification de la date de l'appli pour les tests :
+        DateModulable.inc(0, 0, -10);
         
         File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
         File fCompetences = new File("resources\\csv\\liste_competences.csv");
