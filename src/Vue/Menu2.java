@@ -54,6 +54,7 @@ public class Menu2 extends javax.swing.JFrame {
         // dans le but de faire évoluer l'application
         Entreprise.chargerFichiers(fPersonnels, fCompetences, fCompetencesPerso, fMission, fCompetenceMission, fPersonnelMission);
         remplirTableauPersonnel();
+        remplirTableauMissions();
         remplirTableauCompetences();
         
         jBtnModifier.setEnabled(false);
@@ -403,6 +404,10 @@ public class Menu2 extends javax.swing.JFrame {
          /* ---- Masquer column ID ---- */
         TableColumnModel tcm = jTableDuPersonnel.getColumnModel();
         tcm.removeColumn(tcm.getColumn(0));
+        
+    }
+    
+    public void remplirTableauMissions(){
         
     }
     

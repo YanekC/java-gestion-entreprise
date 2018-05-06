@@ -56,6 +56,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jPanelParticipants = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jList3 = new javax.swing.JList<>();
@@ -162,11 +163,13 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jSliderEtat.setAutoscrolls(true);
         jSliderEtat.setOpaque(false);
 
-        jLabel3.setText("A FAIRE");
+        jLabel3.setText("En préparation");
 
-        jLabel4.setText("EN COURS");
+        jLabel4.setText("Planifiée");
 
-        jLabel5.setText("FAIT");
+        jLabel5.setText("Terminée");
+
+        jLabel6.setText("En cours");
 
         javax.swing.GroupLayout jPanelSliderLayout = new javax.swing.GroupLayout(jPanelSlider);
         jPanelSlider.setLayout(jPanelSliderLayout);
@@ -177,8 +180,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                 .addGroup(jPanelSliderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelSliderLayout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(137, 137, 137)
+                        .addGap(47, 47, 47)
                         .addComponent(jLabel4)
+                        .addGap(55, 55, 55)
+                        .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5))
                     .addGroup(jPanelSliderLayout.createSequentialGroup()
@@ -195,7 +200,8 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                 .addGroup(jPanelSliderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5)))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)))
         );
 
         javax.swing.GroupLayout jPanelGaucheLayout = new javax.swing.GroupLayout(jPanelGauche);
@@ -365,6 +371,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JList<String> jList3;
