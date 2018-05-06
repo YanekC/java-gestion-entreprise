@@ -80,11 +80,10 @@ public class Menu2 extends javax.swing.JFrame {
         jTableDuPersonnel = new javax.swing.JTable();
         jButtonAjouterPersonne = new javax.swing.JButton();
         jBtnModifier = new javax.swing.JButton();
+        jPanelMission = new javax.swing.JPanel();
         jPanelCompetence = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCompetences = new javax.swing.JTable();
-        jButtonAjouterCompetence = new javax.swing.JButton();
-        jPanelMission = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,42 +147,6 @@ public class Menu2 extends javax.swing.JFrame {
 
         jTabbedPane.addTab("Gestion du personel", jPanelPersonnel);
 
-        DefaultTableModel model2 = new DefaultTableModel();
-        model2.addColumn("ID");
-        model2.addColumn("Dénomination anglaise");
-        model2.addColumn("Dénomination française");
-        model2.addColumn("Actions");
-        jTableCompetences.setModel(model2);
-        jScrollPane2.setViewportView(jTableCompetences);
-
-        jButtonAjouterCompetence.setText("Ajouter une compétence");
-        jButtonAjouterCompetence.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAjouterCompetenceActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelCompetenceLayout = new javax.swing.GroupLayout(jPanelCompetence);
-        jPanelCompetence.setLayout(jPanelCompetenceLayout);
-        jPanelCompetenceLayout.setHorizontalGroup(
-            jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCompetenceLayout.createSequentialGroup()
-                .addContainerGap(614, Short.MAX_VALUE)
-                .addComponent(jButtonAjouterCompetence)
-                .addContainerGap())
-        );
-        jPanelCompetenceLayout.setVerticalGroup(
-            jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCompetenceLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAjouterCompetence)
-                .addGap(0, 22, Short.MAX_VALUE))
-        );
-
-        jTabbedPane.addTab("Gestion des compétences", jPanelCompetence);
-
         javax.swing.GroupLayout jPanelMissionLayout = new javax.swing.GroupLayout(jPanelMission);
         jPanelMission.setLayout(jPanelMissionLayout);
         jPanelMissionLayout.setHorizontalGroup(
@@ -196,6 +159,27 @@ public class Menu2 extends javax.swing.JFrame {
         );
 
         jTabbedPane.addTab("Gestion des missions", jPanelMission);
+
+        DefaultTableModel model2 = new DefaultTableModel();
+        model2.addColumn("Dénomination anglaise");
+        model2.addColumn("Dénomination française");
+        jTableCompetences.setModel(model2);
+        jScrollPane2.setViewportView(jTableCompetences);
+
+        javax.swing.GroupLayout jPanelCompetenceLayout = new javax.swing.GroupLayout(jPanelCompetence);
+        jPanelCompetence.setLayout(jPanelCompetenceLayout);
+        jPanelCompetenceLayout.setHorizontalGroup(
+            jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+        );
+        jPanelCompetenceLayout.setVerticalGroup(
+            jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCompetenceLayout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane.addTab("Gestion des compétences", jPanelCompetence);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -222,11 +206,6 @@ public class Menu2 extends javax.swing.JFrame {
         ajoutP.remplirFormPersonnel(-1, jTableDuPersonnel, rowIndex, colIndex);
         jBtnModifier.setEnabled(true);
     }//GEN-LAST:event_jButtonAjouterPersonneActionPerformed
-
-    private void jButtonAjouterCompetenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterCompetenceActionPerformed
-        AjouterCompetenceJFrame ajoutC = new AjouterCompetenceJFrame();
-        ajoutC.setVisible(true);
-    }//GEN-LAST:event_jButtonAjouterCompetenceActionPerformed
     
     private int getColZeroValueHover(int row, int col){
         //get row pointed of pointer
@@ -363,7 +342,7 @@ public class Menu2 extends javax.swing.JFrame {
         
         for(Map.Entry c : lesCompetences.entrySet()){
             Competence cpt = (Competence)c.getValue();
-            String line = c.getKey()+";"+cpt.getLibelleAng()+";"+cpt.getLibelleFra();
+            String line = cpt.getLibelleAng()+";"+cpt.getLibelleFra();
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableCompetences.getModel()).addRow(laLigne);
         }
@@ -413,7 +392,6 @@ public class Menu2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnModifier;
-    private javax.swing.JButton jButtonAjouterCompetence;
     private javax.swing.JButton jButtonAjouterPersonne;
     private javax.swing.JPanel jPanelCompetence;
     private javax.swing.JPanel jPanelMission;
