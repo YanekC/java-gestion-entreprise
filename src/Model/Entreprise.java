@@ -54,6 +54,10 @@ public class Entreprise {
     public static Personnel findPersonnelById (int id){
         return personnels.get(id); // retourne la personne par l'id de l'hashmap
     }
+    
+    public static Mission findMissionById (int id){
+        return missions.get(id); // retourne la mission par l'id de l'hashmap
+    }
   
     public static String afficherInfoEnt(){
         String s = "";

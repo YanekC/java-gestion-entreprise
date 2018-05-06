@@ -168,11 +168,11 @@ public class Menu2 extends javax.swing.JFrame {
         jTabbedPane.addTab("Gestion du personel", jPanelPersonnel);
 
         DefaultTableModel modelMissions = new DefaultTableModel();
+        modelMissions.addColumn("Id");
         modelMissions.addColumn("Nom de la mission");
         modelMissions.addColumn("Date de début");
         modelMissions.addColumn("Date de fin estimée");
-        modelMissions.addColumn("Nb de personnels associés");
-        modelMissions.addColumn("Nb de personnels nécessaires");
+        modelMissions.addColumn("Personnels nécessaires");
         modelMissions.addColumn("Etat");
         jTableMission.setModel(modelMissions);
         jScrollPane3.setViewportView(jTableMission);
@@ -185,6 +185,11 @@ public class Menu2 extends javax.swing.JFrame {
         });
 
         jButton2.setText("Modifier");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelMissionLayout = new javax.swing.GroupLayout(jPanelMission);
         jPanelMission.setLayout(jPanelMissionLayout);
@@ -280,6 +285,18 @@ public class Menu2 extends javax.swing.JFrame {
         AjouterMissionJFrame ajoutM = new AjouterMissionJFrame();
         ajoutM.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+         /*----- Modifier une personne sélectionné -----*/
+
+        //Get the id
+        int id = getColZeroValueSelectedMission();
+        //Load Frame with selected ID
+        AjouterMissionJFrame apf = new AjouterMissionJFrame();
+        apf.setVisible(true);
+        /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+        apf.remplirFormMission(id, jTableDuPersonnel,jTableDuPersonnel.getSelectedRow(), 0);
+    }//GEN-LAST:event_jButton2ActionPerformed
     
     private int getColZeroValueHover(int row, int col){
         //get row pointed of pointer
@@ -303,6 +320,26 @@ public class Menu2 extends javax.swing.JFrame {
         return id;
     }
     
+    
+    
+    private int getColZeroValueSelectedMission(){
+        //Get the column 0 (here ID) from the model whenever it's sort or not (due to issue on sort)
+        Object colZeroValue = (jTableMission.getModel().getValueAt(jTableMission.convertRowIndexToModel(jTableMission.getSelectedRow()), 0));
+        //System.out.println(colZeroValue.getClass()); 
+        int id = 0;
+        //Get the id
+        try{
+           //parse object to string then int
+           String stringId = (String) colZeroValue;
+           id = Integer.parseInt(stringId);
+        return id;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }    
+        return id;
+    }
+            
     private int getColZeroValueSelected(){
         //Get the column 0 (here ID) from the model whenever it's sort or not (due to issue on sort)
         Object colZeroValue = (jTableDuPersonnel.getModel().getValueAt(jTableDuPersonnel.convertRowIndexToModel(jTableDuPersonnel.getSelectedRow()), 0));
@@ -395,10 +432,14 @@ public class Menu2 extends javax.swing.JFrame {
         
         for(Map.Entry m : Entreprise.getMissions().entrySet()){
             Mission miss = (Mission)m.getValue();
-            String[] line = {miss.getNom(), miss.getDateDebutString(), miss.getDateFinEstimeString(), miss.getDateFinReelString(), String.valueOf(miss.getNbPersMin()), miss.getEtatString()};
+            String[] line = {String.valueOf(m.getKey()), miss.getNom(), miss.getDateDebutString(), miss.getDateFinEstimeString(), String.valueOf(miss.getNbPersMin()), miss.getEtatString()};
             ((DefaultTableModel) jTableMission.getModel()).addRow(line);
         }
         jTableMission.setAutoCreateRowSorter(true);
+        
+        /* ---- Masquer column ID ---- */
+        TableColumnModel tcm = jTableMission.getColumnModel();
+        tcm.removeColumn(tcm.getColumn(0));
         
     }
     
