@@ -113,6 +113,9 @@ public class Menu2 extends javax.swing.JFrame {
         jButtonJour = new javax.swing.JButton();
         jButtonMois = new javax.swing.JButton();
         jButtonAn = new javax.swing.JButton();
+        jButtonJourMoins = new javax.swing.JButton();
+        jButtonMoisMoins = new javax.swing.JButton();
+        jButtonAnMoins = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -266,6 +269,27 @@ public class Menu2 extends javax.swing.JFrame {
             }
         });
 
+        jButtonJourMoins.setText("-1 jour");
+        jButtonJourMoins.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonJourMoinsActionPerformed(evt);
+            }
+        });
+
+        jButtonMoisMoins.setText("-1 mois");
+        jButtonMoisMoins.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMoisMoinsActionPerformed(evt);
+            }
+        });
+
+        jButtonAnMoins.setText("-1 an");
+        jButtonAnMoins.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAnMoinsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelModifDateLayout = new javax.swing.GroupLayout(jPanelModifDate);
         jPanelModifDate.setLayout(jPanelModifDateLayout);
         jPanelModifDateLayout.setHorizontalGroup(
@@ -273,15 +297,23 @@ public class Menu2 extends javax.swing.JFrame {
             .addGroup(jPanelModifDateLayout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonJour)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelModifDateLayout.createSequentialGroup()
-                        .addComponent(jButtonMois)
+                        .addComponent(jButtonJourMoins)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonAn)))
+                        .addComponent(jButtonMoisMoins)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonAnMoins))
+                    .addGroup(jPanelModifDateLayout.createSequentialGroup()
+                        .addGroup(jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonJour)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelModifDateLayout.createSequentialGroup()
+                                .addComponent(jButtonMois)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonAn)))))
                 .addContainerGap(522, Short.MAX_VALUE))
         );
         jPanelModifDateLayout.setVerticalGroup(
@@ -296,7 +328,12 @@ public class Menu2 extends javax.swing.JFrame {
                     .addComponent(jButtonJour)
                     .addComponent(jButtonMois)
                     .addComponent(jButtonAn))
-                .addContainerGap(408, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonJourMoins)
+                    .addComponent(jButtonMoisMoins)
+                    .addComponent(jButtonAnMoins))
+                .addContainerGap(374, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Modifier la date", jPanelModifDate);
@@ -364,6 +401,21 @@ public class Menu2 extends javax.swing.JFrame {
         DateModulable.inc(0, 0, 1);
         updateDate();
     }//GEN-LAST:event_jButtonAnActionPerformed
+
+    private void jButtonJourMoinsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonJourMoinsActionPerformed
+        DateModulable.inc(-1, 0, 0);
+        updateDate();
+    }//GEN-LAST:event_jButtonJourMoinsActionPerformed
+
+    private void jButtonMoisMoinsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMoisMoinsActionPerformed
+        DateModulable.inc(0, -1, 0);
+        updateDate();
+    }//GEN-LAST:event_jButtonMoisMoinsActionPerformed
+
+    private void jButtonAnMoinsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnMoinsActionPerformed
+        DateModulable.inc(0, 0, -1);
+        updateDate();
+    }//GEN-LAST:event_jButtonAnMoinsActionPerformed
     
     private int getColZeroValueHover(int row, int col){
         //get row pointed of pointer
@@ -560,8 +612,11 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAjouterPersonne;
     private javax.swing.JButton jButtonAn;
+    private javax.swing.JButton jButtonAnMoins;
     private javax.swing.JButton jButtonJour;
+    private javax.swing.JButton jButtonJourMoins;
     private javax.swing.JButton jButtonMois;
+    private javax.swing.JButton jButtonMoisMoins;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanelCompetence;
     private javax.swing.JPanel jPanelMission;
