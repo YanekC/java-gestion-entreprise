@@ -123,18 +123,22 @@ public class Entreprise {
         return competenceRecquise;
     }
     
-    public static  HashMap<String, Personnel> getMissionPersonnel(Mission m){
-        HashMap<String, Personnel> personnnelRaccorde = new HashMap();
+    public static  HashMap<Integer, Personnel> getMissionPersonnel(Mission m){
+        HashMap<Integer, Personnel> personnnelRaccorde = new HashMap();
         // parcours la liste des id des compétences de la personne
         for(String idPersonnels : m.getListePersonnels()){
             try{
-                if(personnels.containsKey(idPersonnels)){
-                    personnnelRaccorde.put(idPersonnels,personnels.get(idPersonnels));
+                //Pas mal l'ID sous format String du getListePersonnels
+                int persoId = Integer.parseInt(idPersonnels);
+                if(personnels.containsKey(persoId)){
+                    personnnelRaccorde.put(persoId,personnels.get(persoId));
                 }
             }catch(Exception e){System.out.println(e.getMessage());}
         }
         return personnnelRaccorde;
     }
+    
+    
     
     public static int addPersonnel(Personnel p) {
          int id = getLastId()+1;
@@ -179,6 +183,18 @@ public class Entreprise {
              }
         }
         return idC;
+    }
+    
+    public static int getIdPersonnelByName(String nomPrenom){
+        int idP = 0;
+        for(Map.Entry<Integer, Personnel> p : personnels.entrySet()){
+            String compare = p.getValue().getNom() + " "+ p.getValue().getPrenom();
+             if(nomPrenom.equals(compare)){
+                idP = p.getKey();
+                break;
+             }
+        }
+        return idP;
     }
 
     public static HashMap<Integer, Mission> getMissions() {

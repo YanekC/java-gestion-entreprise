@@ -101,12 +101,12 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
        //Define model
         DefaultListModel modelListePersonnel = new DefaultListModel();
         //Get skill from Enterprise in Hashmap
-        HashMap<String, Personnel> personnels = Entreprise.getMissionPersonnel(m);
+        HashMap<Integer, Personnel> personnels = Entreprise.getMissionPersonnel(m);
         //Loop the hashmap lulz
         try{
             
         
-        for(Map.Entry<String, Personnel> personnel : personnels.entrySet()) {
+        for(Map.Entry<Integer, Personnel> personnel : personnels.entrySet()) {
             //Nom
             String nomPers = personnel.getValue().getNom()+" "+ personnel.getValue().getPrenom();
             modelListePersonnel.addElement(nomPers);
@@ -265,10 +265,14 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     public void disableMission(){
         jTextDateDeb.setEnabled(false);
         jTextDateFin.setEnabled(false);
-        jButton1.setEnabled(false);
-        jButton2.setEnabled(false);
-        jButton3.setEnabled(false);
-        jButton4.setEnabled(false);
+        jButtonSupprComp.setEnabled(false);
+        jButtonAjouterComp.setEnabled(false);
+        jButtonSupprParticip.setEnabled(false);
+        jButtonAddParticip.setEnabled(false);
+        jButtonAddParticip.setVisible(false);
+        jButtonSupprParticip.setVisible(false);
+        jButtonSupprComp.setVisible(false);
+        jButtonAjouterComp.setVisible(false);
     }
     public void setEnableButton(Color color, JButton jBtn1, JButton jBtn2, JButton jBtn3, JButton jBtnToEnable){
         jBtn1.setEnabled(false);
@@ -300,8 +304,8 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jListCompetences = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListAjouterCompetence = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonSupprComp = new javax.swing.JButton();
+        jButtonAjouterComp = new javax.swing.JButton();
         jPanelSlider = new javax.swing.JPanel();
         jButtonPrepare = new javax.swing.JButton();
         jButtonPlan = new javax.swing.JButton();
@@ -312,8 +316,8 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jListParticipant = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         jListAjouterParticipant = new javax.swing.JList<>();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButtonSupprParticip = new javax.swing.JButton();
+        jButtonAddParticip = new javax.swing.JButton();
         jPanelValidation = new javax.swing.JPanel();
         jBtnDelMission = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -347,15 +351,14 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jPanelGeneralLayout.setVerticalGroup(
             jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelGeneralLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jTextDateDeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jTextDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTextDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jPanelCompetences.setBorder(javax.swing.BorderFactory.createTitledBorder("Compétences"));
@@ -374,17 +377,17 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jListAjouterCompetence);
 
-        jButton1.setText("Supprimer");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSupprComp.setText("Supprimer");
+        jButtonSupprComp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonSupprCompActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Ajouter");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAjouterComp.setText("Ajouter");
+        jButtonAjouterComp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonAjouterCompActionPerformed(evt);
             }
         });
 
@@ -399,8 +402,8 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelCompetencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonSupprComp, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonAjouterComp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanelCompetencesLayout.setVerticalGroup(
@@ -409,9 +412,9 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelCompetencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCompetencesLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(jButtonSupprComp)
                         .addGap(70, 70, 70)
-                        .addComponent(jButton2))
+                        .addComponent(jButtonAjouterComp))
                     .addGroup(jPanelCompetencesLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -489,7 +492,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                 .addComponent(jPanelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(29, 29, 29)
                 .addComponent(jPanelCompetences, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
@@ -510,14 +513,19 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(jListAjouterParticipant);
 
-        jButton3.setText("Supprimer");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSupprParticip.setText("Supprimer");
+        jButtonSupprParticip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonSupprParticipActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Ajouter");
+        jButtonAddParticip.setText("Ajouter");
+        jButtonAddParticip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddParticipActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelParticipantsLayout = new javax.swing.GroupLayout(jPanelParticipants);
         jPanelParticipants.setLayout(jPanelParticipantsLayout);
@@ -529,11 +537,11 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                     .addGroup(jPanelParticipantsLayout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3))
+                        .addComponent(jButtonSupprParticip))
                     .addGroup(jPanelParticipantsLayout.createSequentialGroup()
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonAddParticip, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelParticipantsLayout.setVerticalGroup(
@@ -541,15 +549,14 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             .addGroup(jPanelParticipantsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelParticipantsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
+                    .addComponent(jButtonSupprParticip)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelParticipantsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
                     .addGroup(jPanelParticipantsLayout.createSequentialGroup()
-                        .addComponent(jButton4)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jButtonAddParticip)
+                        .addContainerGap(142, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)))
         );
 
         jBtnDelMission.setText("Supprimer la mission");
@@ -616,7 +623,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                 .addComponent(jPanelGauche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(98, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanelParticipants, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanelValidation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -655,7 +662,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonAjouterCompActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterCompActionPerformed
           if(!jListAjouterCompetence.isSelectionEmpty()){
             //Get the actual Mission
             Mission m = Entreprise.findMissionById(id);
@@ -666,9 +673,9 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
               remplirListesCompetencesMission(m);
             jListAjouterCompetence.setSelectedIndex(0);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonAjouterCompActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonSupprCompActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprCompActionPerformed
         if(!jListCompetences.isSelectionEmpty()){
             //Get the actual Mission
             Mission m = Entreprise.findMissionById(id);
@@ -680,7 +687,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             remplirListesCompetencesMission(m);
             jListCompetences.setSelectedIndex(0);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonSupprCompActionPerformed
 
     private void jBtnEnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnregistrerActionPerformed
         // TODO add your handling code here:
@@ -697,9 +704,34 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBtnEnregistrerActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jButtonSupprParticipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprParticipActionPerformed
+        if(!jListParticipant.isSelectionEmpty()){
+            //Get the actual Mission
+            Mission m = Entreprise.findMissionById(id);
+            //Switch to ID to upd
+            int pId = Entreprise.getIdPersonnelByName(jListParticipant.getSelectedValue());
+            //System.out.println("ID :"+id);
+            String stringId = String.valueOf(pId);
+            m.supprimerPersonnel(stringId);
+            //Upd both List
+            remplirListesParticipants(m);
+            jListParticipant.setSelectedIndex(0);
+        }
+    }//GEN-LAST:event_jButtonSupprParticipActionPerformed
+
+    private void jButtonAddParticipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddParticipActionPerformed
+        if(!jListAjouterParticipant.isSelectionEmpty()){
+            //Get the actual Mission
+            Mission m = Entreprise.findMissionById(id);
+            //Switch to ID to upd
+            int pId = Entreprise.getIdPersonnelByName(jListAjouterParticipant.getSelectedValue());
+            String stringId = String.valueOf(pId);
+            m.ajouterPersonnel(stringId);
+            //Upd both List
+              remplirListesParticipants(m);
+            jListAjouterParticipant.setSelectedIndex(0);
+        }
+    }//GEN-LAST:event_jButtonAddParticipActionPerformed
     
     public boolean valide(){
         int ok = 0;
@@ -759,15 +791,15 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnDelMission;
     private javax.swing.JButton jBtnEnregistrer;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButtonAddParticip;
+    private javax.swing.JButton jButtonAjouterComp;
     private javax.swing.JButton jButtonEnd;
     private javax.swing.JButton jButtonInProg;
     private javax.swing.JButton jButtonPlan;
     private javax.swing.JButton jButtonPrepare;
+    private javax.swing.JButton jButtonSupprComp;
+    private javax.swing.JButton jButtonSupprParticip;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jListAjouterCompetence;
