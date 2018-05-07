@@ -147,6 +147,13 @@ public class Entreprise {
          
     }
     
+    public static int addMission(Mission m) {
+         int id = getLastId()+1;
+         missions.put(id, m);
+         return id;
+         
+    }
+    
     public static void removePersonnel (Personnel p, int id) {
         personnels.remove(id, p);
     }
@@ -158,8 +165,10 @@ public class Entreprise {
         personnelsUPD.get(id).setDateNaiss(dateNaiss);
     }
     
-    public static void updBasicValueMission (int id, Calendar dateDeb, Calendar dateFin){
+    public static void updBasicValueMission (int id, int NbMini, String nom, Calendar dateDeb, Calendar dateFin){
         HashMap<Integer, Mission> missionsUPD = missions;
+        missionsUPD.get(id).setNom(nom);
+        missionsUPD.get(id).setNbPersMin(NbMini);
         missionsUPD.get(id).setDateDebut(dateDeb);
         missionsUPD.get(id).setDateFinEstime(dateFin);
     }

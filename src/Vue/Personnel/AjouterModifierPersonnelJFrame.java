@@ -344,8 +344,9 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         this.cInd=cI;
         if(id==-1){
             setLabel(); //Définir les valeurs vides
-            remplirCompetenceEmpty();
+            //remplirCompetenceEmpty(); For 1 action creation with button cancel
             jPanelCompetence.setVisible(false);
+            this.pack();
         }
         else{
             //On modifie !
@@ -444,6 +445,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jTextFieldPrenom.setText("");
         jTextFieldDateEntree.setText("");
         jBtnDeletePers.setVisible(false);
+        
     }
     
     public String updateJtableCompetence(){

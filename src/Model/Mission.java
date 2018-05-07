@@ -103,10 +103,12 @@ public class Mission {
     }
     
     public void ajouterCompetence(String c){
+        System.out.println(c);
         // Regex pour matcher le code d'une Competence
-        Pattern p = Pattern.compile("[a-zA-Z]\\.\\d\\.");
+        Pattern p = Pattern.compile("[a-zA-Z]\\.\\d+\\.");
         Matcher m = p.matcher(c);
         if(m.matches()){
+            System.out.println(c);
             listeCompetences.add(c);
         }
     }
@@ -182,6 +184,14 @@ public class Mission {
 
     public String getNom() {
         return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setNbPersMin(int nbPersMin) {
+        this.nbPersMin = nbPersMin;
     }
 
     public String getDateDebutString() {

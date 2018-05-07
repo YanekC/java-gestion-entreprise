@@ -99,7 +99,7 @@ public class Menu2 extends javax.swing.JFrame {
         jPanelMission = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableMission = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jButtonAddMission = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanelCompetence = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -177,10 +177,10 @@ public class Menu2 extends javax.swing.JFrame {
         jTableMission.setModel(modelMissions);
         jScrollPane3.setViewportView(jTableMission);
 
-        jButton1.setText("Ajouter une mission");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAddMission.setText("Ajouter une mission");
+        jButtonAddMission.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonAddMissionActionPerformed(evt);
             }
         });
 
@@ -200,7 +200,7 @@ public class Menu2 extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(jButtonAddMission)
                 .addGap(18, 18, 18))
         );
         jPanelMissionLayout.setVerticalGroup(
@@ -209,7 +209,7 @@ public class Menu2 extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(jButtonAddMission)
                     .addComponent(jButton2))
                 .addContainerGap())
         );
@@ -281,10 +281,17 @@ public class Menu2 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTableDuPersonnelFocusLost
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AjouterMissionJFrame ajoutM = new AjouterMissionJFrame();
-        ajoutM.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButtonAddMissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddMissionActionPerformed
+         /*----- Ajouter une mission -----*/
+
+        //Get the id
+        int id = -1;
+        //Load Frame with selected ID
+        AjouterMissionJFrame apf = new AjouterMissionJFrame();
+        apf.setVisible(true);
+        /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+        apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0);
+    }//GEN-LAST:event_jButtonAddMissionActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          /*----- Modifier une personne sélectionné -----*/
@@ -498,8 +505,8 @@ public class Menu2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnModifier;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonAddMission;
     private javax.swing.JButton jButtonAjouterPersonne;
     private javax.swing.JPanel jPanelCompetence;
     private javax.swing.JPanel jPanelMission;

@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -61,9 +62,11 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         this.cInd=cI;
         if(id==-1){
             setLabel(); //Définir les valeurs vides
-            //remplirCompetenceEmpty();
+            //remplirCompetenceEmpty(); Besoin qu'en 1 action
             jPanelCompetences.setVisible(false);
             jPanelParticipants.setVisible(false);
+            this.pack();
+            
         }
         else{
             //On modifie !
@@ -75,6 +78,8 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
 
            jTextDateDeb.setText(m.getDateDebutString());
            jTextDateFin.setText(m.getDateFinEstimeString());
+           jTextFieldNom.setText(m.getNom());
+           jTextNbPersMin.setText(String.valueOf(m.getNbPersMin()));
            this.id = id; //Stock l'id pour la modification
            /* ---- Set current etat of the mission ------*/
            setEtatOfTheMission(m.getEtatString());
@@ -273,6 +278,11 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jButtonSupprParticip.setVisible(false);
         jButtonSupprComp.setVisible(false);
         jButtonAjouterComp.setVisible(false);
+        jTextFieldNom.setEnabled(false);
+        jTextNbPersMin.setEnabled(false);
+        jBtnEnregistrer.setText("Fermer");
+        jBtnDelMission.setVisible(false);
+        jBtnCancel.setVisible(false);
     }
     public void setEnableButton(Color color, JButton jBtn1, JButton jBtn2, JButton jBtn3, JButton jBtnToEnable){
         jBtn1.setEnabled(false);
@@ -299,6 +309,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextDateDeb = new javax.swing.JTextField();
         jTextDateFin = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldNom = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jTextNbPersMin = new javax.swing.JTextField();
         jPanelCompetences = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListCompetences = new javax.swing.JList<>();
@@ -320,7 +334,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jButtonAddParticip = new javax.swing.JButton();
         jPanelValidation = new javax.swing.JPanel();
         jBtnDelMission = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        jBtnCancel = new javax.swing.JButton();
         jBtnEnregistrer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -330,6 +344,16 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jLabel1.setText("Date de début");
 
         jLabel2.setText("Date de fin estimée");
+
+        jLabel3.setText("Nom de la mission");
+
+        jLabel4.setText("Nombre de personne minimum");
+
+        jTextNbPersMin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNbPersMinActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelGeneralLayout = new javax.swing.GroupLayout(jPanelGeneral);
         jPanelGeneral.setLayout(jPanelGeneralLayout);
@@ -342,20 +366,33 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
                         .addComponent(jTextDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelGeneralLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGeneralLayout.createSequentialGroup()
+                        .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextDateDeb, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextDateDeb)
+                            .addComponent(jTextFieldNom)
+                            .addComponent(jTextNbPersMin, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))))
                 .addGap(39, 39, 39))
         );
         jPanelGeneralLayout.setVerticalGroup(
             jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelGeneralLayout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextNbPersMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextDateDeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jTextDateDeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jTextDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -561,10 +598,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
 
         jBtnDelMission.setText("Supprimer la mission");
 
-        jButton6.setText("Annuler");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        jBtnCancel.setText("Annuler");
+        jBtnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                jBtnCancelActionPerformed(evt);
             }
         });
 
@@ -583,7 +620,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jBtnDelMission)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
-                .addComponent(jButton6)
+                .addComponent(jBtnCancel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBtnEnregistrer)
                 .addContainerGap())
@@ -594,7 +631,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelValidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnDelMission)
-                    .addComponent(jButton6)
+                    .addComponent(jBtnCancel)
                     .addComponent(jBtnEnregistrer))
                 .addContainerGap())
         );
@@ -657,9 +694,9 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonEndActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void jBtnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelActionPerformed
         dispose();
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_jBtnCancelActionPerformed
 
     private void jButtonAjouterCompActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterCompActionPerformed
           if(!jListAjouterCompetence.isSelectionEmpty()){
@@ -701,6 +738,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         if(jBtnEnregistrer.getText()=="Ajouter"){
             ajouter();
         }
+        //On est en mission terminé
+        if(jBtnEnregistrer.getText()=="Fermer"){
+            dispose();
+        }
     }//GEN-LAST:event_jBtnEnregistrerActionPerformed
 
     private void jButtonSupprParticipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprParticipActionPerformed
@@ -731,10 +772,33 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             jListAjouterParticipant.setSelectedIndex(0);
         }
     }//GEN-LAST:event_jButtonAddParticipActionPerformed
+
+    private void jTextNbPersMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNbPersMinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextNbPersMinActionPerformed
     
     public boolean valide(){
         int ok = 0;
-        //Test des daes
+         //Test du nom
+        if(jTextFieldNom.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Veuillez renseigner le nom de la mission");
+            return false;
+        }
+        else{ok++;}
+         //Test du nb Personne
+        if(jTextNbPersMin.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Veuillez renseigner le nombre de personne minimum de la mission");
+            return false;
+        }
+        else{
+            try{
+                int isInt = Integer.parseInt(jTextNbPersMin.getText());
+                ok++;
+            }catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "La valeur inséré n'est pas un nombre");
+            }
+        }
+        //Test des dates
         if(jTextDateDeb.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Veuillez renseigner la date de début");
             return false;
@@ -756,11 +820,14 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             e.printStackTrace();
         }
         //Tout les tests passent
-        return ok==3;
+        return ok==5;
     }
     
     public void modifier() throws ParseException{
         if(valide()){
+            
+           String nomMission = jTextFieldNom.getText();
+           int nbMini = Integer.parseInt(jTextNbPersMin.getText());
            //Récupère la date
            Calendar dateDeb = Calendar.getInstance();
            dateDeb.setTime(formatDate.parse(jTextDateDeb.getText()));
@@ -772,10 +839,12 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
            
            
            //upd the personnel with corresponding value
-           Entreprise.updBasicValueMission(this.id, dateDeb, dateFin);
+           Entreprise.updBasicValueMission(this.id, nbMini, nomMission, dateDeb, dateFin);
            //System.out.println(Entreprise.afficherPersonnel()); 
            
            /* ------ Update du Jtable ------*/
+           this.jtB.setValueAt(nomMission, this.rInd, this.cInd);
+           this.jtB.setValueAt(nbMini, this.rInd, this.cInd+3);
            this.jtB.setValueAt(dateDeDeb, this.rInd, this.cInd+1);
            this.jtB.setValueAt(dateDeFin, this.rInd, this.cInd+2);
            dispose(); //ferme la fenêtre
@@ -784,13 +853,68 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
 
     
     public void ajouter(){
+        /* ---- Valide alors je l'ajoute ---- */
+        if(valide()){
+            String nomMission = jTextFieldNom.getText();
+           int nbMini = Integer.parseInt(jTextNbPersMin.getText());
+           //Récupère la date
+           Calendar dateDeb = Calendar.getInstance();
+           String dateDeDeb = jTextDateDeb.getText();
+           
+           Calendar dateFin = Calendar.getInstance();
+           String dateDeFin = jTextDateFin.getText();
+           
+           Mission m = new Mission(nomMission, dateDeDeb, dateDeFin, dateDeFin, nbMini);
+           int idM = Entreprise.addMission(m);
+
+           /*-------- Ajout au Jtable ----------*/
+           String line = idM+";"+nomMission+";"+dateDeDeb+";"+dateDeFin+";"+nbMini+";"+m.getEtatString();
+            String[] laLigne = line.split(";");
+           ((DefaultTableModel) this.jtB.getModel()).addRow(laLigne);
+           // Focus sur la row pour la ré-ouvrir
+           int rowTofocus = getRowById(jtB, idM);
+           jtB.setColumnSelectionInterval(0,0);
+           jtB.setRowSelectionInterval(0,0);
+           jtB.changeSelection(rowTofocus, ICONIFIED, rootPaneCheckingEnabled, rootPaneCheckingEnabled);
+            
+           /* ---- Reload la frame pour passer en mode modifier et ajouter les compétences --- */
+            //Load Frame with selected ID
+            AjouterMissionJFrame apf = new AjouterMissionJFrame();
+            apf.setVisible(true);
+            /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+            apf.remplirFormMission(idM, jtB,jtB.getSelectedRow(), 0);   
+            dispose(); //ferme la fenêtre
+            }
+    }
+    
+    public int getRowById(JTable model, int jtId) {
         
+        int found = 0;
+        int idToFound = -1;
+
+        for (int i = model.getRowCount() - 1; i >= 0; --i) {
+            try{
+                Object colIdValue = model.getModel().getValueAt(jtB.convertRowIndexToModel(i), 0);
+                 
+                   //parse object to string then int
+                   String stringId = (String) colIdValue;
+                    idToFound = Integer.parseInt(stringId);
+                    //System.out.println("idToFind"+idToFound);
+            }catch(Exception e){} 
+                if (idToFound == jtId) {
+                    found = i;
+                    //System.out.println("fund"+found);
+                    break;
+                }
+           
+        }
+        return found;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnCancel;
     private javax.swing.JButton jBtnDelMission;
     private javax.swing.JButton jBtnEnregistrer;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButtonAddParticip;
     private javax.swing.JButton jButtonAjouterComp;
     private javax.swing.JButton jButtonEnd;
@@ -801,6 +925,8 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSupprParticip;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JList<String> jListAjouterCompetence;
     private javax.swing.JList<String> jListAjouterParticipant;
     private javax.swing.JList<String> jListCompetences;
@@ -818,5 +944,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField jTextDateDeb;
     private javax.swing.JTextField jTextDateFin;
+    private javax.swing.JTextField jTextFieldNom;
+    private javax.swing.JTextField jTextNbPersMin;
     // End of variables declaration//GEN-END:variables
 }
