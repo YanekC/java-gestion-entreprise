@@ -708,6 +708,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             //Upd both List
               remplirListesCompetencesMission(m);
             jListAjouterCompetence.setSelectedIndex(0);
+              remplirListesParticipants(m);
         }
     }//GEN-LAST:event_jButtonAjouterCompActionPerformed
 
@@ -722,6 +723,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             //Upd both List
             remplirListesCompetencesMission(m);
             jListCompetences.setSelectedIndex(0);
+            remplirListesParticipants(m);
         }
     }//GEN-LAST:event_jButtonSupprCompActionPerformed
 

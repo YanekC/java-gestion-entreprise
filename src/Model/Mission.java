@@ -6,6 +6,7 @@
 package Model;
 
 import static Model.Personnel.formatDate;
+import Util.DateModulable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -163,13 +164,7 @@ public class Mission {
     }
     
     public void updateEtat(){
-        Calendar today = Calendar.getInstance();
-        //On demarre la mission que si il y a assez de personnel
-        
-        System.out.println(formatDate.format(dateDebut.getTime()));
-        System.out.println(formatDate.format(today.getTime()));
-        System.out.println(formatDate.format(dateFinReel.getTime()));
-        
+        Calendar today = DateModulable.getDate();
         
         if(dateDebut.before(today)){
             this.etat = ETAT_EN_COURS;
@@ -218,6 +213,16 @@ public class Mission {
         return nbPersMin;
     }
     
+    public boolean persoParticipe(Integer idPers){
+        boolean ret = false;
+        for(String p : listePersonnels){
+            if(Integer.parseInt(p) == idPers){
+                ret = true;
+                break;
+            }
+        }
+        return ret;
+    }
     
     
     
