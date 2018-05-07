@@ -214,6 +214,17 @@ public class Entreprise {
         return monP;
     }
     
+    public static Competence getCompetenceById(String id){
+        Competence monC = null;
+        for(Map.Entry<String, Competence> c : competences.entrySet()){
+             if(c.getKey() == id){
+                monC = c.getValue();
+                break;
+             }
+        }
+        return monC;
+    }
+    
     public static void removeMission(int idM){ 
         Mission miss = findMissionById(idM); 
         HashMap<Integer, Personnel> personnelDeLaMission = getMissionPersonnel(miss); 

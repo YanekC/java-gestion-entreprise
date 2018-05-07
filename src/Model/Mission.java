@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.*;
 
@@ -34,10 +35,11 @@ public class Mission {
     private ArrayList<String> listePersonnels;
     private int nbPersMin;
     
-    public final int ETAT_PLANIFIE = 0;
-    public final int ETAT_EN_COURS = 1;
-    public final int ETAT_TERMINE = 2;
-    public final int ETAT_EN_PREPARATION = 3;
+    public final int ETAT_EN_PREPARATION = 0;
+    public final int ETAT_PLANIFIE = 1;
+    public final int ETAT_EN_COURS = 2;
+    public final int ETAT_TERMINE = 3;
+    
 
     public Mission(String nom, String dateDebut, String dateFinEstime, String dateFinReel, int nbPersMin) {
         
@@ -88,7 +90,7 @@ public class Mission {
          String etat = "";
         switch (this.etat){
             case ETAT_PLANIFIE :
-                etat = "Planifée";
+                etat = "Planifiée";
                 break;
             case ETAT_EN_COURS : 
                 etat = "En cours";
@@ -164,17 +166,94 @@ public class Mission {
     }
     
     public void updateEtat(){
+        System.err.println("UpdEtat");
         Calendar today = DateModulable.getDate();
-        
-        if(dateDebut.before(today)){
-            this.etat = ETAT_EN_COURS;
-            if(this.dateFinReel.before(today)){
-                this.etat = ETAT_TERMINE;
+        //Y a t'il assez de personne ?
+        ArrayList<String> personnels = getListePersonnels();
+        int nbPersonnel = personnels.size();
+        System.err.println("Personnel : "+personnels);
+        System.err.println("Nb perso : "+nbPersonnel);
+        System.out.println("Nb persomin : "+this.nbPersMin);
+        if(this.nbPersMin >= nbPersonnel){
+            if(isCompleteCompetence()){
+                //System.err.println("Check");
+                if(dateDebut.before(today)){
+                    this.etat = ETAT_EN_COURS;
+                    if(this.dateFinReel.before(today)){
+                        this.etat = ETAT_TERMINE;
+                    }
+                }
+                else{
+                    this.etat = ETAT_PLANIFIE;
+                }
             }
         }
         else{
-            this.etat = ETAT_PLANIFIE;
+            System.err.println("FALSE : ");
+            this.etat = ETAT_EN_PREPARATION;
         }
+        
+        
+    }
+    
+    public boolean isCompleteCompetence(){
+            ArrayList<String> comptToCheck = listeCompetences;
+            if(listeCompetences.isEmpty()){
+                return false;
+            }
+            else{
+                //Initialise à false les compétences
+                HashMap<String, Boolean> allVerified = null;
+                //System.err.println("Mes Comp :"+listeCompetences);
+                //System.err.println("comptToCheck :"+comptToCheck);
+                allVerified = setListeCompetenceToFalse(comptToCheck);  
+                //System.err.println("Jai passé all verified: "+allVerified);
+
+                //Récupère les personnels sur la mission
+                ArrayList<String> personnels = listePersonnels;
+                for(String idP : personnels){
+                    //Instancie chaque personnel
+                    Personnel p = Entreprise.getPersonnelById(Integer.valueOf(idP));
+                    //Pour chaque personnel on regarde chaque compétence
+                    ArrayList<String> compPerso = p.getListeCompetences();
+                    for(String idC : compPerso){
+                        //Pour chaque compétence à check on passe à true si la personne a la compétence
+                        for(String idCToCheck : comptToCheck){
+                            if(idC.equals(idCToCheck)){
+                                allVerified.put(idC, true);
+                            }
+                        }
+                    }
+
+
+                }  
+              
+                if(listeCompetenceVerified(allVerified)){
+                    return true;
+                }
+                else{
+                    return false;
+                } 
+            }
+    }
+    
+    public boolean listeCompetenceVerified(HashMap<String, Boolean> hsCheckComp){
+        for(Map.Entry<String, Boolean> hsC : hsCheckComp.entrySet()){
+            if(!hsC.getValue()){
+                 return false;
+            }
+        }
+        return true;  
+    }
+    
+    public HashMap setListeCompetenceToFalse(ArrayList<String> competences) {
+        System.err.println("SLCTF : "+competences);
+        HashMap<String, Boolean> hsToFalse = new HashMap();
+        System.err.println("Hashmap1 : ");
+        for(String idC : competences){
+                hsToFalse.put(idC, false);
+        }
+        return hsToFalse;
     }
 
     public String getNom() {

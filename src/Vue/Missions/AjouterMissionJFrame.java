@@ -263,7 +263,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     
     public void setEtatOfTheMission(String etat){
         switch(etat){
-            case "Planifée" : setEnableButton(Color.yellow, jButtonEnd, jButtonInProg, jButtonPrepare,jButtonPlan);break;
+            case "Planifiée" : setEnableButton(Color.yellow, jButtonEnd, jButtonInProg, jButtonPrepare,jButtonPlan);break;
             case "En cours" : disableMission();setEnableButton(Color.blue, jButtonEnd, jButtonPlan, jButtonPrepare, jButtonInProg);break;
             case "Terminée" : disableMission();setEnableButton(Color.green, jButtonPlan, jButtonInProg, jButtonPrepare, jButtonEnd);break;
             case "En préparation" : setEnableButton(Color.magenta, jButtonEnd, jButtonInProg, jButtonPlan, jButtonPrepare);break;
@@ -439,12 +439,12 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             .addGroup(jPanelCompetencesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelCompetencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
-                .addGroup(jPanelCompetencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonSupprComp, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonAjouterComp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelCompetencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonAjouterComp, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                    .addComponent(jButtonSupprComp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelCompetencesLayout.setVerticalGroup(
@@ -601,6 +601,11 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         );
 
         jBtnDelMission.setText("Supprimer la mission");
+        jBtnDelMission.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnDelMissionActionPerformed(evt);
+            }
+        });
 
         jBtnCancel.setText("Annuler");
         jBtnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -713,9 +718,13 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
               remplirListesCompetencesMission(m);
             jListAjouterCompetence.setSelectedIndex(0);
               remplirListesParticipants(m);
+              updateEtatMission();
         }
     }//GEN-LAST:event_jButtonAjouterCompActionPerformed
-
+    public void updateEtatMission(){
+       Mission m = Entreprise.findMissionById(id);
+       m.updateEtat();
+    }
     private void jButtonSupprCompActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprCompActionPerformed
         if(!jListCompetences.isSelectionEmpty()){
             //Get the actual Mission
@@ -728,6 +737,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             remplirListesCompetencesMission(m);
             jListCompetences.setSelectedIndex(0);
             remplirListesParticipants(m);
+            
         }
     }//GEN-LAST:event_jButtonSupprCompActionPerformed
 
@@ -762,7 +772,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             //Upd both List
             remplirListesParticipants(m);
             jListParticipant.setSelectedIndex(0);
+            updateEtatMission();
+            updateEtatMission();
         }
+        
     }//GEN-LAST:event_jButtonSupprParticipActionPerformed
 
     private void jButtonAddParticipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddParticipActionPerformed
@@ -782,6 +795,18 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     private void jTextNbPersMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNbPersMinActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextNbPersMinActionPerformed
+
+    private void jBtnDelMissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDelMissionActionPerformed
+         //Get the actual mission
+        try{
+        Entreprise.removeMission(id);
+        int rowToDel = this.jtB.convertRowIndexToModel(rInd);
+        ((DefaultTableModel)this.jtB.getModel()).removeRow(rowToDel);
+        }catch(Exception e){System.out.println(e.getMessage());}
+        jtB.setColumnSelectionInterval(0,0);
+        jtB.setRowSelectionInterval(0,0);
+        dispose();
+    }//GEN-LAST:event_jBtnDelMissionActionPerformed
     
     public boolean valide(){
         int ok = 0;
