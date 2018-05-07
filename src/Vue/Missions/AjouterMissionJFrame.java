@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -128,11 +129,12 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
          /*---- Fill Personnel ------*/
         //Define model
         DefaultListModel modelAddCompetence = new DefaultListModel();
-        HashMap<String, Personnel> unaddedPersonnel = getUnAddedPersonnel(addedPersonnel);
-        for(Map.Entry<String, Personnel> personnel : unaddedPersonnel.entrySet()) {
+        ArrayList<Integer> unaddedPersonnel = getUnAddedPersonnel(addedPersonnel);
+        for(int idP : unaddedPersonnel ) {
+            Personnel p = Entreprise.getPersonnelById(idP);
             try{
                 //Nom
-            String nomPers = personnel.getValue().getNom()+" "+ personnel.getValue().getPrenom();
+            String nomPers = p.getNom()+" "+ p.getPrenom();
             modelAddCompetence.addElement(nomPers);
             }catch(Exception e){System.out.println(e.getMessage());}
             
@@ -141,20 +143,22 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jListAjouterParticipant.setModel(modelAddCompetence);
     }
     
-    public HashMap getUnAddedPersonnel(HashMap<String, Personnel> addedPersonnel){
+    public ArrayList getUnAddedPersonnel(HashMap<String, Personnel> addedPersonnel){
        /*--- Get unknown skill ---- */
-       //New Hashmap
-       HashMap<Integer, Personnel> unAddedPersonnel= new HashMap();
+       Mission m = Entreprise.findMissionById(id);
+       //New ArrayList
+       ArrayList<Integer> unAddedPersonnel= new ArrayList();
        //Get all skill from enterprise
-       HashMap<Integer, Personnel> personnelEntreprise = Entreprise.getlistePersonnel();
+       ArrayList<Integer> personnelEntreprise = Entreprise.getPersonnelSuggere(m);
        //compare with skill of the mission
-       for(Map.Entry<Integer, Personnel> personnel : personnelEntreprise.entrySet()) {
+       for(int idP : personnelEntreprise) {
             try{
-               if(!addedPersonnel.containsKey(personnel.getKey())){
+               if(!addedPersonnel.containsKey(idP)){
+                    Personnel p = Entreprise.getPersonnelById(idP);
                     //Nom
-                    String nomPers = personnel.getValue().getNom()+" "+ personnel.getValue().getPrenom();
-                    //Set the hasmap with the competence
-                    unAddedPersonnel.put(personnel.getKey(), personnelEntreprise.get(personnel.getKey()));
+                    String nomPers = p.getNom()+" "+ p.getPrenom();
+                    //Set the hasmap with the personnel
+                    unAddedPersonnel.add(idP);
                     //unAddedPersonnel.put(idPersonnels,personnels.get(idPersonnels));
                }
             }catch(Exception e){System.out.println(e.getMessage());}

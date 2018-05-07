@@ -202,6 +202,28 @@ public class Entreprise {
         }
         return idP;
     }
+    
+    public static Personnel getPersonnelById(int id){
+        Personnel monP = null;
+        for(Map.Entry<Integer, Personnel> p : personnels.entrySet()){
+             if(p.getKey() == id){
+                monP = p.getValue();
+                break;
+             }
+        }
+        return monP;
+    }
+    
+    public static void removeMission(int idM){ 
+        Mission miss = findMissionById(idM); 
+        HashMap<Integer, Personnel> personnelDeLaMission = getMissionPersonnel(miss); 
+
+        for(Map.Entry<Integer, Personnel> pers : personnelDeLaMission.entrySet()){ 
+        miss.supprimerPersonnel(String.valueOf(pers.getKey())); 
+        } 
+
+        missions.remove(idM); 
+    }
 
     public static HashMap<Integer, Mission> getMissions() {
         for(Map.Entry m : missions.entrySet()){
