@@ -162,7 +162,7 @@ public class Menu2 extends javax.swing.JFrame {
                 .addGroup(jPanelPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAjouterPersonne)
                     .addComponent(jBtnModifier))
-                .addGap(0, 16, Short.MAX_VALUE))
+                .addGap(0, 23, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Gestion du personnel", jPanelPersonnel);
@@ -175,6 +175,7 @@ public class Menu2 extends javax.swing.JFrame {
         modelMissions.addColumn("Personnel Néccessaire");
         modelMissions.addColumn("Etat");
         jTableMission.setModel(modelMissions);
+        jTableMission.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(jTableMission);
 
         jButtonAddMission.setText("Ajouter une mission");
@@ -232,7 +233,7 @@ public class Menu2 extends javax.swing.JFrame {
             jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCompetenceLayout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 44, Short.MAX_VALUE))
+                .addGap(0, 58, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Gestion des compétences", jPanelCompetence);

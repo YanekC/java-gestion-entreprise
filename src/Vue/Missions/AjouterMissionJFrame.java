@@ -254,7 +254,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     
     public void setColorToPanel(JButton jBtn, Color color){
         jBtn.setBackground(color);
-        jBtn.setForeground(Color.GRAY);
+        jBtn.setForeground(Color.BLACK);
     }
     
     public void setEtatOfTheMission(String etat){
