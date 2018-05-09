@@ -138,14 +138,14 @@ public class Entreprise {
     
     
     public static int addPersonnel(Personnel p) {
-         int id = getLastId()+1;
+         int id = getLastIdPersonnel()+1;
          personnels.put(id, p);
          return id;
          
     }
     
     public static int addMission(Mission m) {
-         int id = getLastId()+1;
+         int id = getLastIdMission()+1;
          missions.put(id, m);
          return id;
          
@@ -172,13 +172,22 @@ public class Entreprise {
     
     
     
-    public static int getLastId(){
+    public static int getLastIdPersonnel(){
         int id=0;
         for(Map.Entry p : personnels.entrySet()){
              id=(Integer) p.getKey();
         }
         return id;
     }
+    
+    public static int getLastIdMission(){
+        int id=0;
+        for(Map.Entry p : missions.entrySet()){
+             id=(Integer) p.getKey();
+        }
+        return id;
+    }
+    
     
     public static String getIdCompetenceByFrName(String nameFr){
         String idC = "";

@@ -166,17 +166,12 @@ public class Mission {
     }
     
     public void updateEtat(){
-        System.err.println("UpdEtat");
         Calendar today = DateModulable.getDate();
         //Y a t'il assez de personne ?
         ArrayList<String> personnels = getListePersonnels();
         int nbPersonnel = personnels.size();
-        System.err.println("Personnel : "+personnels);
-        System.err.println("Nb perso : "+nbPersonnel);
-        System.out.println("Nb persomin : "+this.nbPersMin);
         if(this.nbPersMin >= nbPersonnel){
             if(isCompleteCompetence()){
-                //System.err.println("Check");
                 if(dateDebut.before(today)){
                     this.etat = ETAT_EN_COURS;
                     if(this.dateFinReel.before(today)){
@@ -189,7 +184,6 @@ public class Mission {
             }
         }
         else{
-            System.err.println("FALSE : ");
             this.etat = ETAT_EN_PREPARATION;
         }
         

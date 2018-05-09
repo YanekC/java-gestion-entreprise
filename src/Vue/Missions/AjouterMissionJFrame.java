@@ -724,6 +724,8 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     public void updateEtatMission(){
        Mission m = Entreprise.findMissionById(id);
        m.updateEtat();
+       String etat = m.getEtatString();
+       setEtatOfTheMission(etat);
     }
     private void jButtonSupprCompActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprCompActionPerformed
         if(!jListCompetences.isSelectionEmpty()){
@@ -772,7 +774,6 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             //Upd both List
             remplirListesParticipants(m);
             jListParticipant.setSelectedIndex(0);
-            updateEtatMission();
             updateEtatMission();
         }
         
