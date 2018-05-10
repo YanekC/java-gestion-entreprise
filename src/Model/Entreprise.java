@@ -234,6 +234,21 @@ public class Entreprise {
         return monC;
     }
     
+    public static HashMap<Integer, Personnel> getPersoSansMiss(){
+        HashMap<Integer, Personnel> ret = new HashMap<>();
+        for(Map.Entry perso : personnels.entrySet()){
+            for(Map.Entry miss : missions.entrySet()){
+                if(((Mission)miss.getValue()).persoParticipe((int)perso.getKey())){
+                    ret.put((Integer)perso.getKey(), (Personnel)perso.getValue());
+                    break;
+                }
+            }
+        }
+        return ret;
+    }
+    
+    
+    
     public static void removeMission(int idM){ 
         Mission miss = findMissionById(idM); 
         HashMap<Integer, Personnel> personnelDeLaMission = getMissionPersonnel(miss); 

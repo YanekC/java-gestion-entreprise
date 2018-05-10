@@ -68,6 +68,7 @@ public class Menu2 extends javax.swing.JFrame {
         remplirTableauMissions();
         remplirTableauCompetences();
         remplirTableauMissionsSynth();
+        remplirListePersoSansMiss();
         
 
         
@@ -117,6 +118,8 @@ public class Menu2 extends javax.swing.JFrame {
         jList1 = new javax.swing.JList<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabelTotMiss = new javax.swing.JLabel();
+        jLabelTotSansMiss = new javax.swing.JLabel();
         jPanelMission = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableMission = new javax.swing.JTable();
@@ -217,6 +220,10 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jLabel7.setText("Nombre total de missions :");
 
+        jLabelTotMiss.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+
+        jLabelTotSansMiss.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+
         javax.swing.GroupLayout jPanelTdBLayout = new javax.swing.GroupLayout(jPanelTdB);
         jPanelTdB.setLayout(jPanelTdBLayout);
         jPanelTdBLayout.setHorizontalGroup(
@@ -227,12 +234,18 @@ public class Menu2 extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addGroup(jPanelTdBLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelTotMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addGroup(jPanelTdBLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelTotSansMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelTdBLayout.setVerticalGroup(
@@ -249,9 +262,12 @@ public class Menu2 extends javax.swing.JFrame {
                     .addComponent(jScrollPane5)
                     .addComponent(jScrollPane4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel6))
+                .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel6))
+                    .addComponent(jLabelTotMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelTotSansMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -613,11 +629,15 @@ public class Menu2 extends javax.swing.JFrame {
         DefaultTableModel modelMission = (DefaultTableModel) jTableSyntheseMission.getModel();
         modelMission.setRowCount(0);
         
+        int cpt = 0;
+        
         for(Map.Entry m : Entreprise.getMissions().entrySet()){
             Mission miss = (Mission)m.getValue();
             String[] line = {String.valueOf(m.getKey()), miss.getNom(), miss.getEtatString()};
             ((DefaultTableModel) jTableSyntheseMission.getModel()).addRow(line);
+            cpt++;
         }
+        jLabelTotMiss.setText(String.valueOf(cpt));
         jTableSyntheseMission.setAutoCreateRowSorter(true);
         
         /* ---- Masquer column ID ---- */
@@ -641,6 +661,20 @@ public class Menu2 extends javax.swing.JFrame {
         }
         jTableCompetences.setAutoCreateRowSorter(true);
         
+    }
+    
+    public void remplirListePersoSansMiss(){
+        HashMap<Integer, Personnel> liste = Entreprise.getPersoSansMiss();
+        DefaultListModel modelListeSansMiss = new DefaultListModel();
+        int cpt = 0;
+        for(Map.Entry<Integer, Personnel> perso : liste.entrySet()) {
+            //Fr lib
+            String p = perso.getValue().getNom()+" "+perso.getValue().getPrenom();
+            modelListeSansMiss.addElement(p);
+            cpt++;
+        }
+        jList1.setModel(modelListeSansMiss);
+        jLabelTotSansMiss.setText(String.valueOf(cpt));
     }
     
     public void updateDate(){
@@ -716,6 +750,8 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabelTotMiss;
+    private javax.swing.JLabel jLabelTotSansMiss;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanelCompetence;
     private javax.swing.JPanel jPanelMission;
