@@ -7,6 +7,7 @@ package Model;
 
 import static Model.Personnel.formatDate;
 import Util.DateModulable;
+import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -103,6 +104,29 @@ public class Mission {
                 break;
         }
         return etat;
+    }
+    
+    public static Color getCouleurEtat(String etat){
+        Color ret = null;
+        switch (etat){
+            case "Planifiée" :
+                //Jaune
+                ret = new Color(244, 66, 66);
+                break;
+            case "En cours" :
+                //Bleu
+                ret = new Color(65, 142, 244);
+                break;
+            case "Terminée" : 
+                //Vert
+                ret = new Color(65, 244, 86);
+                break;
+            case "En préparation" : 
+                //Rouge
+                ret = new Color(244, 66, 66);
+                break;
+        }
+        return ret;
     }
     
     public void ajouterCompetence(String c){

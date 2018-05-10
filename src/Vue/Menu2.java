@@ -14,6 +14,9 @@ import Vue.Competences.AjouterCompetenceJFrame;
 import Vue.Missions.AjouterMissionJFrame;
 import Vue.Personnel.AjouterModifierPersonnelJFrame;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
@@ -24,9 +27,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -60,6 +66,7 @@ public class Menu2 extends javax.swing.JFrame {
         remplirTableauPersonnel();
         remplirTableauMissions();
         remplirTableauCompetences();
+        remplirTableauMissionsSynth();
         
 
         
@@ -95,17 +102,30 @@ public class Menu2 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelTitre = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jTabbedPane = new javax.swing.JTabbedPane();
-        jPanelPersonnel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableDuPersonnel = new javax.swing.JTable();
-        jButtonAjouterPersonne = new javax.swing.JButton();
-        jBtnModifier = new javax.swing.JButton();
+        jPanelTdB = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTableSyntheseMission = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jPanelMission = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableMission = new javax.swing.JTable();
         jButtonAddMission = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jPanelPersonnel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableDuPersonnel = new javax.swing.JTable();
+        jButtonAjouterPersonne = new javax.swing.JButton();
+        jBtnModifier = new javax.swing.JButton();
         jPanelCompetence = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCompetences = new javax.swing.JTable();
@@ -120,6 +140,175 @@ public class Menu2 extends javax.swing.JFrame {
         jButtonJourMoins = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanelTitre.setBackground(new java.awt.Color(61, 95, 173));
+
+        jLabel2.setFont(new java.awt.Font("Calibri", 0, 75)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Nom de l'entreprise");
+
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setPreferredSize(new java.awt.Dimension(42, 42));
+        ImageIcon icon = new ImageIcon("resources\\images\\reglage_icon.png") ;
+        Image img = icon.getImage();
+        Image newimg = img.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH) ;
+        icon = new ImageIcon( newimg );
+        jButton1.setIcon(icon);
+
+        javax.swing.GroupLayout jPanelTitreLayout = new javax.swing.GroupLayout(jPanelTitre);
+        jPanelTitre.setLayout(jPanelTitreLayout);
+        jPanelTitreLayout.setHorizontalGroup(
+            jPanelTitreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTitreLayout.createSequentialGroup()
+                .addGap(114, 114, 114)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanelTitreLayout.setVerticalGroup(
+            jPanelTitreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTitreLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelTitreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanelTitre, java.awt.BorderLayout.PAGE_START);
+
+        jTabbedPane.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPane.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+
+        jPanelTdB.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel3.setFont(new java.awt.Font("Calibri", 0, 48)); // NOI18N
+        jLabel3.setText("Bienvenue");
+
+        jLabel4.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
+        jLabel4.setText("Vos Missions : ");
+
+        jScrollPane4.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane4.getViewport().setBackground(Color.WHITE);
+
+        DefaultTableModel modelSynthMissions = new DefaultTableModel();
+        modelSynthMissions.addColumn("Id");
+        modelSynthMissions.addColumn("Nom de la mission");
+        modelSynthMissions.addColumn("Etat");
+        jTableSyntheseMission.setModel(modelSynthMissions);
+        jTableSyntheseMission.setGridColor(new java.awt.Color(102, 102, 102));
+        jTableSyntheseMission.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane4.setViewportView(jTableSyntheseMission);
+
+        jLabel5.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
+        jLabel5.setText("Ils n'ont aucune mission : ");
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Jean Leguin", "Bernard Tapis", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane5.setViewportView(jList1);
+
+        jLabel6.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        jLabel6.setText("Nombre de personnels non-affectés:");
+
+        jLabel7.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        jLabel7.setText("Nombre total de missions :");
+
+        javax.swing.GroupLayout jPanelTdBLayout = new javax.swing.GroupLayout(jPanelTdB);
+        jPanelTdB.setLayout(jPanelTdBLayout);
+        jPanelTdBLayout.setHorizontalGroup(
+            jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTdBLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addContainerGap())
+        );
+        jPanelTdBLayout.setVerticalGroup(
+            jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTdBLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane5)
+                    .addComponent(jScrollPane4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        jTabbedPane.addTab("Tableau de bord", jPanelTdB);
+
+        DefaultTableModel modelMissions = new DefaultTableModel();
+        modelMissions.addColumn("Id");
+        modelMissions.addColumn("Nom de la mission");
+        modelMissions.addColumn("Date de début");
+        modelMissions.addColumn("Date de fin estimée");
+        modelMissions.addColumn("Personnel Néccessaire");
+        modelMissions.addColumn("Etat");
+        jTableMission.setModel(modelMissions);
+        jTableMission.setRowHeight(jTableMission.getRowHeight() + 7);
+        jTableMission.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane3.setViewportView(jTableMission);
+
+        jButtonAddMission.setText("Ajouter une mission");
+        jButtonAddMission.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddMissionActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Modifier");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelMissionLayout = new javax.swing.GroupLayout(jPanelMission);
+        jPanelMission.setLayout(jPanelMissionLayout);
+        jPanelMissionLayout.setHorizontalGroup(
+            jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMissionLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonAddMission)
+                .addGap(18, 18, 18))
+        );
+        jPanelMissionLayout.setVerticalGroup(
+            jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMissionLayout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAddMission)
+                    .addComponent(jButton2))
+                .addContainerGap())
+        );
+
+        jTabbedPane.addTab("Gestion des missions", jPanelMission);
 
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
@@ -128,6 +317,7 @@ public class Menu2 extends javax.swing.JFrame {
         model.addColumn("Date d'embauche");
         model.addColumn("Compétences");
         jTableDuPersonnel.setModel(model);
+        jTableDuPersonnel.setRowHeight(jTableDuPersonnel.getRowHeight() + 7);
         jTableDuPersonnel.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableDuPersonnel.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -160,7 +350,7 @@ public class Menu2 extends javax.swing.JFrame {
         jPanelPersonnel.setLayout(jPanelPersonnelLayout);
         jPanelPersonnelLayout.setHorizontalGroup(
             jPanelPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPersonnelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBtnModifier)
@@ -176,78 +366,29 @@ public class Menu2 extends javax.swing.JFrame {
                 .addGroup(jPanelPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAjouterPersonne)
                     .addComponent(jBtnModifier))
-                .addGap(0, 23, Short.MAX_VALUE))
+                .addGap(0, 70, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Gestion du personnel", jPanelPersonnel);
-
-        DefaultTableModel modelMissions = new DefaultTableModel();
-        modelMissions.addColumn("Id");
-        modelMissions.addColumn("Nom de la mission");
-        modelMissions.addColumn("Date de début");
-        modelMissions.addColumn("Date de fin estimée");
-        modelMissions.addColumn("Personnel Néccessaire");
-        modelMissions.addColumn("Etat");
-        jTableMission.setModel(modelMissions);
-        jTableMission.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane3.setViewportView(jTableMission);
-
-        jButtonAddMission.setText("Ajouter une mission");
-        jButtonAddMission.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddMissionActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Modifier");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelMissionLayout = new javax.swing.GroupLayout(jPanelMission);
-        jPanelMission.setLayout(jPanelMissionLayout);
-        jPanelMissionLayout.setHorizontalGroup(
-            jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMissionLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonAddMission)
-                .addGap(18, 18, 18))
-        );
-        jPanelMissionLayout.setVerticalGroup(
-            jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMissionLayout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAddMission)
-                    .addComponent(jButton2))
-                .addContainerGap())
-        );
-
-        jTabbedPane.addTab("Gestion des missions", jPanelMission);
 
         DefaultTableModel model2 = new DefaultTableModel();
         model2.addColumn("Dénomination anglaise");
         model2.addColumn("Dénomination française");
         jTableCompetences.setModel(model2);
+        jTableCompetences.setRowHeight(jTableCompetences.getRowHeight() + 7);
         jScrollPane2.setViewportView(jTableCompetences);
 
         javax.swing.GroupLayout jPanelCompetenceLayout = new javax.swing.GroupLayout(jPanelCompetence);
         jPanelCompetence.setLayout(jPanelCompetenceLayout);
         jPanelCompetenceLayout.setHorizontalGroup(
             jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE)
         );
         jPanelCompetenceLayout.setVerticalGroup(
             jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCompetenceLayout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 58, Short.MAX_VALUE))
+                .addGap(0, 105, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Gestion des compétences", jPanelCompetence);
@@ -319,7 +460,7 @@ public class Menu2 extends javax.swing.JFrame {
                         .addGroup(jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButtonAn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonAnMoins, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(522, Short.MAX_VALUE))
+                .addContainerGap(571, Short.MAX_VALUE))
         );
         jPanelModifDateLayout.setVerticalGroup(
             jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,21 +479,12 @@ public class Menu2 extends javax.swing.JFrame {
                     .addComponent(jButtonJourMoins)
                     .addComponent(jButtonMoisMoins)
                     .addComponent(jButtonAnMoins))
-                .addContainerGap(367, Short.MAX_VALUE))
+                .addContainerGap(428, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Modifier la date", jPanelModifDate);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        getContentPane().add(jTabbedPane, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -594,6 +726,29 @@ public class Menu2 extends javax.swing.JFrame {
         
     }
     
+    public void remplirTableauMissionsSynth() throws Exception {
+        
+        DefaultTableModel modelMission = (DefaultTableModel) jTableSyntheseMission.getModel();
+        modelMission.setRowCount(0);
+        
+        for(Map.Entry m : Entreprise.getMissions().entrySet()){
+            Mission miss = (Mission)m.getValue();
+            String[] line = {String.valueOf(m.getKey()), miss.getNom(), miss.getEtatString()};
+            ((DefaultTableModel) jTableSyntheseMission.getModel()).addRow(line);
+        }
+        jTableSyntheseMission.setAutoCreateRowSorter(true);
+        
+        /* ---- Masquer column ID ---- */
+        TableColumnModel tcm = jTableSyntheseMission.getColumnModel();
+        if(tcm.getColumnCount()==3){
+            tcm.removeColumn(tcm.getColumn(0));
+        }
+        jTableSyntheseMission.setRowHeight(jTableSyntheseMission.getRowHeight() + 7);
+        jTableSyntheseMission.getColumnModel().getColumn(1).setCellRenderer(r);
+        
+    }
+    
+    
     public void remplirTableauCompetences() throws Exception {
         HashMap<String, Competence> lesCompetences = Entreprise.getCompetences();
         
@@ -612,10 +767,23 @@ public class Menu2 extends javax.swing.JFrame {
         jTextFieldDate.setText(DateModulable.getDateString());
         try {
             remplirTableauMissions();
+            remplirTableauMissionsSynth();
         } catch (Exception ex) {
             Logger.getLogger(Menu2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    DefaultTableCellRenderer r = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object
+                value, boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, column);
+                String etat = (String)value;
+                setBackground(Mission.getCouleurEtat(etat));
+                return this;
+            }
+        };
     
     /**
      * @param args the command line arguments
@@ -659,6 +827,7 @@ public class Menu2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnModifier;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAddMission;
     private javax.swing.JButton jButtonAjouterPersonne;
@@ -669,17 +838,29 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JButton jButtonMois;
     private javax.swing.JButton jButtonMoisMoins;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanelCompetence;
     private javax.swing.JPanel jPanelMission;
     private javax.swing.JPanel jPanelModifDate;
     private javax.swing.JPanel jPanelPersonnel;
+    private javax.swing.JPanel jPanelTdB;
+    private javax.swing.JPanel jPanelTitre;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTable jTableCompetences;
     private javax.swing.JTable jTableDuPersonnel;
     private javax.swing.JTable jTableMission;
+    private javax.swing.JTable jTableSyntheseMission;
     private javax.swing.JTextField jTextFieldDate;
     // End of variables declaration//GEN-END:variables
 }
