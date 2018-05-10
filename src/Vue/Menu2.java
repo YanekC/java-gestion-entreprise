@@ -12,6 +12,7 @@ import Model.Personnel;
 import Util.DateModulable;
 import Vue.Competences.AjouterCompetenceJFrame;
 import Vue.Missions.AjouterMissionJFrame;
+import Vue.Parametres.ParametreJFrame;
 import Vue.Personnel.AjouterModifierPersonnelJFrame;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -155,6 +156,11 @@ public class Menu2 extends javax.swing.JFrame {
         Image newimg = img.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH) ;
         icon = new ImageIcon( newimg );
         jButton1.setIcon(icon);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelTitreLayout = new javax.swing.GroupLayout(jPanelTitre);
         jPanelTitre.setLayout(jPanelTitreLayout);
@@ -199,6 +205,7 @@ public class Menu2 extends javax.swing.JFrame {
         modelSynthMissions.addColumn("Etat");
         jTableSyntheseMission.setModel(modelSynthMissions);
         jTableSyntheseMission.setGridColor(new java.awt.Color(102, 102, 102));
+        jTableSyntheseMission.setRowHeight(jTableSyntheseMission.getRowHeight() + 7);
         jTableSyntheseMission.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane4.setViewportView(jTableSyntheseMission);
 
@@ -572,6 +579,11 @@ public class Menu2 extends javax.swing.JFrame {
        DateModulable.inc(-1,0,0);
         updateDate();
     }//GEN-LAST:event_jButtonJourMoinsActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ParametreJFrame pFrame = new ParametreJFrame(this);
+        pFrame.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     private int getColZeroValueHover(int row, int col){
         //get row pointed of pointer
@@ -743,7 +755,6 @@ public class Menu2 extends javax.swing.JFrame {
         if(tcm.getColumnCount()==3){
             tcm.removeColumn(tcm.getColumn(0));
         }
-        jTableSyntheseMission.setRowHeight(jTableSyntheseMission.getRowHeight() + 7);
         jTableSyntheseMission.getColumnModel().getColumn(1).setCellRenderer(r);
         
     }
@@ -762,7 +773,7 @@ public class Menu2 extends javax.swing.JFrame {
         
     }
     
-    private void updateDate(){
+    public void updateDate(){
         //System.out.println(DateModulable.getDateString());
         jTextFieldDate.setText(DateModulable.getDateString());
         try {
