@@ -18,6 +18,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
@@ -283,6 +284,11 @@ public class Menu2 extends javax.swing.JFrame {
         jTableMission.setModel(modelMissions);
         jTableMission.setRowHeight(jTableMission.getRowHeight() + 7);
         jTableMission.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableMission.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMissionMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableMission);
 
         jButtonAddMission.setText("Ajouter une mission");
@@ -470,6 +476,20 @@ public class Menu2 extends javax.swing.JFrame {
         ParametreJFrame pFrame = new ParametreJFrame(this);
         pFrame.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTableMissionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMissionMouseClicked
+        JTable table =(JTable) evt.getSource();
+        Point point = evt.getPoint();
+        int row = table.rowAtPoint(point);
+        if (evt.getClickCount() == 2 && table.getSelectedRow() != -1) {
+            int id = getColZeroValueSelectedMission();
+            
+            AjouterMissionJFrame apf = new AjouterMissionJFrame();
+            apf.setVisible(true);
+            /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+            apf.remplirFormMission(id, table, row, 0);
+        }
+    }//GEN-LAST:event_jTableMissionMouseClicked
     
     private int getColZeroValueHover(int row, int col){
         //get row pointed of pointer
@@ -620,7 +640,7 @@ public class Menu2 extends javax.swing.JFrame {
         if(tcm.getColumnCount()==6){
             tcm.removeColumn(tcm.getColumn(0));
         }
-        
+        jTableMission.getColumnModel().getColumn(4).setCellRenderer(r);
         
     }
     
