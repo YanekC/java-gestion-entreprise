@@ -17,6 +17,7 @@ import Vue.Personnel.AjouterModifierPersonnelJFrame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -663,8 +664,8 @@ public class Menu2 extends javax.swing.JFrame {
             tcm.removeColumn(tcm.getColumn(0));
         }
         jTableMission.getColumnModel().getColumn(4).setCellRenderer(rMissionEtat);
-        jTableMission.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
-        jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JCheckBox()));
+        jTableMission.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer());
+        jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox()));
         
     }
     
@@ -743,23 +744,27 @@ public class Menu2 extends javax.swing.JFrame {
             }
         };
   
-    public class ButtonRenderer extends JButton implements TableCellRenderer {
+    public class ButtonModifierRenderer extends JButton implements TableCellRenderer {
 
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean isFocus, int row, int col) {
-            //On écrit dans le bouton ce que contient la cellule
-            setText("Modifier");
+            
+            ImageIcon icon = new ImageIcon("resources\\images\\pencil.png") ;  
+            Image img = icon.getImage();
+            Image newimg = img.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH) ;  
+            icon = new ImageIcon( newimg );
+            setIcon(icon);
             //On retourne notre bouton
             return this;
         }
     }
     
-    public class ButtonEditor extends DefaultCellEditor {
+    public class ButtonModifierEditor extends DefaultCellEditor {
 
         protected JButton button;
         private ButtonListener bListener = new ButtonListener();
 
         //Constructeur avec une CheckBox
-        public ButtonEditor(JCheckBox checkBox) {
+        public ButtonModifierEditor(JCheckBox checkBox) {
             //Par défaut, ce type d'objet travaille avec un JCheckBox
             super(checkBox);
             //On crée à nouveau un bouton
