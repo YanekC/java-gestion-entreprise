@@ -19,6 +19,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
@@ -28,9 +30,11 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonModel;
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -286,6 +290,7 @@ public class Menu2 extends javax.swing.JFrame {
         modelMissions.addColumn("Date de fin estimée");
         modelMissions.addColumn("Personnel Néccessaire");
         modelMissions.addColumn("Etat");
+        modelMissions.addColumn("Supprimer");
         jTableMission.setModel(modelMissions);
         jTableMission.setRowHeight(jTableMission.getRowHeight() + 7);
         jTableMission.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -645,17 +650,21 @@ public class Menu2 extends javax.swing.JFrame {
         
         for(Map.Entry m : Entreprise.getMissions().entrySet()){
             Mission miss = (Mission)m.getValue();
-            String[] line = {String.valueOf(m.getKey()), miss.getNom(), miss.getDateDebutString(), miss.getDateFinEstimeString(), String.valueOf(miss.getNbPersMin()), miss.getEtatString()};
+            Object[] line = {String.valueOf(m.getKey()), miss.getNom(), miss.getDateDebutString(), 
+                miss.getDateFinEstimeString(), String.valueOf(miss.getNbPersMin()),
+                miss.getEtatString(), "Modifier"};
             ((DefaultTableModel) jTableMission.getModel()).addRow(line);
         }
         jTableMission.setAutoCreateRowSorter(true);
         
         /* ---- Masquer column ID ---- */
         TableColumnModel tcm = jTableMission.getColumnModel();
-        if(tcm.getColumnCount()==6){
+        if(tcm.getColumnCount()==7){
             tcm.removeColumn(tcm.getColumn(0));
         }
-        jTableMission.getColumnModel().getColumn(4).setCellRenderer(r);
+        jTableMission.getColumnModel().getColumn(4).setCellRenderer(rMissionEtat);
+        jTableMission.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
+        jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JCheckBox()));
         
     }
     
@@ -680,7 +689,7 @@ public class Menu2 extends javax.swing.JFrame {
         if(tcm.getColumnCount()==3){
             tcm.removeColumn(tcm.getColumn(0));
         }
-        jTableSyntheseMission.getColumnModel().getColumn(1).setCellRenderer(r);
+        jTableSyntheseMission.getColumnModel().getColumn(1).setCellRenderer(rMissionEtat);
         
     }
     
@@ -721,7 +730,7 @@ public class Menu2 extends javax.swing.JFrame {
         }
     }
     
-    DefaultTableCellRenderer r = new DefaultTableCellRenderer() {
+    DefaultTableCellRenderer rMissionEtat = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object
                 value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -729,10 +738,76 @@ public class Menu2 extends javax.swing.JFrame {
                     table, value, isSelected, hasFocus, row, column);
                 String etat = (String)value;
                 setBackground(Mission.getCouleurEtat(etat));
+                
                 return this;
             }
         };
+  
+    public class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean isFocus, int row, int col) {
+            //On écrit dans le bouton ce que contient la cellule
+            setText("Modifier");
+            //On retourne notre bouton
+            return this;
+        }
+    }
     
+    public class ButtonEditor extends DefaultCellEditor {
+
+        protected JButton button;
+        private ButtonListener bListener = new ButtonListener();
+
+        //Constructeur avec une CheckBox
+        public ButtonEditor(JCheckBox checkBox) {
+            //Par défaut, ce type d'objet travaille avec un JCheckBox
+            super(checkBox);
+            //On crée à nouveau un bouton
+            button = new JButton();
+            button.setOpaque(true);
+            //On lui attribue un listener
+            button.addActionListener(bListener);
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            //On précise le numéro de ligne à notre listener
+            bListener.setRow(row);
+            //Idem pour le numéro de colonne
+            bListener.setColumn(column);
+            //On passe aussi le tableau en paramètre pour des actions potentielles
+            bListener.setTable(table);
+
+            //On réaffecte le libellé au bouton
+            button.setText((value == null) ? "" : value.toString());
+            //On renvoie le bouton
+            return button;
+        }
+
+        //Notre listener pour le bouton
+        class ButtonListener implements ActionListener {
+
+            private int column, row;
+            private JTable table;
+            private int nbre = 0;
+
+            public void setColumn(int col) {
+                this.column = col;
+            }
+
+            public void setRow(int row) {
+                this.row = row;
+            }
+
+            public void setTable(JTable table) {
+                this.table = table;
+            }
+
+            public void actionPerformed(ActionEvent event) {
+                jButton2ActionPerformed(event);
+            }
+        }
+    }
+
     /**
      * @param args the command line arguments
      */

@@ -370,7 +370,7 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableMissionMouseClicked"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel modelMissions = new DefaultTableModel();&#xa;    modelMissions.addColumn(&quot;Id&quot;);&#xa;    modelMissions.addColumn(&quot;Nom de la mission&quot;);&#xa;    modelMissions.addColumn(&quot;Date de d&#xe9;but&quot;);&#xa;    modelMissions.addColumn(&quot;Date de fin estim&#xe9;e&quot;);&#xa;    modelMissions.addColumn(&quot;Personnel N&#xe9;ccessaire&quot;);&#xa;    modelMissions.addColumn(&quot;Etat&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel modelMissions = new DefaultTableModel();&#xa;    modelMissions.addColumn(&quot;Id&quot;);&#xa;    modelMissions.addColumn(&quot;Nom de la mission&quot;);&#xa;    modelMissions.addColumn(&quot;Date de d&#xe9;but&quot;);&#xa;    modelMissions.addColumn(&quot;Date de fin estim&#xe9;e&quot;);&#xa;    modelMissions.addColumn(&quot;Personnel N&#xe9;ccessaire&quot;);&#xa;    modelMissions.addColumn(&quot;Etat&quot;);&#xa;    modelMissions.addColumn(&quot;Supprimer&quot;);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
