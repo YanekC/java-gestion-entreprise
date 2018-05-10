@@ -274,6 +274,11 @@ public class Menu2 extends javax.swing.JFrame {
 
         jTabbedPane.addTab("Tableau de bord", jPanelTdB);
 
+        jPanelMission.setBackground(new java.awt.Color(255, 255, 255));
+
+        jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane3.getViewport().setBackground(Color.WHITE);
+
         DefaultTableModel modelMissions = new DefaultTableModel();
         modelMissions.addColumn("Id");
         modelMissions.addColumn("Nom de la mission");
@@ -320,8 +325,8 @@ public class Menu2 extends javax.swing.JFrame {
         jPanelMissionLayout.setVerticalGroup(
             jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMissionLayout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAddMission)
                     .addComponent(jButton2))
@@ -329,6 +334,11 @@ public class Menu2 extends javax.swing.JFrame {
         );
 
         jTabbedPane.addTab("Gestion des missions", jPanelMission);
+
+        jPanelPersonnel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.getViewport().setBackground(Color.WHITE);
 
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
@@ -390,6 +400,11 @@ public class Menu2 extends javax.swing.JFrame {
         );
 
         jTabbedPane.addTab("Gestion du personnel", jPanelPersonnel);
+
+        jPanelCompetence.setBackground(new java.awt.Color(255, 255, 255));
+
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.getViewport().setBackground(Color.WHITE);
 
         DefaultTableModel model2 = new DefaultTableModel();
         model2.addColumn("Dénomination anglaise");
