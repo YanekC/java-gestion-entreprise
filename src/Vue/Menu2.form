@@ -360,7 +360,7 @@
                       <Connection code="modelMissions" type="code"/>
                     </Property>
                     <Property name="rowHeight" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="jTableMission.getRowHeight() + 7" type="code"/>
+                      <Connection code="jTableMission.getRowHeight() + 15" type="code"/>
                     </Property>
                     <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
                       <JTableSelectionModel selectionMode="0"/>
@@ -370,7 +370,7 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableMissionMouseClicked"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel modelMissions = new DefaultTableModel();&#xa;    modelMissions.addColumn(&quot;Id&quot;);&#xa;    modelMissions.addColumn(&quot;Nom de la mission&quot;);&#xa;    modelMissions.addColumn(&quot;Date de d&#xe9;but&quot;);&#xa;    modelMissions.addColumn(&quot;Date de fin estim&#xe9;e&quot;);&#xa;    modelMissions.addColumn(&quot;Personnel N&#xe9;ccessaire&quot;);&#xa;    modelMissions.addColumn(&quot;Etat&quot;);&#xa;    modelMissions.addColumn(&quot;Supprimer&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel modelMissions = new DefaultTableModel();&#xa;    modelMissions.addColumn(&quot;Id&quot;);&#xa;    modelMissions.addColumn(&quot;Nom de la mission&quot;);&#xa;    modelMissions.addColumn(&quot;Date de d&#xe9;but&quot;);&#xa;    modelMissions.addColumn(&quot;Date de fin estim&#xe9;e&quot;);&#xa;    modelMissions.addColumn(&quot;Personnel N&#xe9;ccessaire&quot;);&#xa;    modelMissions.addColumn(&quot;Etat&quot;);&#xa;    modelMissions.addColumn(&quot;Modifier&quot;);&#xa;    modelMissions.addColumn(&quot;Supprimer&quot;);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>

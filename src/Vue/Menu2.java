@@ -51,6 +51,8 @@ import javax.swing.table.TableColumnModel;
 public class Menu2 extends javax.swing.JFrame {
 
     private Entreprise entC;
+    private ImageIcon iconeSuppr;
+    private ImageIcon iconeModif;
     /**
      * Creates new form test
      */
@@ -65,6 +67,15 @@ public class Menu2 extends javax.swing.JFrame {
         File fCompetenceMission = new File("resources\\csv\\competence_mission.csv");
         File fPersonnelMission = new File("resources\\csv\\personnel_mission.csv");
         
+        ImageIcon icon = new ImageIcon("resources\\images\\pencil.png") ;  
+        Image img = icon.getImage();
+        Image newimg = img.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH) ;  
+        iconeModif = new ImageIcon( newimg );
+        icon = new ImageIcon("resources\\images\\del.png") ;  
+        img = icon.getImage();
+        newimg = img.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH) ;  
+        iconeSuppr = new ImageIcon( newimg );
+
         initComponents();
         this.setLocationRelativeTo(null); // positionner la fenetre au centre de l'écran
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
@@ -291,9 +302,10 @@ public class Menu2 extends javax.swing.JFrame {
         modelMissions.addColumn("Date de fin estimée");
         modelMissions.addColumn("Personnel Néccessaire");
         modelMissions.addColumn("Etat");
+        modelMissions.addColumn("Modifier");
         modelMissions.addColumn("Supprimer");
         jTableMission.setModel(modelMissions);
-        jTableMission.setRowHeight(jTableMission.getRowHeight() + 7);
+        jTableMission.setRowHeight(jTableMission.getRowHeight() + 15);
         jTableMission.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableMission.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -660,12 +672,14 @@ public class Menu2 extends javax.swing.JFrame {
         
         /* ---- Masquer column ID ---- */
         TableColumnModel tcm = jTableMission.getColumnModel();
-        if(tcm.getColumnCount()==7){
+        if(tcm.getColumnCount()== 8){
             tcm.removeColumn(tcm.getColumn(0));
         }
         jTableMission.getColumnModel().getColumn(4).setCellRenderer(rMissionEtat);
-        jTableMission.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer());
-        jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox()));
+        jTableMission.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer(iconeModif));
+        jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, 0));
+        jTableMission.getColumnModel().getColumn(6).setCellRenderer(new ButtonModifierRenderer(iconeSuppr));
+        jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeSuppr, 1));
         
     }
     
@@ -746,13 +760,15 @@ public class Menu2 extends javax.swing.JFrame {
   
     public class ButtonModifierRenderer extends JButton implements TableCellRenderer {
 
+        ImageIcon icone;
+        
+        public ButtonModifierRenderer(ImageIcon icone){
+            this.icone = icone;
+        }
+        
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean isFocus, int row, int col) {
             
-            ImageIcon icon = new ImageIcon("resources\\images\\pencil.png") ;  
-            Image img = icon.getImage();
-            Image newimg = img.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH) ;  
-            icon = new ImageIcon( newimg );
-            setIcon(icon);
+            setIcon(icone);
             //On retourne notre bouton
             return this;
         }
@@ -762,9 +778,11 @@ public class Menu2 extends javax.swing.JFrame {
 
         protected JButton button;
         private ButtonListener bListener = new ButtonListener();
+        private ImageIcon icone;
+        private int action;
 
         //Constructeur avec une CheckBox
-        public ButtonModifierEditor(JCheckBox checkBox) {
+        public ButtonModifierEditor(JCheckBox checkBox, ImageIcon icone, int action) {
             //Par défaut, ce type d'objet travaille avec un JCheckBox
             super(checkBox);
             //On crée à nouveau un bouton
@@ -772,6 +790,9 @@ public class Menu2 extends javax.swing.JFrame {
             button.setOpaque(true);
             //On lui attribue un listener
             button.addActionListener(bListener);
+            
+            this.icone = icone;
+            this.action = action;
         }
 
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
@@ -783,7 +804,8 @@ public class Menu2 extends javax.swing.JFrame {
             bListener.setTable(table);
 
             //On réaffecte le libellé au bouton
-            button.setText((value == null) ? "" : value.toString());
+            
+            button.setIcon(icone);
             //On renvoie le bouton
             return button;
         }
@@ -808,7 +830,13 @@ public class Menu2 extends javax.swing.JFrame {
             }
 
             public void actionPerformed(ActionEvent event) {
-                jButton2ActionPerformed(event);
+                if(action == 0){
+                    jButton2ActionPerformed(event);
+                }
+                else if(action == 1){
+                    //Suppr
+                }
+                
             }
         }
     }
