@@ -234,15 +234,22 @@ public class Entreprise {
         return monC;
     }
     
+    //retourne le personnel qui n'a pas de mission
     public static HashMap<Integer, Personnel> getPersoSansMiss(){
         HashMap<Integer, Personnel> ret = new HashMap<>();
+        boolean participe;
         for(Map.Entry perso : personnels.entrySet()){
+            participe = false;
             for(Map.Entry miss : missions.entrySet()){
                 if(((Mission)miss.getValue()).persoParticipe((int)perso.getKey())){
-                    ret.put((Integer)perso.getKey(), (Personnel)perso.getValue());
+                    participe =true;
                     break;
                 }
             }
+            if(!participe){
+                ret.put((Integer)perso.getKey(), (Personnel)perso.getValue());
+            }
+            
         }
         return ret;
     }
