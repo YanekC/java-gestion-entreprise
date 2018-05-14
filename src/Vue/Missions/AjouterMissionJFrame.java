@@ -75,7 +75,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
            jBtnEnregistrer.setText("Enregistrer");
            Mission m = Entreprise.findMissionById(id);
 
-           System.out.println(m);
+           //System.out.println(m);
 
            jTextDateDeb.setText(m.getDateDebutString());
            jTextDateFin.setText(m.getDateFinEstimeString());

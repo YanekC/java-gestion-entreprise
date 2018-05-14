@@ -36,10 +36,10 @@ public class Mission {
     private ArrayList<String> listePersonnels;
     private int nbPersMin;
     
-    public final int ETAT_EN_PREPARATION = 0;
-    public final int ETAT_PLANIFIE = 1;
-    public final int ETAT_EN_COURS = 2;
-    public final int ETAT_TERMINE = 3;
+    public static final int ETAT_EN_PREPARATION = 0;
+    public static final int ETAT_PLANIFIE = 1;
+    public static final int ETAT_EN_COURS = 2;
+    public static final int ETAT_TERMINE = 3;
     
 
     public Mission(String nom, String dateDebut, String dateFinEstime, String dateFinReel, int nbPersMin) {
@@ -86,6 +86,17 @@ public class Mission {
                 "\nPersonnels participants : "+lcomp+
                 "\nNombre de personnes requises : "+this.nbPersMin;
     }
+
+    public Calendar getDateFinReel() {
+        return dateFinReel;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+    
+   
+    
     
     public String getEtatString(){
          String etat = "";
@@ -130,12 +141,12 @@ public class Mission {
     }
     
     public void ajouterCompetence(String c){
-        System.out.println(c);
+        //System.out.println(c);
         // Regex pour matcher le code d'une Competence
         Pattern p = Pattern.compile("[a-zA-Z]\\.\\d+\\.");
         Matcher m = p.matcher(c);
         if(m.matches()){
-            System.out.println(c);
+            //System.out.println(c);
             listeCompetences.add(c);
         }
     }
@@ -146,7 +157,7 @@ public class Mission {
     
     public void afficherCompetences(){
         for(String c : listeCompetences){
-            System.out.println(c);
+            //System.out.println(c);
         }
     }
 
@@ -173,7 +184,7 @@ public class Mission {
     
     public void afficherPersonnel(){
         for (String p : listePersonnels){
-            System.out.println(p);
+            //System.out.println(p);
         }
     }
     
@@ -198,7 +209,7 @@ public class Mission {
             if(isCompleteCompetence()){
                 if(dateDebut.before(today)){
                     this.etat = ETAT_EN_COURS;
-                    if(this.dateFinReel.before(today)){
+                    if(this.dateFinEstime.before(today)){
                         this.etat = ETAT_TERMINE;
                     }
                 }
@@ -265,9 +276,9 @@ public class Mission {
     }
     
     public HashMap setListeCompetenceToFalse(ArrayList<String> competences) {
-        System.err.println("SLCTF : "+competences);
+        //System.err.println("SLCTF : "+competences);
         HashMap<String, Boolean> hsToFalse = new HashMap();
-        System.err.println("Hashmap1 : ");
+        //System.err.println("Hashmap1 : ");
         for(String idC : competences){
                 hsToFalse.put(idC, false);
         }
@@ -319,6 +330,10 @@ public class Mission {
             }
         }
         return ret;
+    }
+
+    public Calendar getDateFinEstime() {
+        return dateFinEstime;
     }
     
     

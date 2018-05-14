@@ -721,14 +721,28 @@ public class Menu2 extends javax.swing.JFrame {
         jTableCompetences.setAutoCreateRowSorter(true);
         
     }
-    
+        
     public void remplirListePersoSansMiss(){
         HashMap<Integer, Personnel> liste = Entreprise.getPersoSansMiss();
         DefaultListModel modelListeSansMiss = new DefaultListModel();
+        int nbJour;
         int cpt = 0;
+        String p;
         for(Map.Entry<Integer, Personnel> perso : liste.entrySet()) {
             //Fr lib
-            String p = perso.getValue().getNom()+" "+perso.getValue().getPrenom();
+            nbJour = Entreprise.getNbJourNonTrav(perso.getKey());
+            if(nbJour == -1){
+                p = perso.getValue().getNom()+" "+perso.getValue().getPrenom()+" n'a jamais travaillé.";
+            }
+            else{
+                if(nbJour==0){
+                    p = perso.getValue().getNom()+" "+perso.getValue().getPrenom()+" a finis sa dernière mission aujourd'hui.";
+                }
+                else{
+                    p = perso.getValue().getNom()+" "+perso.getValue().getPrenom()+" n'a pas travaillé depuis "+nbJour+" jours.";
+                }
+                
+            }
             modelListeSansMiss.addElement(p);
             cpt++;
         }
@@ -740,6 +754,7 @@ public class Menu2 extends javax.swing.JFrame {
         try {
             remplirTableauMissions();
             remplirTableauMissionsSynth();
+            remplirListePersoSansMiss();
         } catch (Exception ex) {
             Logger.getLogger(Menu2.class.getName()).log(Level.SEVERE, null, ex);
         }

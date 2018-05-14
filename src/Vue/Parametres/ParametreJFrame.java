@@ -160,31 +160,37 @@ public class ParametreJFrame extends javax.swing.JFrame {
 
     private void jButtonJourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonJourActionPerformed
         DateModulable.inc(1,0,0);
+        jTextFieldDate.setText(DateModulable.getDateString());
         caller.updateDate();
     }//GEN-LAST:event_jButtonJourActionPerformed
 
     private void jButtonMoisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMoisActionPerformed
         DateModulable.inc(0,1,0);
+        jTextFieldDate.setText(DateModulable.getDateString());
         caller.updateDate();
     }//GEN-LAST:event_jButtonMoisActionPerformed
 
     private void jButtonAnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnActionPerformed
         DateModulable.inc(0,0,1);
+        jTextFieldDate.setText(DateModulable.getDateString());
         caller.updateDate();
     }//GEN-LAST:event_jButtonAnActionPerformed
 
     private void jButtonAnMoinsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnMoinsActionPerformed
         DateModulable.inc(0,0,-1);
+        jTextFieldDate.setText(DateModulable.getDateString());
         caller.updateDate();
     }//GEN-LAST:event_jButtonAnMoinsActionPerformed
 
     private void jButtonMoisMoinsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMoisMoinsActionPerformed
         DateModulable.inc(0,-1,0);
+        jTextFieldDate.setText(DateModulable.getDateString());
         caller.updateDate();
     }//GEN-LAST:event_jButtonMoisMoinsActionPerformed
 
     private void jButtonJourMoinsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonJourMoinsActionPerformed
         DateModulable.inc(-1,0,0);
+        jTextFieldDate.setText(DateModulable.getDateString());
         caller.updateDate();
     }//GEN-LAST:event_jButtonJourMoinsActionPerformed
 

@@ -1,5 +1,6 @@
 package Model;
 
+import Util.DateModulable;
 import Util.ExportCSV;
 import Util.ExportInterface;
 import Util.ImportCSV;
@@ -170,7 +171,31 @@ public class Entreprise {
         missionsUPD.get(id).setDateFinEstime(dateFin);
     }
     
+   
+    public static int getNbJourNonTrav(Integer id){
+        Personnel p = personnels.get(id);
+        Calendar dateFin = Calendar.getInstance();
+        dateFin.set(0, 0, 0);
+        boolean trouve = false;
+        for(Map.Entry m : missions.entrySet()){
+            Mission miss = (Mission)m.getValue();
+            for(String ident : miss.getListePersonnels()){
+                if(ident.equals(String.valueOf(id)) && dateFin.before(miss.getDateFinEstime())){
+                    dateFin = miss.getDateFinEstime();
+                    trouve = true;
+                }
+            }
+        }
+        if(trouve){
+            return getNbJour(dateFin);
+        }
+        return -1;
+    } 
     
+    private static int getNbJour(Calendar date){
+        Calendar today = DateModulable.getDate();
+        return today.get(Calendar.DATE)-date.get(Calendar.DATE);
+    }
     
     public static int getLastIdPersonnel(){
         int id=0;
@@ -241,7 +266,7 @@ public class Entreprise {
         for(Map.Entry perso : personnels.entrySet()){
             participe = false;
             for(Map.Entry miss : missions.entrySet()){
-                if(((Mission)miss.getValue()).persoParticipe((int)perso.getKey())){
+                if(((Mission)miss.getValue()).persoParticipe((int)perso.getKey()) && ((Mission)miss.getValue()).getEtat() != Mission.ETAT_TERMINE){
                     participe =true;
                     break;
                 }
@@ -308,7 +333,7 @@ public class Entreprise {
             ret.add((Integer)perso.getKey());
         }
         
-        System.out.println(ret);
+        //System.out.println(ret);
         return ret;
     }
     
