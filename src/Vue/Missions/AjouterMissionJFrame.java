@@ -23,6 +23,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -262,11 +264,22 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     }
     
     public void setEtatOfTheMission(String etat){
+        Mission m = Entreprise.findMissionById(id);
+        //Switch to ID to upd
+        Color mColor = m.getCouleurEtat(etat);
+        ColorUIResource colorResource = new ColorUIResource(Color.RED.darker().darker());UIManager.put("nimbusOrange",colorResource);
         switch(etat){
-            case "Planifiée" : setEnableButton(Color.yellow, jButtonEnd, jButtonInProg, jButtonPrepare,jButtonPlan);break;
-            case "En cours" : disableMission();setEnableButton(Color.blue, jButtonEnd, jButtonPlan, jButtonPrepare, jButtonInProg);break;
-            case "Terminée" : disableMission();setEnableButton(Color.green, jButtonPlan, jButtonInProg, jButtonPrepare, jButtonEnd);break;
-            case "En préparation" : setEnableButton(Color.magenta, jButtonEnd, jButtonInProg, jButtonPlan, jButtonPrepare);break;
+            case "Planifiée" : setEnableButton(mColor, jButtonEnd, jButtonInProg, jButtonPrepare,jButtonPlan, 50);break;
+            case "En cours" : disableMission();setEnableButton(mColor, jButtonEnd, jButtonPlan, jButtonPrepare, jButtonInProg, 75);break;
+            case "Terminée" : disableMission();setEnableButton(mColor, jButtonPlan, jButtonInProg, jButtonPrepare, jButtonEnd, 100);break;
+            case "En préparation" : setEnableButton(mColor, jButtonEnd, jButtonInProg, jButtonPlan, jButtonPrepare, 25);break;
+            default:break;
+        }
+        switch(etat){
+            case "Planifiée" : colorResource = new ColorUIResource(Color.RED.darker().darker());UIManager.put("nimbusOrange",colorResource);break;
+            case "En cours" : colorResource = new ColorUIResource(Color.BLUE.darker().darker());UIManager.put("nimbusOrange",colorResource);break;
+            case "Terminée" : colorResource = new ColorUIResource(Color.GREEN.darker().darker());UIManager.put("nimbusOrange",colorResource);break;
+            case "En préparation" : colorResource = new ColorUIResource(Color.YELLOW.darker().darker());UIManager.put("nimbusOrange",colorResource);break;
             default:break;
         }
     }
@@ -288,12 +301,17 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jBtnDelMission.setVisible(false);
         jBtnCancel.setVisible(false);
     }
-    public void setEnableButton(Color color, JButton jBtn1, JButton jBtn2, JButton jBtn3, JButton jBtnToEnable){
+    public void setEnableButton(Color color, JButton jBtn1, JButton jBtn2, JButton jBtn3, JButton jBtnToEnable, int progress){
         jBtn1.setEnabled(false);
         jBtn2.setEnabled(false);
         jBtn3.setEnabled(false);
         jBtnToEnable.setEnabled(true);
         getContentPane().setBackground(color);
+        jBtnToEnable.setBackground(color);
+        jPBEtat.setValue(0);
+        jPBEtat.setValue(progress);
+        jPBEtat.setStringPainted(true);
+        jPBEtat.setForeground(Color.white);
     }
     
 
@@ -325,6 +343,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jButtonSupprComp = new javax.swing.JButton();
         jButtonAjouterComp = new javax.swing.JButton();
         jPanelSlider = new javax.swing.JPanel();
+        jPBEtat = new javax.swing.JProgressBar();
         jButtonPrepare = new javax.swing.JButton();
         jButtonPlan = new javax.swing.JButton();
         jButtonInProg = new javax.swing.JButton();
@@ -439,7 +458,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             .addGroup(jPanelCompetencesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelCompetencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelCompetencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -467,11 +486,15 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jPanelSlider.setLayout(jPanelSliderLayout);
         jPanelSliderLayout.setHorizontalGroup(
             jPanelSliderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 434, Short.MAX_VALUE)
+            .addGroup(jPanelSliderLayout.createSequentialGroup()
+                .addComponent(jPBEtat, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelSliderLayout.setVerticalGroup(
             jPanelSliderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 11, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSliderLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPBEtat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jButtonPrepare.setText("En préparation");
@@ -507,17 +530,18 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                     .addComponent(jPanelCompetences, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanelGaucheLayout.createSequentialGroup()
                         .addGroup(jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelGaucheLayout.createSequentialGroup()
-                                .addComponent(jButtonPrepare, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonInProg, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 29, Short.MAX_VALUE)))
+                            .addComponent(jPanelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelGaucheLayout.createSequentialGroup()
+                                    .addComponent(jButtonPrepare, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButtonPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButtonInProg, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButtonEnd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jPanelSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 105, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelGaucheLayout.setVerticalGroup(
@@ -526,9 +550,9 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jButtonPrepare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonEnd, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addComponent(jButtonInProg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonInProg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -963,6 +987,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     private javax.swing.JList<String> jListAjouterParticipant;
     private javax.swing.JList<String> jListCompetences;
     private javax.swing.JList<String> jListParticipant;
+    private javax.swing.JProgressBar jPBEtat;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelCompetences;
     private javax.swing.JPanel jPanelGauche;

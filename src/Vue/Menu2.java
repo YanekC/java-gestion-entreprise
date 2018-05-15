@@ -768,6 +768,7 @@ public class Menu2 extends javax.swing.JFrame {
                     table, value, isSelected, hasFocus, row, column);
                 String etat = (String)value;
                 setBackground(Mission.getCouleurEtat(etat));
+                setForeground(Color.WHITE);
                 
                 return this;
             }
