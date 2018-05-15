@@ -636,9 +636,9 @@ public class Menu2 extends javax.swing.JFrame {
         }
         jTableMission.getColumnModel().getColumn(4).setCellRenderer(rMissionEtat);
         jTableMission.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer(iconeModif, "modifier"));
-        jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, 0));
+        jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier"));
         jTableMission.getColumnModel().getColumn(6).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
-        jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeSuppr, 1));
+        jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeSuppr, "supprimer"));
         jTableMission.getColumnModel().getColumn(5).setPreferredWidth(10);
         jTableMission.getColumnModel().getColumn(6).setPreferredWidth(10);
         
@@ -764,10 +764,10 @@ public class Menu2 extends javax.swing.JFrame {
         protected JButton button;
         private ButtonListener bListener = new ButtonListener();
         private ImageIcon icone;
-        private int action;
+        private String version;
 
         //Constructeur avec une CheckBox
-        public ButtonModifierEditor(JCheckBox checkBox, ImageIcon icone, int action) {
+        public ButtonModifierEditor(JCheckBox checkBox, ImageIcon icone, String version) {
             //Par défaut, ce type d'objet travaille avec un JCheckBox
             super(checkBox);
             //On crée à nouveau un bouton
@@ -777,7 +777,7 @@ public class Menu2 extends javax.swing.JFrame {
             button.addActionListener(bListener);
             
             this.icone = icone;
-            this.action = action;
+            this.version = version;
         }
 
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
@@ -790,7 +790,15 @@ public class Menu2 extends javax.swing.JFrame {
 
             //On réaffecte le libellé au bouton
             
-            button.setIcon(icone);
+            if(version.equals("modifier")){
+                button.setIcon(icone);
+                button.setBackground(Color.LIGHT_GRAY);
+            }
+            else if(version.equals("supprimer")){
+                button.setBackground(new Color(189, 30, 45));
+                button.setForeground(Color.white);
+                button.setText("X");
+            }
             //On renvoie le bouton
             return button;
         }
@@ -815,7 +823,7 @@ public class Menu2 extends javax.swing.JFrame {
             }
 
             public void actionPerformed(ActionEvent event) {
-                if(action == 0){
+                if(version.equals("modifier")){
                     /*----- Modifier une personne sélectionné -----*/
 
                     //Get the id
@@ -826,8 +834,11 @@ public class Menu2 extends javax.swing.JFrame {
                     /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
                     apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0);
                 }
-                else if(action == 1){
-                    //Suppr
+                else if(version.equals("supprimer")){
+                    int id = getColZeroValueSelectedMission();
+                    Entreprise.removeMission(id);
+                    int rowToDel = jTableMission.convertRowIndexToModel(jTableMission.getSelectedRow());
+                    ((DefaultTableModel)jTableMission.getModel()).removeRow(rowToDel);
                 }
                 
             }
