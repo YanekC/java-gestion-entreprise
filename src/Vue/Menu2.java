@@ -349,6 +349,8 @@ public class Menu2 extends javax.swing.JFrame {
         model.addColumn("Prénom");
         model.addColumn("Date d'embauche");
         model.addColumn("Compétences");
+        model.addColumn("");
+        model.addColumn("");
         jTableDuPersonnel.setModel(model);
         jTableDuPersonnel.setRowHeight(jTableDuPersonnel.getRowHeight() + 7);
         jTableDuPersonnel.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -613,6 +615,14 @@ public class Menu2 extends javax.swing.JFrame {
         TableColumnModel tcm = jTableDuPersonnel.getColumnModel();
         tcm.removeColumn(tcm.getColumn(0));
         
+        jTableDuPersonnel.getColumnModel().getColumn(4).setCellRenderer(new ButtonModifierRenderer(iconeModif, "modifier"));
+        jTableDuPersonnel.getColumnModel().getColumn(4).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", "personnel"));
+        jTableDuPersonnel.getColumnModel().getColumn(4).setPreferredWidth(10);
+        
+        jTableDuPersonnel.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
+        jTableDuPersonnel.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeSuppr, "supprimer", "personnel"));
+        jTableDuPersonnel.getColumnModel().getColumn(5).setPreferredWidth(10);
+        
     }
     
     public void remplirTableauMissions() throws Exception {
@@ -636,9 +646,9 @@ public class Menu2 extends javax.swing.JFrame {
         }
         jTableMission.getColumnModel().getColumn(4).setCellRenderer(rMissionEtat);
         jTableMission.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer(iconeModif, "modifier"));
-        jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier"));
+        jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", "mission"));
         jTableMission.getColumnModel().getColumn(6).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
-        jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeSuppr, "supprimer"));
+        jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeSuppr, "supprimer", "mission"));
         jTableMission.getColumnModel().getColumn(5).setPreferredWidth(10);
         jTableMission.getColumnModel().getColumn(6).setPreferredWidth(10);
         
@@ -767,7 +777,7 @@ public class Menu2 extends javax.swing.JFrame {
         private String version;
 
         //Constructeur avec une CheckBox
-        public ButtonModifierEditor(JCheckBox checkBox, ImageIcon icone, String version) {
+        public ButtonModifierEditor(JCheckBox checkBox, ImageIcon icone, String version, String table) {
             //Par défaut, ce type d'objet travaille avec un JCheckBox
             super(checkBox);
             //On crée à nouveau un bouton
@@ -824,21 +834,41 @@ public class Menu2 extends javax.swing.JFrame {
 
             public void actionPerformed(ActionEvent event) {
                 if(version.equals("modifier")){
-                    /*----- Modifier une personne sélectionné -----*/
+                    if(table.equals("mission")){
+                        /*----- Modifier une personne sélectionné -----*/
 
-                    //Get the id
-                    int id = getColZeroValueSelectedMission();
-                    //Load Frame with selected ID
-                    AjouterMissionJFrame apf = new AjouterMissionJFrame();
-                    apf.setVisible(true);
-                    /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-                    apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0);
+                        //Get the id
+                        int id = getColZeroValueSelectedMission();
+                        //Load Frame with selected ID
+                        AjouterMissionJFrame apf = new AjouterMissionJFrame();
+                        apf.setVisible(true);
+                        /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+                        apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0);
+                    }
+                    else if(table.equals("personnel")){
+                        int id = getColZeroValueSelectedMission();
+            
+                        AjouterMissionJFrame apf = new AjouterMissionJFrame();
+                        apf.setVisible(true);
+                        /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+                        apf.remplirFormMission(id, table, row, 0);
+                    }
                 }
                 else if(version.equals("supprimer")){
-                    int id = getColZeroValueSelectedMission();
-                    Entreprise.removeMission(id);
-                    int rowToDel = jTableMission.convertRowIndexToModel(jTableMission.getSelectedRow());
-                    ((DefaultTableModel)jTableMission.getModel()).removeRow(rowToDel);
+                     if(table.equals("mission")){
+                        int id = getColZeroValueSelectedMission();
+                        Entreprise.removeMission(id);
+                        int rowToDel = jTableMission.convertRowIndexToModel(jTableMission.getSelectedRow());
+                        ((DefaultTableModel)jTableMission.getModel()).removeRow(rowToDel);
+                    }
+                    else if(table.equals("personnel")){
+                        int id = getColZeroValueSelected();
+                        Personnel p = Entreprise.findPersonnelById(id);
+                        Entreprise.removePersonnel(p, id);
+                        int rowToDel = jTableDuPersonnel.convertRowIndexToModel(jTableDuPersonnel.getSelectedRow());
+                        ((DefaultTableModel)jTableDuPersonnel.getModel()).removeRow(rowToDel);
+                    }
+                    
                 }
                 
             }

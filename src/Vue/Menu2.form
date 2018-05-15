@@ -453,7 +453,7 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableDuPersonnelMouseClicked"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel model = new DefaultTableModel();&#xa;    model.addColumn(&quot;ID&quot;);&#xa;    model.addColumn(&quot;Nom&quot;);&#xa;    model.addColumn(&quot;Pr&#xe9;nom&quot;);&#xa;    model.addColumn(&quot;Date d&apos;embauche&quot;);&#xa;    model.addColumn(&quot;Comp&#xe9;tences&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel model = new DefaultTableModel();&#xa;    model.addColumn(&quot;ID&quot;);&#xa;    model.addColumn(&quot;Nom&quot;);&#xa;    model.addColumn(&quot;Pr&#xe9;nom&quot;);&#xa;    model.addColumn(&quot;Date d&apos;embauche&quot;);&#xa;    model.addColumn(&quot;Comp&#xe9;tences&quot;);&#xa;    model.addColumn(&quot;&quot;);&#xa;    model.addColumn(&quot;&quot;);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
