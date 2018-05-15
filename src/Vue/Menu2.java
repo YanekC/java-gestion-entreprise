@@ -69,7 +69,7 @@ public class Menu2 extends javax.swing.JFrame {
         
         ImageIcon icon = new ImageIcon("resources\\images\\pencil.png") ;  
         Image img = icon.getImage();
-        Image newimg = img.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH) ;  
+        Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH) ;  
         iconeModif = new ImageIcon( newimg );
         icon = new ImageIcon("resources\\images\\del.png") ;  
         img = icon.getImage();
@@ -298,8 +298,8 @@ public class Menu2 extends javax.swing.JFrame {
         modelMissions.addColumn("Date de fin estimée");
         modelMissions.addColumn("Personnel Néccessaire");
         modelMissions.addColumn("Etat");
-        modelMissions.addColumn("Modifier");
-        modelMissions.addColumn("Supprimer");
+        modelMissions.addColumn("");
+        modelMissions.addColumn("");
         jTableMission.setModel(modelMissions);
         jTableMission.setRowHeight(jTableMission.getRowHeight() + 15);
         jTableMission.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -635,10 +635,12 @@ public class Menu2 extends javax.swing.JFrame {
             tcm.removeColumn(tcm.getColumn(0));
         }
         jTableMission.getColumnModel().getColumn(4).setCellRenderer(rMissionEtat);
-        jTableMission.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer(iconeModif));
+        jTableMission.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer(iconeModif, "modifier"));
         jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, 0));
-        jTableMission.getColumnModel().getColumn(6).setCellRenderer(new ButtonModifierRenderer(iconeSuppr));
+        jTableMission.getColumnModel().getColumn(6).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
         jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeSuppr, 1));
+        jTableMission.getColumnModel().getColumn(5).setPreferredWidth(10);
+        jTableMission.getColumnModel().getColumn(6).setPreferredWidth(10);
         
     }
     
@@ -735,15 +737,24 @@ public class Menu2 extends javax.swing.JFrame {
     public class ButtonModifierRenderer extends JButton implements TableCellRenderer {
 
         ImageIcon icone;
+        String version;
         
-        public ButtonModifierRenderer(ImageIcon icone){
+        public ButtonModifierRenderer(ImageIcon icone, String version){
             this.icone = icone;
+            this.version = version;
         }
         
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean isFocus, int row, int col) {
+            if(version.equals("modifier")){
+                setIcon(icone);
+                setBackground(Color.LIGHT_GRAY);
+            }
+            else if(version.equals("supprimer")){
+                setBackground(new Color(189, 30, 45));
+                setForeground(Color.white);
+                setText("X");
+            }
             
-            setIcon(icone);
-            //On retourne notre bouton
             return this;
         }
     }
