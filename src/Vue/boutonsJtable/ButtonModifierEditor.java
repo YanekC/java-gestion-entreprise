@@ -1,0 +1,133 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Vue.boutonsJtable;
+
+import Model.Entreprise;
+import Model.Personnel;
+import Vue.Menu2;
+import Vue.Missions.AjouterMissionJFrame;
+import Vue.Personnel.AjouterModifierPersonnelJFrame;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author Yanek
+ */
+public class ButtonModifierEditor extends DefaultCellEditor {
+
+    protected JButton button;
+    private ButtonListener bListener = new ButtonListener();
+    private ImageIcon icone;
+    private String version;
+    private String versionTable;
+    private JTable table;
+    private Menu2 menu;
+
+    //Constructeur avec une CheckBox
+    public ButtonModifierEditor(JCheckBox checkBox, ImageIcon icone, String version, JTable table, String versionTable, Menu2 menu) {
+        //Par défaut, ce type d'objet travaille avec un JCheckBox
+        super(checkBox);
+        //On crée à nouveau un bouton
+        button = new JButton();
+        button.setOpaque(true);
+        //On lui attribue un listener
+        button.addActionListener(bListener);
+
+        this.menu = menu;
+        this.table = table;
+        this.icone = icone;
+        this.version = version;
+        this.versionTable = versionTable;
+    }
+
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+        //On précise le numéro de ligne à notre listener
+        bListener.setRow(row);
+        //Idem pour le numéro de colonne
+        bListener.setColumn(column);
+        //On passe aussi le tableau en paramètre pour des actions potentielles
+        bListener.setTable(table);
+
+        //On réaffecte le libellé au bouton
+        if (version.equals("modifier")) {
+            button.setIcon(icone);
+            button.setBackground(Color.LIGHT_GRAY);
+        } else if (version.equals("supprimer")) {
+            button.setBackground(new Color(189, 30, 45));
+            button.setForeground(Color.white);
+            button.setText("X");
+        }
+        //On renvoie le bouton
+        return button;
+    }
+
+    //Notre listener pour le bouton
+    class ButtonListener implements ActionListener {
+
+        private int column, row;
+        private JTable table;
+        private int nbre = 0;
+
+        public void setColumn(int col) {
+            this.column = col;
+        }
+
+        public void setRow(int row) {
+            this.row = row;
+        }
+
+        public void setTable(JTable table) {
+            this.table = table;
+        }
+
+        public void actionPerformed(ActionEvent event) {
+            if (version.equals("modifier")) {
+                if (versionTable.equals("mission")) {
+                    /*----- Modifier une personne sélectionné -----*/
+
+                    //Get the id
+                    int id = menu.getColZeroValueSelectedMission();
+                    //Load Frame with selected ID
+                    AjouterMissionJFrame apf = new AjouterMissionJFrame();
+                    apf.setVisible(true);
+                    /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+                    apf.remplirFormMission(id, table, table.getSelectedRow(), 0);
+                } else if (versionTable.equals("personnel")) {
+                    int id = menu.getColZeroValueSelectedMission();
+
+                    AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame();
+                    apf.setVisible(true);
+                    /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
+                    apf.remplirFormPersonnel(id, table, row, 0);
+                }
+            } else if (version.equals("supprimer")) {
+                if (versionTable.equals("mission")) {
+                    int id = menu.getColZeroValueSelectedMission();
+                    Entreprise.removeMission(id);
+                    int rowToDel = table.convertRowIndexToModel(table.getSelectedRow());
+                    ((DefaultTableModel) table.getModel()).removeRow(rowToDel);
+                } else if (versionTable.equals("personnel")) {
+                    int id = menu.getColZeroValueSelected();
+                    Personnel p = Entreprise.findPersonnelById(id);
+                    Entreprise.removePersonnel(p, id);
+                    int rowToDel = table.convertRowIndexToModel(table.getSelectedRow());
+                    ((DefaultTableModel) table.getModel()).removeRow(rowToDel);
+                }
+
+            }
+
+        }
+    }
+}

@@ -14,6 +14,7 @@ import Vue.Competences.AjouterCompetenceJFrame;
 import Vue.Missions.AjouterMissionJFrame;
 import Vue.Parametres.ParametreJFrame;
 import Vue.Personnel.AjouterModifierPersonnelJFrame;
+import Vue.boutonsJtable.ButtonModifierEditor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -509,7 +510,7 @@ public class Menu2 extends javax.swing.JFrame {
     
     
     
-    private int getColZeroValueSelectedMission(){
+    public int getColZeroValueSelectedMission(){
         //Get the column 0 (here ID) from the model whenever it's sort or not (due to issue on sort)
         Object colZeroValue = (jTableMission.getModel().getValueAt(jTableMission.convertRowIndexToModel(jTableMission.getSelectedRow()), 0));
         //System.out.println(colZeroValue.getClass()); 
@@ -527,7 +528,7 @@ public class Menu2 extends javax.swing.JFrame {
         return id;
     }
             
-    private int getColZeroValueSelected(){
+    public int getColZeroValueSelected(){
         //Get the column 0 (here ID) from the model whenever it's sort or not (due to issue on sort)
         Object colZeroValue = (jTableDuPersonnel.getModel().getValueAt(jTableDuPersonnel.convertRowIndexToModel(jTableDuPersonnel.getSelectedRow()), 0));
         //System.out.println(colZeroValue.getClass()); 
@@ -616,11 +617,11 @@ public class Menu2 extends javax.swing.JFrame {
         tcm.removeColumn(tcm.getColumn(0));
         
         jTableDuPersonnel.getColumnModel().getColumn(4).setCellRenderer(new ButtonModifierRenderer(iconeModif, "modifier"));
-        jTableDuPersonnel.getColumnModel().getColumn(4).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", "personnel"));
+        jTableDuPersonnel.getColumnModel().getColumn(4).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", jTableDuPersonnel, "personnel", this));
         jTableDuPersonnel.getColumnModel().getColumn(4).setPreferredWidth(10);
         
         jTableDuPersonnel.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
-        jTableDuPersonnel.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeSuppr, "supprimer", "personnel"));
+        jTableDuPersonnel.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", jTableDuPersonnel, "personnel", this));
         jTableDuPersonnel.getColumnModel().getColumn(5).setPreferredWidth(10);
         
     }
@@ -646,10 +647,10 @@ public class Menu2 extends javax.swing.JFrame {
         }
         jTableMission.getColumnModel().getColumn(4).setCellRenderer(rMissionEtat);
         jTableMission.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer(iconeModif, "modifier"));
-        jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", "mission"));
-        jTableMission.getColumnModel().getColumn(6).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
-        jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeSuppr, "supprimer", "mission"));
+        jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", jTableMission, "mission", this));
         jTableMission.getColumnModel().getColumn(5).setPreferredWidth(10);
+        jTableMission.getColumnModel().getColumn(6).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
+        jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", jTableMission, "mission", this));
         jTableMission.getColumnModel().getColumn(6).setPreferredWidth(10);
         
     }
@@ -769,111 +770,7 @@ public class Menu2 extends javax.swing.JFrame {
         }
     }
     
-    public class ButtonModifierEditor extends DefaultCellEditor {
-
-        protected JButton button;
-        private ButtonListener bListener = new ButtonListener();
-        private ImageIcon icone;
-        private String version;
-
-        //Constructeur avec une CheckBox
-        public ButtonModifierEditor(JCheckBox checkBox, ImageIcon icone, String version, String table) {
-            //Par défaut, ce type d'objet travaille avec un JCheckBox
-            super(checkBox);
-            //On crée à nouveau un bouton
-            button = new JButton();
-            button.setOpaque(true);
-            //On lui attribue un listener
-            button.addActionListener(bListener);
-            
-            this.icone = icone;
-            this.version = version;
-        }
-
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            //On précise le numéro de ligne à notre listener
-            bListener.setRow(row);
-            //Idem pour le numéro de colonne
-            bListener.setColumn(column);
-            //On passe aussi le tableau en paramètre pour des actions potentielles
-            bListener.setTable(table);
-
-            //On réaffecte le libellé au bouton
-            
-            if(version.equals("modifier")){
-                button.setIcon(icone);
-                button.setBackground(Color.LIGHT_GRAY);
-            }
-            else if(version.equals("supprimer")){
-                button.setBackground(new Color(189, 30, 45));
-                button.setForeground(Color.white);
-                button.setText("X");
-            }
-            //On renvoie le bouton
-            return button;
-        }
-
-        //Notre listener pour le bouton
-        class ButtonListener implements ActionListener {
-
-            private int column, row;
-            private JTable table;
-            private int nbre = 0;
-
-            public void setColumn(int col) {
-                this.column = col;
-            }
-
-            public void setRow(int row) {
-                this.row = row;
-            }
-
-            public void setTable(JTable table) {
-                this.table = table;
-            }
-
-            public void actionPerformed(ActionEvent event) {
-                if(version.equals("modifier")){
-                    if(table.equals("mission")){
-                        /*----- Modifier une personne sélectionné -----*/
-
-                        //Get the id
-                        int id = getColZeroValueSelectedMission();
-                        //Load Frame with selected ID
-                        AjouterMissionJFrame apf = new AjouterMissionJFrame();
-                        apf.setVisible(true);
-                        /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-                        apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0);
-                    }
-                    else if(table.equals("personnel")){
-                        int id = getColZeroValueSelectedMission();
-            
-                        AjouterMissionJFrame apf = new AjouterMissionJFrame();
-                        apf.setVisible(true);
-                        /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-                        apf.remplirFormMission(id, table, row, 0);
-                    }
-                }
-                else if(version.equals("supprimer")){
-                     if(table.equals("mission")){
-                        int id = getColZeroValueSelectedMission();
-                        Entreprise.removeMission(id);
-                        int rowToDel = jTableMission.convertRowIndexToModel(jTableMission.getSelectedRow());
-                        ((DefaultTableModel)jTableMission.getModel()).removeRow(rowToDel);
-                    }
-                    else if(table.equals("personnel")){
-                        int id = getColZeroValueSelected();
-                        Personnel p = Entreprise.findPersonnelById(id);
-                        Entreprise.removePersonnel(p, id);
-                        int rowToDel = jTableDuPersonnel.convertRowIndexToModel(jTableDuPersonnel.getSelectedRow());
-                        ((DefaultTableModel)jTableDuPersonnel.getModel()).removeRow(rowToDel);
-                    }
-                    
-                }
-                
-            }
-        }
-    }
+    
 
     /**
      * @param args the command line arguments
