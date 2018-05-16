@@ -463,7 +463,7 @@ public class Menu2 extends javax.swing.JFrame {
         AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame();
         apf.setVisible(true);
         /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-        apf.remplirFormPersonnel(id, jTableDuPersonnel,jTableDuPersonnel.getSelectedRow(), 0);
+        apf.remplirFormPersonnel(id, jTableDuPersonnel,jTableDuPersonnel.getSelectedRow(), 0, this);
     }//GEN-LAST:event_jBtnModifierActionPerformed
 
     private void jButtonAjouterPersonneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterPersonneActionPerformed
@@ -472,7 +472,7 @@ public class Menu2 extends javax.swing.JFrame {
         int rowIndex = jTableDuPersonnel.getSelectedRow(); // Récupère la ligne du champ cliqué
         int colIndex = 0;
         /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-        ajoutP.remplirFormPersonnel(-1, jTableDuPersonnel, rowIndex, colIndex);
+        ajoutP.remplirFormPersonnel(-1, jTableDuPersonnel, rowIndex, colIndex, this);
         jBtnModifier.setEnabled(true);
     }//GEN-LAST:event_jButtonAjouterPersonneActionPerformed
 

@@ -832,6 +832,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
               remplirListesParticipants(m);
               updateEtatMission();
               etatModif=true;
+              updateEtatMission();
         }
     }//GEN-LAST:event_jButtonAjouterCompActionPerformed
     public void updateEtatMission(){
@@ -853,6 +854,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             jListCompetences.setSelectedIndex(0);
             remplirListesParticipants(m);
             etatModif=true;
+            updateEtatMission();
             
         }
     }//GEN-LAST:event_jButtonSupprCompActionPerformed
@@ -906,6 +908,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
               remplirListesParticipants(m);
             jListAjouterParticipant.setSelectedIndex(0);
             etatModif=true;
+            updateEtatMission();
         }
     }//GEN-LAST:event_jButtonAddParticipActionPerformed
 

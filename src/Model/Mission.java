@@ -205,7 +205,7 @@ public class Mission {
         //Y a t'il assez de personne ?
         ArrayList<String> personnels = getListePersonnels();
         int nbPersonnel = personnels.size();
-        if(this.nbPersMin >= nbPersonnel){
+        if(this.nbPersMin <= nbPersonnel){
             if(isCompleteCompetence()){
                 if(dateDebut.before(today)){
                     this.etat = ETAT_EN_COURS;

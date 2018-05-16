@@ -4,6 +4,7 @@ import Model.Competence;
 import Model.Entreprise;
 import Model.Personnel;
 import static Model.Personnel.formatDate;
+import Vue.Menu2;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
@@ -31,6 +32,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     private int cInd;
     private ArrayList<String> lComp;
     private boolean etatModif = false;
+    private Menu2 caller;
     
     /**
      * Creates new form AjouterPersonnelJFrame
@@ -349,9 +351,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             Personnel p = Entreprise.findPersonnelById(id);
             //Switch to ID to upd
             String id = Entreprise.getIdCompetenceByFrName(jListAjouterCompetence.getSelectedValue());
-
             p.ajouterCompetence(id);
-            
             //Upd both List
             remplirListesCompetences(p);
             jListAjouterCompetence.setSelectedIndex(0);
@@ -387,6 +387,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         }catch(Exception e){System.out.println(e.getMessage());}
         jtB.setColumnSelectionInterval(0,0);
         jtB.setRowSelectionInterval(0,0);
+        caller.updateDate();
         dispose();
     }//GEN-LAST:event_jBtnDeletePersActionPerformed
 
@@ -423,10 +424,11 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
        jListAjouterCompetence.setModel(fullCompetences);
     }
     
-    public void remplirFormPersonnel(int id, JTable jtB, int rI, int cI){
+    public void remplirFormPersonnel(int id, JTable jtB, int rI, int cI, Menu2 caller){
         this.jtB = jtB;
         this.rInd=rI;
         this.cInd=cI;
+        this.caller = caller;
         if(id==-1){
             this.id=id;
             setLabel(); //Définir les valeurs vides
@@ -565,6 +567,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
            //update du Jtable pour le tooltip competence
            String competence = updateJtableCompetence();
            this.jtB.setValueAt(competence, this.rInd, this.cInd+3);
+           caller.updateDate();
            dispose(); //ferme la fenêtre
         }
     }
@@ -617,7 +620,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame();
             apf.setVisible(true);
             /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-            apf.remplirFormPersonnel(idP, jtB,jtB.getSelectedRow(), 0);   
+            apf.remplirFormPersonnel(idP, jtB,jtB.getSelectedRow(), 0, caller);   
             dispose(); //ferme la fenêtre
             }
     }
