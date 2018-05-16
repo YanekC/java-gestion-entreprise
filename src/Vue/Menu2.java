@@ -24,6 +24,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +39,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -490,7 +493,7 @@ public class Menu2 extends javax.swing.JFrame {
         AjouterMissionJFrame apf = new AjouterMissionJFrame();
         apf.setVisible(true);
         /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-        apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0);
+        apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0, apf);
     }//GEN-LAST:event_jButtonAddMissionActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -502,7 +505,7 @@ public class Menu2 extends javax.swing.JFrame {
         AjouterMissionJFrame apf = new AjouterMissionJFrame();
         apf.setVisible(true);
         /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-        apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0);
+        apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0, apf);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -520,7 +523,7 @@ public class Menu2 extends javax.swing.JFrame {
             AjouterMissionJFrame apf = new AjouterMissionJFrame();
             apf.setVisible(true);
             /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-            apf.remplirFormMission(id, table, row, 0);
+            apf.remplirFormMission(id, table, row, 0, apf);
         }
     }//GEN-LAST:event_jTableMissionMouseClicked
     

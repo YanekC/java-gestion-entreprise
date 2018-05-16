@@ -13,17 +13,26 @@ import static Model.Personnel.formatDate;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,6 +45,8 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     private JTable jtB;
     private int rInd;
     private int cInd;
+    private ColorUIResource colorResource;
+    private AjouterMissionJFrame apf;
     /**
      * Creates new form AjouterMissionJFrame
      */
@@ -48,6 +59,22 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //fermer la JFrame sans arrêter l'application
         this.setTitle("Ajouter/Modifier la mission");
         setButtonAction();
+        
+        
+        
+        
+        /* ----- Fermeture réupload de la JProgressBar -------- */
+        this.addWindowListener(new WindowAdapter(){
+                public void windowClosing(WindowEvent e){
+                    try {
+                        UIManager.setLookAndFeel(UIManager.getLookAndFeel());
+                    } catch (UnsupportedLookAndFeelException ex) {
+                        Logger.getLogger(AjouterMissionJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    SwingUtilities.updateComponentTreeUI(apf);
+                    apf.pack();
+                }
+        });
     }
     
     public void setLabel(){
@@ -59,10 +86,12 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jBtnDelMission.setVisible(false);
     }
     
-    public void remplirFormMission(int id, JTable jtB, int rI, int cI){
+    public void remplirFormMission(int id, JTable jtB, int rI, int cI, AjouterMissionJFrame apf){
         this.jtB = jtB;
         this.rInd=rI;
         this.cInd=cI;
+        this.apf = apf;
+        UIManager.put("nimbusOrange",null);
         if(id==-1){
             setLabel(); //Définir les valeurs vides
             //remplirCompetenceEmpty(); Besoin qu'en 1 action
@@ -267,21 +296,22 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         Mission m = Entreprise.findMissionById(id);
         //Switch to ID to upd
         Color mColor = m.getCouleurEtat(etat);
-        ColorUIResource colorResource = new ColorUIResource(Color.RED.darker().darker());UIManager.put("nimbusOrange",colorResource);
         switch(etat){
-            case "Planifiée" : setEnableButton(mColor, jButtonEnd, jButtonInProg, jButtonPrepare,jButtonPlan, 50);break;
-            case "En cours" : disableMission();setEnableButton(mColor, jButtonEnd, jButtonPlan, jButtonPrepare, jButtonInProg, 75);break;
-            case "Terminée" : disableMission();setEnableButton(mColor, jButtonPlan, jButtonInProg, jButtonPrepare, jButtonEnd, 100);break;
-            case "En préparation" : setEnableButton(mColor, jButtonEnd, jButtonInProg, jButtonPlan, jButtonPrepare, 25);break;
+            case "Planifiée" : setEnableButton(mColor, jButtonEnd, jButtonInProg, jButtonPrepare,jButtonPlan, 50);changeProgressBarColor(etat);break;
+            case "En cours" : disableMission();setEnableButton(mColor, jButtonEnd, jButtonPlan, jButtonPrepare, jButtonInProg, 75);changeProgressBarColor(etat);break;
+            case "Terminée" : disableMission();setEnableButton(mColor, jButtonPlan, jButtonInProg, jButtonPrepare, jButtonEnd, 100);changeProgressBarColor(etat);break;
+            case "En préparation" : setEnableButton(mColor, jButtonEnd, jButtonInProg, jButtonPlan, jButtonPrepare, 25);changeProgressBarColor(etat);break;
             default:break;
         }
-        switch(etat){
-            case "Planifiée" : colorResource = new ColorUIResource(Color.RED.darker().darker());UIManager.put("nimbusOrange",colorResource);break;
-            case "En cours" : colorResource = new ColorUIResource(Color.BLUE.darker().darker());UIManager.put("nimbusOrange",colorResource);break;
-            case "Terminée" : colorResource = new ColorUIResource(Color.GREEN.darker().darker());UIManager.put("nimbusOrange",colorResource);break;
-            case "En préparation" : colorResource = new ColorUIResource(Color.YELLOW.darker().darker());UIManager.put("nimbusOrange",colorResource);break;
-            default:break;
-        }
+    }
+    
+    
+    
+    public void changeProgressBarColor(String etat){
+        Mission m = Entreprise.findMissionById(id);
+        Color color = m.getCouleurEtat(etat);
+        colorResource = new ColorUIResource(color);
+        UIManager.put("nimbusOrange",colorResource);       
     }
     
     public void disableMission(){
@@ -938,7 +968,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             AjouterMissionJFrame apf = new AjouterMissionJFrame();
             apf.setVisible(true);
             /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-            apf.remplirFormMission(idM, jtB,jtB.getSelectedRow(), 0);   
+            apf.remplirFormMission(idM, jtB,jtB.getSelectedRow(), 0, apf);   
             dispose(); //ferme la fenêtre
             }
     }
