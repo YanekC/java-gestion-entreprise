@@ -6,6 +6,8 @@ import Model.Personnel;
 import static Model.Personnel.formatDate;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,6 +29,9 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     private JTable jtB;
     private int rInd;
     private int cInd;
+    private ArrayList<String> lComp;
+    private boolean etatModif = false;
+    
     /**
      * Creates new form AjouterPersonnelJFrame
      */
@@ -36,7 +41,43 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         Container content = this.getContentPane();
         content.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
-        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //fermer la JFrame sans arrêter l'application
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
+
+        /* ----- Fermeture réupload de la JProgressBar -------- */
+        this.addWindowListener(new WindowAdapter(){
+                public void windowClosing(WindowEvent e){
+                   if(etatModif){
+                       String ObjButtons[] = {"Oui","Non"};
+                        int PromptResult = JOptionPane.showOptionDialog(null, 
+                            "Les compétences non enregistrées vont être perdu, continuer ?", "Quitter sans enregistrer", 
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+                            ObjButtons,ObjButtons[1]);
+                        if(PromptResult==0)
+                        {
+                          hideFrame();
+                        }
+                   }
+                   else{
+                       dispose();
+                   }
+                   
+                }
+        });
+        
+        
+        
+    }
+    
+    public void hideFrame(){
+        if(id==-1){
+            dispose(); //ferme la fenêtre
+        }
+        else{
+            Personnel p = Entreprise.findPersonnelById(id);
+            p.setCompetences(lComp);
+            dispose(); //ferme la fenêtre
+        }
     }
 
     /**
@@ -96,14 +137,29 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jLabel2.setText("Nom :");
 
         jTextFieldNom.setText("nom");
+        jTextFieldNom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNomActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Prénom :");
 
         jTextFieldPrenom.setText("prenom");
+        jTextFieldPrenom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPrenomActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Date d'entrée :");
 
         jTextFieldDateEntree.setText("dateEntree");
+        jTextFieldDateEntree.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldDateEntreeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelInfosPersonnelLayout = new javax.swing.GroupLayout(jPanelInfosPersonnel);
         jPanelInfosPersonnel.setLayout(jPanelInfosPersonnelLayout);
@@ -283,6 +339,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             //Upd both List
             remplirListesCompetences(p);
             jListCompetences.setSelectedIndex(0);
+            etatModif=true;
         }
     }//GEN-LAST:event_jButtonSupprimerCompetenceActionPerformed
 
@@ -292,15 +349,32 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             Personnel p = Entreprise.findPersonnelById(id);
             //Switch to ID to upd
             String id = Entreprise.getIdCompetenceByFrName(jListAjouterCompetence.getSelectedValue());
+
             p.ajouterCompetence(id);
+            
             //Upd both List
             remplirListesCompetences(p);
             jListAjouterCompetence.setSelectedIndex(0);
+            etatModif=true;
         }
     }//GEN-LAST:event_jBtnAddCompetenceActionPerformed
 
     private void jBtnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelActionPerformed
-        dispose(); //ferme la fenêtre
+        
+        if(etatModif){
+                       String ObjButtons[] = {"Oui","Non"};
+                        int PromptResult = JOptionPane.showOptionDialog(null, 
+                            "Les compétences non enregistrées vont être perdu, continuer ?", "Quitter sans enregistrer", 
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+                            ObjButtons,ObjButtons[1]);
+                        if(PromptResult==0)
+                        {
+                          hideFrame();
+                        }
+                   }
+                   else{
+                       dispose();
+                   }
     }//GEN-LAST:event_jBtnCancelActionPerformed
 
     private void jBtnDeletePersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDeletePersActionPerformed
@@ -315,6 +389,18 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jtB.setRowSelectionInterval(0,0);
         dispose();
     }//GEN-LAST:event_jBtnDeletePersActionPerformed
+
+    private void jTextFieldNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomActionPerformed
+    
+    }//GEN-LAST:event_jTextFieldNomActionPerformed
+
+    private void jTextFieldPrenomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrenomActionPerformed
+        
+    }//GEN-LAST:event_jTextFieldPrenomActionPerformed
+
+    private void jTextFieldDateEntreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDateEntreeActionPerformed
+       
+    }//GEN-LAST:event_jTextFieldDateEntreeActionPerformed
     
     public void remplirCompetenceEmpty(){
        /*--- Fill Empty Competences ---- */
@@ -337,12 +423,12 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
        jListAjouterCompetence.setModel(fullCompetences);
     }
     
-
     public void remplirFormPersonnel(int id, JTable jtB, int rI, int cI){
         this.jtB = jtB;
         this.rInd=rI;
         this.cInd=cI;
         if(id==-1){
+            this.id=id;
             setLabel(); //Définir les valeurs vides
             //remplirCompetenceEmpty(); For 1 action creation with button cancel
             jPanelCompetence.setVisible(false);
@@ -350,15 +436,17 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         }
         else{
             //On modifie !
+           
            this.setTitle("Modifier un Personnel");
            jBtnEnregistrer.setText("Enregistrer");
            Personnel p = Entreprise.findPersonnelById(id);
-
-           //System.out.println(p);
+           //Cancel (clone fonctionne pas, copy non plus, on s'amuse en java)
+           lComp = (ArrayList<String>)p.getListeCompetences().clone();
 
            jTextFieldNom.setText(p.getNom());
            jTextFieldPrenom.setText(p.getPrenom());
            jTextFieldDateEntree.setText(p.getDateNaissString()); 
+           
            this.id = id; //Stock l'id pour la modification
            remplirListesCompetences(p);
            

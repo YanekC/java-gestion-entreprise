@@ -47,6 +47,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     private int cInd;
     private ColorUIResource colorResource;
     private AjouterMissionJFrame apf;
+    private boolean etatModif = false;
+    private ArrayList<String> lComp;
+    private ArrayList<String> lPers;
+    
     /**
      * Creates new form AjouterMissionJFrame
      */
@@ -73,8 +77,35 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                     }
                     SwingUtilities.updateComponentTreeUI(apf);
                     apf.pack();
+                    if(etatModif){
+                       String ObjButtons[] = {"Oui","Non"};
+                        int PromptResult = JOptionPane.showOptionDialog(null, 
+                            "Les compétences et personnels non enregistrées vont être perdu, continuer ?", "Quitter sans enregistrer", 
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+                            ObjButtons,ObjButtons[1]);
+                        if(PromptResult==0)
+                        {
+                          hideFrame();
+                        }
+                   }
+                   else{
+                       dispose();
+                   }
                 }
         });
+    }
+    
+     public void hideFrame(){
+        if(id==-1){
+            dispose(); //ferme la fenêtre
+        }
+        else{
+            Mission m = Entreprise.findMissionById(id);
+            m.setCompetences(lComp);
+            m.setPersonnels(lPers);
+            
+            dispose(); //ferme la fenêtre
+        }
     }
     
     public void setLabel(){
@@ -91,7 +122,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         this.rInd=rI;
         this.cInd=cI;
         this.apf = apf;
-        UIManager.put("nimbusOrange",null);
+        
         if(id==-1){
             setLabel(); //Définir les valeurs vides
             //remplirCompetenceEmpty(); Besoin qu'en 1 action
@@ -113,6 +144,11 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
            jTextFieldNom.setText(m.getNom());
            jTextNbPersMin.setText(String.valueOf(m.getNbPersMin()));
            this.id = id; //Stock l'id pour la modification
+           
+            //Cancel (clone fonctionne pas, copy non plus, on s'amuse en java)
+           lComp = (ArrayList<String>)m.getListeCompetences().clone();
+           lPers = (ArrayList<String>)m.getListePersonnels().clone();
+           
            /* ---- Set current etat of the mission ------*/
            setEtatOfTheMission(m.getEtatString());
            remplirListesCompetencesMission(m);
@@ -341,7 +377,15 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jPBEtat.setValue(0);
         jPBEtat.setValue(progress);
         jPBEtat.setStringPainted(true);
-        jPBEtat.setForeground(Color.white);
+        Color colorText;
+        switch(progress){
+            case 25 : colorText = Color.BLACK;break;
+            case 50 : colorText = Color.BLACK;break;
+            default: colorText = Color.WHITE;break;
+        
+        }
+        jPBEtat.setForeground(colorText);
+        
     }
     
 
@@ -632,12 +676,13 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                     .addGroup(jPanelParticipantsLayout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonSupprParticip))
+                        .addComponent(jButtonSupprParticip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanelParticipantsLayout.createSequentialGroup()
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonAddParticip, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButtonAddParticip, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanelParticipantsLayout.setVerticalGroup(
             jPanelParticipantsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -758,7 +803,20 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEndActionPerformed
 
     private void jBtnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelActionPerformed
-        dispose();
+         if(etatModif){
+                       String ObjButtons[] = {"Oui","Non"};
+                        int PromptResult = JOptionPane.showOptionDialog(null, 
+                            "Les compétences non enregistrées vont être perdu, continuer ?", "Quitter sans enregistrer", 
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+                            ObjButtons,ObjButtons[1]);
+                        if(PromptResult==0)
+                        {
+                          hideFrame();
+                        }
+                   }
+                   else{
+                       dispose();
+                   }
     }//GEN-LAST:event_jBtnCancelActionPerformed
 
     private void jButtonAjouterCompActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterCompActionPerformed
@@ -773,6 +831,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             jListAjouterCompetence.setSelectedIndex(0);
               remplirListesParticipants(m);
               updateEtatMission();
+              etatModif=true;
         }
     }//GEN-LAST:event_jButtonAjouterCompActionPerformed
     public void updateEtatMission(){
@@ -793,6 +852,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             remplirListesCompetencesMission(m);
             jListCompetences.setSelectedIndex(0);
             remplirListesParticipants(m);
+            etatModif=true;
             
         }
     }//GEN-LAST:event_jButtonSupprCompActionPerformed
@@ -829,6 +889,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             remplirListesParticipants(m);
             jListParticipant.setSelectedIndex(0);
             updateEtatMission();
+            etatModif=true;
         }
         
     }//GEN-LAST:event_jButtonSupprParticipActionPerformed
@@ -844,6 +905,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             //Upd both List
               remplirListesParticipants(m);
             jListAjouterParticipant.setSelectedIndex(0);
+            etatModif=true;
         }
     }//GEN-LAST:event_jButtonAddParticipActionPerformed
 

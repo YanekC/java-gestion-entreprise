@@ -336,6 +336,12 @@ public class Mission {
         return dateFinEstime;
     }
     
+    public void setCompetences(ArrayList<String> lsComp){
+        this.listeCompetences = lsComp;
+    }
     
+    public void setPersonnels(ArrayList<String> lsPers){
+        this.listePersonnels = lsPers;
+    }
     
 }
