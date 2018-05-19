@@ -275,9 +275,9 @@ public class Menu2 extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane5)
-                    .addComponent(jScrollPane4))
+                .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -624,7 +624,7 @@ public class Menu2 extends javax.swing.JFrame {
         jTableDuPersonnel.getColumnModel().getColumn(4).setPreferredWidth(10);
         
         jTableDuPersonnel.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
-        jTableDuPersonnel.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", jTableDuPersonnel, "personnel", this));
+        jTableDuPersonnel.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "supprimer", jTableDuPersonnel, "personnel", this));
         jTableDuPersonnel.getColumnModel().getColumn(5).setPreferredWidth(10);
         
     }
@@ -653,7 +653,7 @@ public class Menu2 extends javax.swing.JFrame {
         jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", jTableMission, "mission", this));
         jTableMission.getColumnModel().getColumn(5).setPreferredWidth(10);
         jTableMission.getColumnModel().getColumn(6).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
-        jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", jTableMission, "mission", this));
+        jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "supprimer", jTableMission, "mission", this));
         jTableMission.getColumnModel().getColumn(6).setPreferredWidth(10);
         
     }

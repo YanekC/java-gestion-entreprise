@@ -18,6 +18,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -95,6 +96,7 @@ public class ButtonModifierEditor extends DefaultCellEditor {
         public void actionPerformed(ActionEvent event) {
             if (version.equals("modifier")) {
                 if (versionTable.equals("mission")) {
+                     //MODIFICATION MISSION
                     /*----- Modifier une personne sélectionné -----*/
 
                     //Get the id
@@ -105,7 +107,8 @@ public class ButtonModifierEditor extends DefaultCellEditor {
                     /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
                     apf.remplirFormMission(id, table, table.getSelectedRow(), 0, apf);
                 } else if (versionTable.equals("personnel")) {
-                    int id = menu.getColZeroValueSelectedMission();
+                     //MODIFICATION PERSONNEl
+                    int id = menu.getColZeroValueSelected();
 
                     AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame();
                     apf.setVisible(true);
@@ -114,16 +117,33 @@ public class ButtonModifierEditor extends DefaultCellEditor {
                 }
             } else if (version.equals("supprimer")) {
                 if (versionTable.equals("mission")) {
-                    int id = menu.getColZeroValueSelectedMission();
-                    Entreprise.removeMission(id);
-                    int rowToDel = table.convertRowIndexToModel(table.getSelectedRow());
-                    ((DefaultTableModel) table.getModel()).removeRow(rowToDel);
+                     //SUPPRESSION MISSION
+                      String ObjButtons[] = {"Oui","Non"};
+                        int PromptResult = JOptionPane.showOptionDialog(null, 
+                                           "La mission sera définitivement supprimé, continuer ?", "Supprimer la mission", 
+                                           JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+                                           ObjButtons,ObjButtons[1]);
+                        if(PromptResult==0){
+                            int id = menu.getColZeroValueSelectedMission();
+                            Entreprise.removeMission(id);
+                            int rowToDel = table.convertRowIndexToModel(table.getSelectedRow());
+                            ((DefaultTableModel) table.getModel()).removeRow(rowToDel);
+                        }
                 } else if (versionTable.equals("personnel")) {
-                    int id = menu.getColZeroValueSelected();
-                    Personnel p = Entreprise.findPersonnelById(id);
-                    Entreprise.removePersonnel(p, id);
-                    int rowToDel = table.convertRowIndexToModel(table.getSelectedRow());
-                    ((DefaultTableModel) table.getModel()).removeRow(rowToDel);
+                    //SUPPRESION PERSONNEl
+                    String ObjButtons[] = {"Oui","Non"};
+                    int PromptResult = JOptionPane.showOptionDialog(null, 
+                                       "Le personnel sera définitivement supprimé, continuer ?", "Supprimer le personnel", 
+                                       JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+                                       ObjButtons,ObjButtons[1]);
+                    if(PromptResult==0)
+                    {
+                        int id = menu.getColZeroValueSelected();
+                        Personnel p = Entreprise.findPersonnelById(id);
+                        Entreprise.removePersonnel(p, id);
+                        int rowToDel = table.convertRowIndexToModel(table.getSelectedRow());
+                        ((DefaultTableModel) table.getModel()).removeRow(rowToDel);
+                    }
                 }
 
             }
