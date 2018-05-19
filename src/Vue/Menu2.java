@@ -147,10 +147,21 @@ public class Menu2 extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldRechNomMiss = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel8 = new javax.swing.JLabel();
+        jTextFieldRechEtat = new javax.swing.JTextField();
         jPanelPersonnel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableDuPersonnel = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
         jButtonAjouterPersonne = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jTextFieldRechNom = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel10 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jSeparator3 = new javax.swing.JSeparator();
         jPanelCompetence = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCompetences = new javax.swing.JTable();
@@ -259,7 +270,7 @@ public class Menu2 extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelTotMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,7 +300,7 @@ public class Menu2 extends javax.swing.JFrame {
                         .addComponent(jLabel6))
                     .addComponent(jLabelTotMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelTotSansMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Tableau de bord", jPanelTdB);
@@ -334,13 +345,28 @@ public class Menu2 extends javax.swing.JFrame {
         jLabel1.setText("Dénomination : ");
         jPanel2.add(jLabel1);
 
-        jTextFieldRechNomMiss.setText("jTextField1");
+        jTextFieldRechNomMiss.setPreferredSize(new java.awt.Dimension(100, 24));
         jTextFieldRechNomMiss.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 jTextFieldRechNomMissCaretUpdate(evt);
             }
         });
         jPanel2.add(jTextFieldRechNomMiss);
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator1.setPreferredSize(new java.awt.Dimension(10, 24));
+        jPanel2.add(jSeparator1);
+
+        jLabel8.setText("Etat :");
+        jPanel2.add(jLabel8);
+
+        jTextFieldRechEtat.setPreferredSize(new java.awt.Dimension(100, 24));
+        jTextFieldRechEtat.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jTextFieldRechEtatCaretUpdate(evt);
+            }
+        });
+        jPanel2.add(jTextFieldRechEtat);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
@@ -349,6 +375,7 @@ public class Menu2 extends javax.swing.JFrame {
         jTabbedPane.addTab("Gestion des missions", jPanelMission);
 
         jPanelPersonnel.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelPersonnel.setLayout(new java.awt.BorderLayout());
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.getViewport().setBackground(Color.WHITE);
@@ -377,31 +404,53 @@ public class Menu2 extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTableDuPersonnel);
         jTableDuPersonnel.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
+        jPanelPersonnel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
         jButtonAjouterPersonne.setText("Ajouter une personne");
         jButtonAjouterPersonne.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAjouterPersonneActionPerformed(evt);
             }
         });
+        jPanel3.add(jButtonAjouterPersonne, java.awt.BorderLayout.PAGE_END);
 
-        javax.swing.GroupLayout jPanelPersonnelLayout = new javax.swing.GroupLayout(jPanelPersonnel);
-        jPanelPersonnel.setLayout(jPanelPersonnelLayout);
-        jPanelPersonnelLayout.setHorizontalGroup(
-            jPanelPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 841, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPersonnelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonAjouterPersonne)
-                .addContainerGap())
-        );
-        jPanelPersonnelLayout.setVerticalGroup(
-            jPanelPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelPersonnelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAjouterPersonne)
-                .addGap(0, 75, Short.MAX_VALUE))
-        );
+        jLabel9.setText("Nom :");
+        jPanel4.add(jLabel9);
+
+        jTextFieldRechNom.setPreferredSize(new java.awt.Dimension(100, 24));
+        jTextFieldRechNom.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jTextFieldRechNomCaretUpdate(evt);
+            }
+        });
+        jPanel4.add(jTextFieldRechNom);
+
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator2.setPreferredSize(new java.awt.Dimension(10, 24));
+        jPanel4.add(jSeparator2);
+
+        jLabel10.setText("Prénom : ");
+        jPanel4.add(jLabel10);
+
+        jTextField2.setMinimumSize(new java.awt.Dimension(100, 24));
+        jTextField2.setName(""); // NOI18N
+        jTextField2.setPreferredSize(new java.awt.Dimension(100, 24));
+        jTextField2.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jTextField2CaretUpdate(evt);
+            }
+        });
+        jPanel4.add(jTextField2);
+
+        jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator3.setPreferredSize(new java.awt.Dimension(10, 24));
+        jPanel4.add(jSeparator3);
+
+        jPanel3.add(jPanel4, java.awt.BorderLayout.CENTER);
+
+        jPanelPersonnel.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
         jTabbedPane.addTab("Gestion du personnel", jPanelPersonnel);
 
@@ -496,28 +545,20 @@ public class Menu2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddMissionActionPerformed
 
     private void jTextFieldRechNomMissCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldRechNomMissCaretUpdate
-     
-        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(jTableMission.getModel());
-        RowFilter<TableModel , Integer> filtre = new RowFilter<TableModel, Integer>() {
-            public boolean include(Entry<? extends TableModel, ? extends Integer> entry) {
-                
-                TableModel m = entry.getModel();
-                for(int i = 0; i < m.getRowCount(); i++){
-                    System.out.println(m.getValueAt(i, 1));
-                    if(((String)m.getValueAt(i, 1)).toLowerCase().contains(jTextFieldRechNomMiss.getText().toLowerCase()))
-                        return true;
-                }
-                return false;
-            }
-        };
-        jTableMission.setRowSorter(rowSorter);
-        String text = ((JTextField) evt.getSource()).getText();
-        if (text.trim().length() == 0) {
-            rowSorter.setRowFilter(null);
-        } else {
-            rowSorter.setRowFilter(filtre);
-        }
+        setRowSorter(evt, jTableMission, 1);
     }//GEN-LAST:event_jTextFieldRechNomMissCaretUpdate
+
+    private void jTextFieldRechEtatCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldRechEtatCaretUpdate
+        setRowSorter(evt, jTableMission, 5);
+    }//GEN-LAST:event_jTextFieldRechEtatCaretUpdate
+
+    private void jTextFieldRechNomCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldRechNomCaretUpdate
+        setRowSorter(evt, jTableDuPersonnel, 1);
+    }//GEN-LAST:event_jTextFieldRechNomCaretUpdate
+
+    private void jTextField2CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField2CaretUpdate
+        setRowSorter(evt, jTableDuPersonnel, 2);
+    }//GEN-LAST:event_jTextField2CaretUpdate
 
     private int getColZeroValueHover(int row, int col){
         //get row pointed of pointer
@@ -803,7 +844,27 @@ public class Menu2 extends javax.swing.JFrame {
         }
     }
     
-    
+    public void setRowSorter(javax.swing.event.CaretEvent evt, JTable table, int col){
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(table.getModel());
+        final String text = ((JTextField) evt.getSource()).getText();
+        final int colonne = col;
+        RowFilter<TableModel , Integer> filtre = new RowFilter<TableModel, Integer>() {
+            public boolean include(RowFilter.Entry<? extends TableModel, ? extends Integer> entry) {
+                
+                if(((String)entry.getValue(colonne)).toLowerCase().contains(text.toLowerCase())){
+                    return true;
+
+                }
+                return false;
+            }
+        };
+        table.setRowSorter(rowSorter);
+        if (text.trim().length() == 0) {
+            rowSorter.setRowFilter(null);
+        } else {
+            rowSorter.setRowFilter(filtre);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -850,17 +911,22 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAddMission;
     private javax.swing.JButton jButtonAjouterPersonne;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelTotMiss;
     private javax.swing.JLabel jLabelTotSansMiss;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelCompetence;
     private javax.swing.JPanel jPanelMission;
     private javax.swing.JPanel jPanelPersonnel;
@@ -871,11 +937,17 @@ public class Menu2 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTable jTableCompetences;
     private javax.swing.JTable jTableDuPersonnel;
     private javax.swing.JTable jTableMission;
     private javax.swing.JTable jTableSyntheseMission;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextFieldRechEtat;
+    private javax.swing.JTextField jTextFieldRechNom;
     private javax.swing.JTextField jTextFieldRechNomMiss;
     // End of variables declaration//GEN-END:variables
 }
