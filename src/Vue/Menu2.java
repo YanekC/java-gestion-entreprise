@@ -288,7 +288,7 @@ public class Menu2 extends javax.swing.JFrame {
                         .addComponent(jLabel6))
                     .addComponent(jLabelTotMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelTotSansMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Tableau de bord", jPanelTdB);
@@ -346,7 +346,7 @@ public class Menu2 extends javax.swing.JFrame {
         jPanelMissionLayout.setVerticalGroup(
             jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMissionLayout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanelMissionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAddMission)
@@ -417,7 +417,7 @@ public class Menu2 extends javax.swing.JFrame {
                 .addGroup(jPanelPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAjouterPersonne)
                     .addComponent(jBtnModifier))
-                .addGap(0, 70, Short.MAX_VALUE))
+                .addGap(0, 45, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Gestion du personnel", jPanelPersonnel);
@@ -444,7 +444,7 @@ public class Menu2 extends javax.swing.JFrame {
             jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCompetenceLayout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 105, Short.MAX_VALUE))
+                .addGap(0, 80, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Gestion des compétences", jPanelCompetence);

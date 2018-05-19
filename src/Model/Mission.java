@@ -65,6 +65,22 @@ public class Mission {
         this.updateEtat();
     }
     
+    public Mission(String nom, Calendar dateDebut, Calendar dateFinEstime, Calendar dateFinReel, int nbPersMin) {
+        
+        this.nom = nom;
+        this.dateDebut = dateDebut;
+        this.dateFinEstime = dateFinEstime;
+        this.dateFinReel = dateFinReel;
+        this.listeCompetences = new ArrayList<>();
+        this.listePersonnels = new ArrayList<>();
+        this.nbPersMin = nbPersMin;
+        this.updateEtat();
+    }
+
+    public Calendar getDateDebut() {
+        return dateDebut;
+    }
+    
     @Override
     public String toString(){
         String etat = getEtatString();
@@ -214,15 +230,17 @@ public class Mission {
                     }
                 }
                 else{
+                   
                     this.etat = ETAT_PLANIFIE;
                 }
+            }
+            else{
+               this.etat = ETAT_EN_PREPARATION; 
             }
         }
         else{
             this.etat = ETAT_EN_PREPARATION;
         }
-        
-        
     }
     
     public boolean isCompleteCompetence(){
@@ -255,9 +273,11 @@ public class Mission {
                     }
 
 
-                }  
+                }
+                //System.err.println(allVerified);
               
                 if(listeCompetenceVerified(allVerified)){
+                    //System.err.println("verifié :"+allVerified);
                     return true;
                 }
                 else{

@@ -37,6 +37,14 @@ public class Personnel{
         
     }
     
+    public Personnel(String nom, String prenom, Calendar dateNaiss){
+        this.nom = nom;
+        this.prenom = prenom;
+        this.listeCompetences = new ArrayList<String>();
+        this.dateNaiss = dateNaiss;
+        
+    }
+    
     
     
     public void setCompetences(ArrayList<String> lsComp){

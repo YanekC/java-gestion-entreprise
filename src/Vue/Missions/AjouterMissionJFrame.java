@@ -70,13 +70,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         /* ----- Fermeture réupload de la JProgressBar -------- */
         this.addWindowListener(new WindowAdapter(){
                 public void windowClosing(WindowEvent e){
-                    try {
-                        UIManager.setLookAndFeel(UIManager.getLookAndFeel());
-                    } catch (UnsupportedLookAndFeelException ex) {
-                        Logger.getLogger(AjouterMissionJFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    SwingUtilities.updateComponentTreeUI(apf);
-                    apf.pack();
+                    updateUIManager();
                     if(etatModif){
                        String ObjButtons[] = {"Oui","Non"};
                         int PromptResult = JOptionPane.showOptionDialog(null, 
@@ -93,6 +87,16 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                    }
                 }
         });
+    }
+    
+    public void updateUIManager(){
+        try {
+            UIManager.setLookAndFeel(UIManager.getLookAndFeel());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(AjouterMissionJFrame.class.getName()).log(Level.SEVERE, null, ex);
+          }
+        SwingUtilities.updateComponentTreeUI(apf);
+        apf.pack();
     }
     
      public void hideFrame(){
@@ -112,8 +116,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         //On ajoute !
         this.setTitle("Ajouter une Mission");
         jBtnEnregistrer.setText("Ajouter");
-        jTextDateDeb.setText("");
-        jTextDateFin.setText("");
+       
         jBtnDelMission.setVisible(false);
     }
     
@@ -138,9 +141,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
            Mission m = Entreprise.findMissionById(id);
 
            //System.out.println(m);
-
-           jTextDateDeb.setText(m.getDateDebutString());
-           jTextDateFin.setText(m.getDateFinEstimeString());
+           
+           
+           jDCDateDeb.setCalendar(m.getDateDebut());
+           jDCDateFin.setCalendar(m.getDateFinEstime());
            jTextFieldNom.setText(m.getNom());
            jTextNbPersMin.setText(String.valueOf(m.getNbPersMin()));
            this.id = id; //Stock l'id pour la modification
@@ -159,15 +163,12 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     
     public void remplirListesParticipants(Mission m){
         /* --- Remplir participant de la mission --- */
-        HashMap<String, Personnel> missionCompetence = remplirMesPersonnels(m);
-        //System.out.println(personnalCompetence);
-        /* --- Remplir les compétences non acquise avec les compétences de la mission --- */
-        remplirListesParticipantsPotentiel(missionCompetence);
+        HashMap<String, Personnel> personnelSurLaMission = remplirMesPersonnels(m);
+
+        /* --- Remplir les personnels potentiel sans les personnels déjà présent --- */
+        remplirListesParticipantsPotentiel(personnelSurLaMission);
     }
     
-    public void remplirListesCompetencesNonAcquise(Mission m){
-        
-    }
     
     public HashMap remplirMesPersonnels(Mission m){
          /*---- Fill personnel added to the Mission ------*/
@@ -351,8 +352,8 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     }
     
     public void disableMission(){
-        jTextDateDeb.setEnabled(false);
-        jTextDateFin.setEnabled(false);
+        jDCDateDeb.setEnabled(false);
+        jDCDateFin.setEnabled(false);
         jButtonSupprComp.setEnabled(false);
         jButtonAjouterComp.setEnabled(false);
         jButtonSupprParticip.setEnabled(false);
@@ -403,12 +404,12 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jPanelGeneral = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextDateDeb = new javax.swing.JTextField();
-        jTextDateFin = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldNom = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextNbPersMin = new javax.swing.JTextField();
+        jDCDateDeb = new com.toedter.calendar.JDateChooser();
+        jDCDateFin = new com.toedter.calendar.JDateChooser();
         jPanelCompetences = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListCompetences = new javax.swing.JList<>();
@@ -460,19 +461,21 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelGeneralLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
-                        .addComponent(jTextDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGeneralLayout.createSequentialGroup()
                         .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextDateDeb)
-                            .addComponent(jTextFieldNom)
-                            .addComponent(jTextNbPersMin, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGeneralLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelGeneralLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextFieldNom)
+                    .addComponent(jTextNbPersMin, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(jDCDateDeb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jDCDateFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(39, 39, 39))
         );
         jPanelGeneralLayout.setVerticalGroup(
@@ -487,12 +490,14 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                     .addComponent(jTextNbPersMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextDateDeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(jPanelGeneralLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1))
+                    .addComponent(jDCDateDeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDCDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)))
         );
 
         jPanelCompetences.setBorder(javax.swing.BorderFactory.createTitledBorder("Compétences"));
@@ -815,6 +820,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
                         }
                    }
                    else{
+                       updateUIManager();
                        dispose();
                    }
     }//GEN-LAST:event_jBtnCancelActionPerformed
@@ -829,10 +835,9 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             //Upd both List
               remplirListesCompetencesMission(m);
             jListAjouterCompetence.setSelectedIndex(0);
+            updateEtatMission();
               remplirListesParticipants(m);
-              updateEtatMission();
               etatModif=true;
-              updateEtatMission();
         }
     }//GEN-LAST:event_jButtonAjouterCompActionPerformed
     public void updateEtatMission(){
@@ -840,6 +845,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
        m.updateEtat();
        String etat = m.getEtatString();
        setEtatOfTheMission(etat);
+       updateUIManager();
     }
     private void jButtonSupprCompActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprCompActionPerformed
         if(!jListCompetences.isSelectionEmpty()){
@@ -852,9 +858,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             //Upd both List
             remplirListesCompetencesMission(m);
             jListCompetences.setSelectedIndex(0);
+            updateEtatMission();
             remplirListesParticipants(m);
             etatModif=true;
-            updateEtatMission();
+            
             
         }
     }//GEN-LAST:event_jButtonSupprCompActionPerformed
@@ -874,6 +881,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         }
         //On est en mission terminé
         if(jBtnEnregistrer.getText()=="Fermer"){
+            Mission m = Entreprise.findMissionById(id);
+            String etat = m.getEtatString();
+            this.jtB.setValueAt(etat, this.rInd, this.cInd+4);
+            updateUIManager();
             dispose();
         }
     }//GEN-LAST:event_jBtnEnregistrerActionPerformed
@@ -917,7 +928,12 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextNbPersMinActionPerformed
 
     private void jBtnDelMissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDelMissionActionPerformed
-         //Get the actual mission
+         String ObjButtons[] = {"Oui","Non"};
+    int PromptResult = JOptionPane.showOptionDialog(null, 
+                       "La mission sera définitivement supprimé, continuer ?", "Supprimer la mission", 
+                       JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+                       ObjButtons,ObjButtons[1]);
+    if(PromptResult==0){
         try{
         Entreprise.removeMission(id);
         int rowToDel = this.jtB.convertRowIndexToModel(rInd);
@@ -925,7 +941,9 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         }catch(Exception e){System.out.println(e.getMessage());}
         jtB.setColumnSelectionInterval(0,0);
         jtB.setRowSelectionInterval(0,0);
+        updateUIManager();
         dispose();
+    }
     }//GEN-LAST:event_jBtnDelMissionActionPerformed
     
     public boolean valide(){
@@ -950,26 +968,32 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             }
         }
         //Test des dates
-        if(jTextDateDeb.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Veuillez renseigner la date de début");
-            return false;
-        }
-        else{ok++;}
-        if(jTextDateFin.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Veuillez renseigner le prenom du personnel"); 
-            return false;
-        }
-        else{ok++;}
+        //Test de la date
+        // before
         try{
-            Calendar dateNaissance = Calendar.getInstance();
-            dateNaissance.setTime(formatDate.parse(jTextDateDeb.getText()));
-            dateNaissance.setTime(formatDate.parse(jTextDateFin.getText()));
-            ok++;
+           jDCDateDeb.getCalendar().toString(); 
+           ok++;
+           //after
+           try{
+                jDCDateFin.getCalendar().toString(); 
+                ok++;
+           //Logic
+                if(jDCDateDeb.getCalendar().after( jDCDateFin.getCalendar())){
+                   JOptionPane.showMessageDialog(null, "Les dates sont incohérentes"); 
+                   return false;
+                }
+                else{ok++;}
+            }
+             catch(Exception e){
+               JOptionPane.showMessageDialog(null, "Veuillez renseigner la date de fin de la mission"); 
+               return false;
+            }
         }
-        catch(ParseException e){
-            JOptionPane.showMessageDialog(null, "La date n'est pas au format dd/MM/yyyy"); 
-            e.printStackTrace();
+         catch(Exception e){
+           JOptionPane.showMessageDialog(null, "Veuillez renseigner la date de début de la mission"); 
+           return false;
         }
+        
         //Tout les tests passent
         return ok==5;
     }
@@ -979,25 +1003,19 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             
            String nomMission = jTextFieldNom.getText();
            int nbMini = Integer.parseInt(jTextNbPersMin.getText());
-           //Récupère la date
-           Calendar dateDeb = Calendar.getInstance();
-           dateDeb.setTime(formatDate.parse(jTextDateDeb.getText()));
-           String dateDeDeb = jTextDateDeb.getText();
-           
-           Calendar dateFin = Calendar.getInstance();
-           dateFin.setTime(formatDate.parse(jTextDateFin.getText()));
-           String dateDeFin = jTextDateFin.getText();
-           
            
            //upd the personnel with corresponding value
-           Entreprise.updBasicValueMission(this.id, nbMini, nomMission, dateDeb, dateFin);
-           //System.out.println(Entreprise.afficherPersonnel()); 
+           Entreprise.updBasicValueMission(this.id, nbMini, nomMission, jDCDateDeb.getCalendar(), jDCDateFin.getCalendar());
+           Mission m = Entreprise.findMissionById(id);
+           String etat = m.getEtatString();
            
            /* ------ Update du Jtable ------*/
            this.jtB.setValueAt(nomMission, this.rInd, this.cInd);
+           this.jtB.setValueAt(m.getDateDebutString(), this.rInd, this.cInd+1);
+           this.jtB.setValueAt(m.getDateFinEstimeString(), this.rInd, this.cInd+2);
            this.jtB.setValueAt(nbMini, this.rInd, this.cInd+3);
-           this.jtB.setValueAt(dateDeDeb, this.rInd, this.cInd+1);
-           this.jtB.setValueAt(dateDeFin, this.rInd, this.cInd+2);
+           this.jtB.setValueAt(etat, this.rInd, this.cInd+4);
+           updateUIManager();
            dispose(); //ferme la fenêtre
         }
     }
@@ -1008,18 +1026,13 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         if(valide()){
             String nomMission = jTextFieldNom.getText();
            int nbMini = Integer.parseInt(jTextNbPersMin.getText());
-           //Récupère la date
-           Calendar dateDeb = Calendar.getInstance();
-           String dateDeDeb = jTextDateDeb.getText();
            
-           Calendar dateFin = Calendar.getInstance();
-           String dateDeFin = jTextDateFin.getText();
-           
-           Mission m = new Mission(nomMission, dateDeDeb, dateDeFin, dateDeFin, nbMini);
+           Mission m = new Mission(nomMission, jDCDateDeb.getCalendar(), jDCDateFin.getCalendar(), jDCDateFin.getCalendar(), nbMini);
            int idM = Entreprise.addMission(m);
+           Mission mToUpd = Entreprise.findMissionById(idM);
 
            /*-------- Ajout au Jtable ----------*/
-           String line = idM+";"+nomMission+";"+dateDeDeb+";"+dateDeFin+";"+nbMini+";"+m.getEtatString();
+           String line = idM+";"+nomMission+";"+mToUpd.getDateDebutString()+";"+mToUpd.getDateFinEstimeString()+";"+nbMini+";"+m.getEtatString();
             String[] laLigne = line.split(";");
            ((DefaultTableModel) this.jtB.getModel()).addRow(laLigne);
            // Focus sur la row pour la ré-ouvrir
@@ -1034,6 +1047,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
             apf.setVisible(true);
             /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
             apf.remplirFormMission(idM, jtB,jtB.getSelectedRow(), 0, apf);   
+            updateUIManager();
             dispose(); //ferme la fenêtre
             }
     }
@@ -1074,6 +1088,8 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonPrepare;
     private javax.swing.JButton jButtonSupprComp;
     private javax.swing.JButton jButtonSupprParticip;
+    private com.toedter.calendar.JDateChooser jDCDateDeb;
+    private com.toedter.calendar.JDateChooser jDCDateFin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1094,8 +1110,6 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextField jTextDateDeb;
-    private javax.swing.JTextField jTextDateFin;
     private javax.swing.JTextField jTextFieldNom;
     private javax.swing.JTextField jTextNbPersMin;
     // End of variables declaration//GEN-END:variables
