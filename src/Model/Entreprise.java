@@ -279,6 +279,27 @@ public class Entreprise {
         return ret;
     }
     
+    public static HashMap<Integer, Personnel> getPersoSansMissFromMiss(){
+        
+        
+        HashMap<Integer, Personnel> ret = new HashMap<>();
+        boolean participe;
+        for(Map.Entry perso : personnels.entrySet()){
+            participe = false;
+            for(Map.Entry miss : missions.entrySet()){
+                if(((Mission)miss.getValue()).persoParticipe((int)perso.getKey()) && ((Mission)miss.getValue()).getEtat() != Mission.ETAT_TERMINE){
+                    participe =true;
+                    break;
+                }
+            }
+            if(!participe){
+                ret.put((Integer)perso.getKey(), (Personnel)perso.getValue());
+            }
+            
+        }
+        return ret;
+    }
+    
     
     
     public static void removeMission(int idM){ 

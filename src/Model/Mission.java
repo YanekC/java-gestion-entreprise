@@ -65,6 +65,22 @@ public class Mission {
         this.updateEtat();
     }
     
+    public Mission(String nom, Calendar dateDebut, Calendar dateFinEstime, Calendar dateFinReel, int nbPersMin) {
+        
+        this.nom = nom;
+        this.dateDebut = dateDebut;
+        this.dateFinEstime = dateFinEstime;
+        this.dateFinReel = dateFinReel;
+        this.listeCompetences = new ArrayList<>();
+        this.listePersonnels = new ArrayList<>();
+        this.nbPersMin = nbPersMin;
+        this.updateEtat();
+    }
+
+    public Calendar getDateDebut() {
+        return dateDebut;
+    }
+    
     @Override
     public String toString(){
         String etat = getEtatString();
@@ -122,19 +138,19 @@ public class Mission {
         switch (etat){
             case "Planifiée" :
                 //Jaune
-                ret = new Color(244, 66, 66);
+                ret = new Color(200,206,31);
                 break;
             case "En cours" :
                 //Bleu
-                ret = new Color(65, 142, 244);
+                ret = new Color(5,127,141);
                 break;
             case "Terminée" : 
                 //Vert
-                ret = new Color(65, 244, 86);
+                ret = new Color(0,102,51);
                 break;
             case "En préparation" : 
                 //Rouge
-                ret = new Color(244, 66, 66);
+                ret = new Color(215,81,4);;
                 break;
         }
         return ret;
@@ -205,7 +221,7 @@ public class Mission {
         //Y a t'il assez de personne ?
         ArrayList<String> personnels = getListePersonnels();
         int nbPersonnel = personnels.size();
-        if(this.nbPersMin >= nbPersonnel){
+        if(this.nbPersMin <= nbPersonnel){
             if(isCompleteCompetence()){
                 if(dateDebut.before(today)){
                     this.etat = ETAT_EN_COURS;
@@ -214,15 +230,17 @@ public class Mission {
                     }
                 }
                 else{
+                   
                     this.etat = ETAT_PLANIFIE;
                 }
+            }
+            else{
+               this.etat = ETAT_EN_PREPARATION; 
             }
         }
         else{
             this.etat = ETAT_EN_PREPARATION;
         }
-        
-        
     }
     
     public boolean isCompleteCompetence(){
@@ -255,9 +273,11 @@ public class Mission {
                     }
 
 
-                }  
+                }
+                //System.err.println(allVerified);
               
                 if(listeCompetenceVerified(allVerified)){
+                    //System.err.println("verifié :"+allVerified);
                     return true;
                 }
                 else{
@@ -336,6 +356,12 @@ public class Mission {
         return dateFinEstime;
     }
     
+    public void setCompetences(ArrayList<String> lsComp){
+        this.listeCompetences = lsComp;
+    }
     
+    public void setPersonnels(ArrayList<String> lsPers){
+        this.listePersonnels = lsPers;
+    }
     
 }

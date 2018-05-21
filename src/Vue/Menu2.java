@@ -25,6 +25,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +40,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -290,9 +293,9 @@ public class Menu2 extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane5)
-                    .addComponent(jScrollPane4))
+                .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelTdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -476,7 +479,7 @@ public class Menu2 extends javax.swing.JFrame {
             jPanelCompetenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCompetenceLayout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 105, Short.MAX_VALUE))
+                .addGap(0, 79, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Gestion des compétences", jPanelCompetence);
@@ -492,7 +495,7 @@ public class Menu2 extends javax.swing.JFrame {
         int rowIndex = jTableDuPersonnel.getSelectedRow(); // Récupère la ligne du champ cliqué
         int colIndex = 0;
         /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-        ajoutP.remplirFormPersonnel(-1, jTableDuPersonnel, rowIndex, colIndex);
+        ajoutP.remplirFormPersonnel(-1, jTableDuPersonnel, rowIndex, colIndex, this);
     }//GEN-LAST:event_jButtonAjouterPersonneActionPerformed
 
     private void jTableDuPersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDuPersonnelMouseClicked
@@ -505,7 +508,7 @@ public class Menu2 extends javax.swing.JFrame {
             AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame();
             apf.setVisible(true);
             /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-            apf.remplirFormPersonnel(id, table,row, 0);
+            apf.remplirFormPersonnel(id, table,row, 0, this);
         }
     }//GEN-LAST:event_jTableDuPersonnelMouseClicked
 
@@ -528,7 +531,7 @@ public class Menu2 extends javax.swing.JFrame {
             AjouterMissionJFrame apf = new AjouterMissionJFrame();
             apf.setVisible(true);
             /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-            apf.remplirFormMission(id, table, row, 0);
+            apf.remplirFormMission(id, table, row, 0, apf);
         }
     }//GEN-LAST:event_jTableMissionMouseClicked
 
@@ -541,7 +544,7 @@ public class Menu2 extends javax.swing.JFrame {
         AjouterMissionJFrame apf = new AjouterMissionJFrame();
         apf.setVisible(true);
         /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-        apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0);
+        apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0, apf);
     }//GEN-LAST:event_jButtonAddMissionActionPerformed
 
     private void jTextFieldRechNomMissCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldRechNomMissCaretUpdate
@@ -695,7 +698,7 @@ public class Menu2 extends javax.swing.JFrame {
         jTableDuPersonnel.getColumnModel().getColumn(4).setPreferredWidth(10);
         
         jTableDuPersonnel.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
-        jTableDuPersonnel.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", jTableDuPersonnel, "personnel", this));
+        jTableDuPersonnel.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "supprimer", jTableDuPersonnel, "personnel", this));
         jTableDuPersonnel.getColumnModel().getColumn(5).setPreferredWidth(10);
         
     }
@@ -724,7 +727,7 @@ public class Menu2 extends javax.swing.JFrame {
         jTableMission.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", jTableMission, "mission", this));
         jTableMission.getColumnModel().getColumn(5).setPreferredWidth(10);
         jTableMission.getColumnModel().getColumn(6).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
-        jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", jTableMission, "mission", this));
+        jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "supprimer", jTableMission, "mission", this));
         jTableMission.getColumnModel().getColumn(6).setPreferredWidth(10);
         
     }
@@ -814,6 +817,7 @@ public class Menu2 extends javax.swing.JFrame {
                     table, value, isSelected, hasFocus, row, column);
                 String etat = (String)value;
                 setBackground(Mission.getCouleurEtat(etat));
+                setForeground(Color.WHITE);
                 
                 return this;
             }

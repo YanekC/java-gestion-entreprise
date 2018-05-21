@@ -7,6 +7,8 @@ package Vue.Parametres;
 
 import Util.DateModulable;
 import Vue.Menu2;
+import java.awt.Container;
+import java.awt.FlowLayout;
 
 /**
  *
@@ -22,6 +24,12 @@ public class ParametreJFrame extends javax.swing.JFrame {
     public ParametreJFrame(Menu2 caller) {
         this.caller = caller;
         initComponents();
+        this.setLocationRelativeTo(null); // positionner la fenetre au centre de l'écran
+        Container content = this.getContentPane();
+        content.setLayout(new FlowLayout(FlowLayout.CENTER));
+        this.setResizable(false); //la fenetre ne peut pas etre redimensionée
+        this.pack();
+        jTextFieldDate.setEnabled(false);
     }
 
     /**
@@ -112,7 +120,7 @@ public class ParametreJFrame extends javax.swing.JFrame {
                         .addGroup(jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButtonAn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonAnMoins, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(571, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanelModifDateLayout.setVerticalGroup(
             jPanelModifDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,28 +139,28 @@ public class ParametreJFrame extends javax.swing.JFrame {
                     .addComponent(jButtonJourMoins)
                     .addComponent(jButtonMoisMoins)
                     .addComponent(jButtonAnMoins))
-                .addContainerGap(428, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 838, Short.MAX_VALUE)
+            .addGap(0, 342, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelModifDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 583, Short.MAX_VALUE)
+            .addGap(0, 218, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelModifDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();

@@ -10,8 +10,7 @@ import java.util.Calendar;
  * 
  * @author Yanek, Guilhem, SanDeox
  */
-public class Personnel {
-    
+public class Personnel{
     public static SimpleDateFormat formatDate = new SimpleDateFormat( "dd/MM/yyyy" );
     private String nom;
     private String prenom;
@@ -38,6 +37,20 @@ public class Personnel {
         
     }
     
+    public Personnel(String nom, String prenom, Calendar dateNaiss){
+        this.nom = nom;
+        this.prenom = prenom;
+        this.listeCompetences = new ArrayList<String>();
+        this.dateNaiss = dateNaiss;
+        
+    }
+    
+    
+    
+    public void setCompetences(ArrayList<String> lsComp){
+        this.listeCompetences = lsComp;
+    }
+    
     public void ajouterCompetence(String c){
         if(!this.listeCompetences.contains(c)){
             this.listeCompetences.add(c);
@@ -50,10 +63,7 @@ public class Personnel {
         }
     }
     
-    @Override
-    public String toString(){
-        return nom+" "+prenom+" "+formatDate.format(dateNaiss.getTime());
-    }
+   
 
     public String getNom() {
         return nom;

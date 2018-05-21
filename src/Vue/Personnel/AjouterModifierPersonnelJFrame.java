@@ -4,8 +4,11 @@ import Model.Competence;
 import Model.Entreprise;
 import Model.Personnel;
 import static Model.Personnel.formatDate;
+import Vue.Menu2;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,6 +30,10 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     private JTable jtB;
     private int rInd;
     private int cInd;
+    private ArrayList<String> lComp;
+    private boolean etatModif = false;
+    private Menu2 caller;
+    
     /**
      * Creates new form AjouterPersonnelJFrame
      */
@@ -36,7 +43,43 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         Container content = this.getContentPane();
         content.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
-        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //fermer la JFrame sans arrêter l'application
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
+
+        /* ----- Fermeture réupload de la JProgressBar -------- */
+        this.addWindowListener(new WindowAdapter(){
+                public void windowClosing(WindowEvent e){
+                   if(etatModif){
+                       String ObjButtons[] = {"Oui","Non"};
+                        int PromptResult = JOptionPane.showOptionDialog(null, 
+                            "Les compétences non enregistrées vont être perdu, continuer ?", "Quitter sans enregistrer", 
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+                            ObjButtons,ObjButtons[1]);
+                        if(PromptResult==0)
+                        {
+                          hideFrame();
+                        }
+                   }
+                   else{
+                       dispose();
+                   }
+                   
+                }
+        });
+        
+        
+        
+    }
+    
+    public void hideFrame(){
+        if(id==-1){
+            dispose(); //ferme la fenêtre
+        }
+        else{
+            Personnel p = Entreprise.findPersonnelById(id);
+            p.setCompetences(lComp);
+            dispose(); //ferme la fenêtre
+        }
     }
 
     /**
@@ -58,7 +101,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextFieldPrenom = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextFieldDateEntree = new javax.swing.JTextField();
+        jDCDateEntree = new com.toedter.calendar.JDateChooser();
         jPanelCompetence = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListCompetences = new javax.swing.JList<>();
@@ -96,14 +139,22 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jLabel2.setText("Nom :");
 
         jTextFieldNom.setText("nom");
+        jTextFieldNom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNomActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Prénom :");
 
         jTextFieldPrenom.setText("prenom");
+        jTextFieldPrenom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPrenomActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Date d'entrée :");
-
-        jTextFieldDateEntree.setText("dateEntree");
 
         javax.swing.GroupLayout jPanelInfosPersonnelLayout = new javax.swing.GroupLayout(jPanelInfosPersonnel);
         jPanelInfosPersonnel.setLayout(jPanelInfosPersonnelLayout);
@@ -116,14 +167,14 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelInfosPersonnelLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInfosPersonnelLayout.createSequentialGroup()
+                        .addGroup(jPanelInfosPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelInfosPersonnelLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldDateEntree, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanelInfosPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldPrenom, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                            .addComponent(jDCDateEntree, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanelInfosPersonnelLayout.setVerticalGroup(
@@ -137,15 +188,11 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
                 .addGroup(jPanelInfosPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jTextFieldPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanelInfosPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelInfosPersonnelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addGap(17, 17, 17))
-                    .addGroup(jPanelInfosPersonnelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldDateEntree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(22, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(jPanelInfosPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDCDateEntree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(17, 17, 17))
         );
 
         jPanelCompetence.setBorder(javax.swing.BorderFactory.createTitledBorder("Compétences"));
@@ -283,6 +330,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             //Upd both List
             remplirListesCompetences(p);
             jListCompetences.setSelectedIndex(0);
+            etatModif=true;
         }
     }//GEN-LAST:event_jButtonSupprimerCompetenceActionPerformed
 
@@ -296,14 +344,37 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             //Upd both List
             remplirListesCompetences(p);
             jListAjouterCompetence.setSelectedIndex(0);
+            etatModif=true;
         }
     }//GEN-LAST:event_jBtnAddCompetenceActionPerformed
 
     private void jBtnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelActionPerformed
-        dispose(); //ferme la fenêtre
+        
+        if(etatModif){
+                       String ObjButtons[] = {"Oui","Non"};
+                        int PromptResult = JOptionPane.showOptionDialog(null, 
+                            "Les compétences non enregistrées vont être perdu, continuer ?", "Quitter sans enregistrer", 
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+                            ObjButtons,ObjButtons[1]);
+                        if(PromptResult==0)
+                        {
+                          hideFrame();
+                        }
+                   }
+                   else{
+                       dispose();
+                   }
     }//GEN-LAST:event_jBtnCancelActionPerformed
 
     private void jBtnDeletePersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDeletePersActionPerformed
+    
+    String ObjButtons[] = {"Oui","Non"};
+    int PromptResult = JOptionPane.showOptionDialog(null, 
+                       "Le personnel sera définitivement supprimé, continuer ?", "Supprimer le personnel", 
+                       JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+                       ObjButtons,ObjButtons[1]);
+    if(PromptResult==0)
+    {
         //Get the actual person
         try{
         Personnel p = Entreprise.findPersonnelById(id);
@@ -313,8 +384,18 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         }catch(Exception e){System.out.println(e.getMessage());}
         jtB.setColumnSelectionInterval(0,0);
         jtB.setRowSelectionInterval(0,0);
+        caller.updateDate();
         dispose();
+    }
     }//GEN-LAST:event_jBtnDeletePersActionPerformed
+
+    private void jTextFieldNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomActionPerformed
+    
+    }//GEN-LAST:event_jTextFieldNomActionPerformed
+
+    private void jTextFieldPrenomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrenomActionPerformed
+        
+    }//GEN-LAST:event_jTextFieldPrenomActionPerformed
     
     public void remplirCompetenceEmpty(){
        /*--- Fill Empty Competences ---- */
@@ -337,12 +418,13 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
        jListAjouterCompetence.setModel(fullCompetences);
     }
     
-
-    public void remplirFormPersonnel(int id, JTable jtB, int rI, int cI){
+    public void remplirFormPersonnel(int id, JTable jtB, int rI, int cI, Menu2 caller){
         this.jtB = jtB;
         this.rInd=rI;
         this.cInd=cI;
+        this.caller = caller;
         if(id==-1){
+            this.id=id;
             setLabel(); //Définir les valeurs vides
             //remplirCompetenceEmpty(); For 1 action creation with button cancel
             jPanelCompetence.setVisible(false);
@@ -350,15 +432,18 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         }
         else{
             //On modifie !
+           
            this.setTitle("Modifier un Personnel");
            jBtnEnregistrer.setText("Enregistrer");
            Personnel p = Entreprise.findPersonnelById(id);
-
-           //System.out.println(p);
+           //Cancel (clone fonctionne pas, copy non plus, on s'amuse en java)
+           lComp = (ArrayList<String>)p.getListeCompetences().clone();
 
            jTextFieldNom.setText(p.getNom());
            jTextFieldPrenom.setText(p.getPrenom());
-           jTextFieldDateEntree.setText(p.getDateNaissString()); 
+
+           jDCDateEntree.setCalendar(p.getDateNaissCalendar()); 
+           
            this.id = id; //Stock l'id pour la modification
            remplirListesCompetences(p);
            
@@ -443,7 +528,6 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jBtnEnregistrer.setText("Ajouter");
         jTextFieldNom.setText("");
         jTextFieldPrenom.setText("");
-        jTextFieldDateEntree.setText("");
         jBtnDeletePers.setVisible(false);
         
     }
@@ -461,22 +545,21 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
            String nom = jTextFieldNom.getText();
            String prenom = jTextFieldPrenom.getText();
            //Récupère la date
-           Calendar dateNaissance = Calendar.getInstance();
-           dateNaissance.setTime(formatDate.parse(jTextFieldDateEntree.getText()));
-           String date = jTextFieldDateEntree.getText();
-           
-           
+           Calendar dateNaissance = jDCDateEntree.getCalendar(); 
            //upd the personnel with corresponding value
            Entreprise.updBasicValuePersonnel(this.id, nom, prenom, dateNaissance);
-           //System.out.println(Entreprise.afficherPersonnel()); 
+           //récupère le personnel
+           Personnel p = Entreprise.findPersonnelById(id);
+           
            
            /* ------ Update du Jtable ------*/
            this.jtB.setValueAt(nom, this.rInd, this.cInd);
            this.jtB.setValueAt(prenom, this.rInd, this.cInd+1);
-           this.jtB.setValueAt(date, this.rInd, this.cInd+2);
+           this.jtB.setValueAt(p.getDateNaissString(), this.rInd, this.cInd+2);
            //update du Jtable pour le tooltip competence
            String competence = updateJtableCompetence();
            this.jtB.setValueAt(competence, this.rInd, this.cInd+3);
+           caller.updateDate();
            dispose(); //ferme la fenêtre
         }
     }
@@ -510,12 +593,16 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         if(valide()){
            String nom = jTextFieldNom.getText();
            String prenom = jTextFieldPrenom.getText();
-           String date = jTextFieldDateEntree.getText();
+           //Get Date    
+           
+           Calendar date = jDCDateEntree.getCalendar();
            Personnel p = new Personnel(nom, prenom, date);
            int idP = Entreprise.addPersonnel(p);
+           //récupère le personnel
+           Personnel pToUpd = Entreprise.findPersonnelById(idP);
 
            /*-------- Ajout au Jtable ----------*/
-           String line = idP+";"+nom+";"+prenom+";"+date;
+           String line = idP+";"+nom+";"+prenom+";"+pToUpd.getDateNaissString();
             String[] laLigne = line.split(";");
            ((DefaultTableModel) this.jtB.getModel()).addRow(laLigne);
            // Focus sur la row pour la ré-ouvrir
@@ -529,7 +616,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame();
             apf.setVisible(true);
             /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-            apf.remplirFormPersonnel(idP, jtB,jtB.getSelectedRow(), 0);   
+            apf.remplirFormPersonnel(idP, jtB,jtB.getSelectedRow(), 0, caller);   
             dispose(); //ferme la fenêtre
             }
     }
@@ -549,22 +636,16 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         }
         else{ok++;}
         //Test de la date
-        if(jTextFieldDateEntree.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Veuillez renseigner la date d'entrée du personnel"); 
-            return false;
-        }
-        else{ok++;}
         try{
-            Calendar dateNaissance = Calendar.getInstance();
-            dateNaissance.setTime(formatDate.parse(jTextFieldDateEntree.getText()));
-            ok++;
+           jDCDateEntree.getCalendar().toString(); 
+           ok++;
         }
-        catch(ParseException e){
-            JOptionPane.showMessageDialog(null, "La date n'est pas au format dd/MM/yyyy"); 
-            e.printStackTrace();
+         catch(Exception e){
+           JOptionPane.showMessageDialog(null, "Veuillez renseigner la date d'entrée du personnel"); 
+           return false;
         }
         //Tout les tests passent
-        return ok==4;
+        return ok==3;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -573,6 +654,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jBtnDeletePers;
     private javax.swing.JButton jBtnEnregistrer;
     private javax.swing.JButton jButtonSupprimerCompetence;
+    private com.toedter.calendar.JDateChooser jDCDateEntree;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -584,7 +666,6 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelInfosPersonnel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextFieldDateEntree;
     private javax.swing.JTextField jTextFieldNom;
     private javax.swing.JTextField jTextFieldPrenom;
     // End of variables declaration//GEN-END:variables
