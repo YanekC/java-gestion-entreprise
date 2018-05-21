@@ -41,7 +41,14 @@ public class Mission {
     public static final int ETAT_EN_COURS = 2;
     public static final int ETAT_TERMINE = 3;
     
-
+    /**
+     * Creation d'une mission
+     * @param nom la dénomination
+     * @param dateDebut la date de debut
+     * @param dateFinEstime la date de fin estimée
+     * @param dateFinReel la date de fin réelle
+     * @param nbPersMin le nombre de personne minimum pour la mission
+     */
     public Mission(String nom, String dateDebut, String dateFinEstime, String dateFinReel, int nbPersMin) {
         
         this.nom = nom;
@@ -65,6 +72,14 @@ public class Mission {
         this.updateEtat();
     }
     
+    /**
+     * Creation d'une mission
+     * @param nom la dénomination
+     * @param dateDebut la date de debut
+     * @param dateFinEstime la date de fin estimée
+     * @param dateFinReel la date de fin réelle
+     * @param nbPersMin le nombre de personne minimum pour la mission
+     */
     public Mission(String nom, Calendar dateDebut, Calendar dateFinEstime, Calendar dateFinReel, int nbPersMin) {
         
         this.nom = nom;
@@ -111,9 +126,10 @@ public class Mission {
         return etat;
     }
     
-   
-    
-    
+    /**
+     * Retounre l'etat de la mission sous forme de string
+     * @return le string de l'état de la mission
+     */
     public String getEtatString(){
          String etat = "";
         switch (this.etat){
@@ -133,6 +149,11 @@ public class Mission {
         return etat;
     }
     
+    /**
+     * Retourne la couleur associé a l'id passé en parametre
+     * @param etat l'id de l'etat
+     * @return la couleur 
+     */
     public static Color getCouleurEtat(String etat){
         Color ret = null;
         switch (etat){
@@ -156,6 +177,10 @@ public class Mission {
         return ret;
     }
     
+    /**
+     * Ajoute une competence a la mission
+     * @param c l'id de la competence
+     */
     public void ajouterCompetence(String c){
         //System.out.println(c);
         // Regex pour matcher le code d'une Competence
@@ -216,6 +241,9 @@ public class Mission {
         return ret;
     }
     
+    /**
+     * Met a jour l'état de la mission en fonction des dates et et du personnel associé
+     */
     public void updateEtat(){
         Calendar today = DateModulable.getDate();
         //Y a t'il assez de personne ?
@@ -243,6 +271,10 @@ public class Mission {
         }
     }
     
+    /**
+     * Retourne vrai si la mission est prete a etre effectuée cad que les personnel sont asocié avec les bonne competences
+     * @return vrai si la mission peut etre demarrée
+     */
     public boolean isCompleteCompetence(){
             ArrayList<String> comptToCheck = listeCompetences;
             if(listeCompetences.isEmpty()){
@@ -341,6 +373,11 @@ public class Mission {
         return nbPersMin;
     }
     
+    /**
+     * Retourne vrai si le personnel participe a la mission
+     * @param idPers id du personnel a analyser
+     * @return vrai si le personnel participe
+     */
     public boolean persoParticipe(Integer idPers){
         boolean ret = false;
         for(String p : listePersonnels){

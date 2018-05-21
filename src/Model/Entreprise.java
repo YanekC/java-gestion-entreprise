@@ -26,6 +26,15 @@ public class Entreprise {
         missions = new HashMap<>();
     }
         
+    /**
+     * Permet de charger les fichiers dans les arraylist de la classe.
+     * @param fPersonnels Le fichier de personnel
+     * @param fCompetences Le fichier de la liste des competences
+     * @param fCompetencesPerso Le fichier de la liste des competence de chaque personnel
+     * @param fMission Le fichier de la liste des missions
+     * @param fCompetenceMission Le fichier des competence necessaire pour chaque mission
+     * @param fPersonnelMission Le fichier des personnels associé a chaque mission
+     */
     public static void chargerFichiers(File fPersonnels, File fCompetences, File fCompetencesPerso, File fMission, File fCompetenceMission, File fPersonnelMission){
         ImportInterface i = new ImportCSV();
         try{
@@ -37,6 +46,15 @@ public class Entreprise {
         }
     }
     
+    /**
+     * Permet de sauvegarder les fichiers avec les informations contenu dans les arraylist de la classe.
+     * @param fPersonnels Le fichier de personnel
+     * @param fCompetences Le fichier de la liste des competences
+     * @param fCompetencesPerso Le fichier de la liste des competence de chaque personnel
+     * @param fMission Le fichier de la liste des missions
+     * @param fCompetenceMission Le fichier des competence necessaire pour chaque mission
+     * @param fPersonnelMission Le fichier des personnels associé a chaque mission
+     */
     public static void sauverFichiers(File fPersonnels, File fCompetences, File fCompetencesPerso, File fMission, File fCompetenceMission, File fPersonnelMission){
         ExportInterface e = new ExportCSV();
         
@@ -49,14 +67,28 @@ public class Entreprise {
         }
     }
     
+    /**
+     * Retourne le personnel de l'id passé en parametre
+     * @param id L'id du personnel recherché
+     * @return Le personnel recherché
+     */
     public static Personnel findPersonnelById (int id){
         return personnels.get(id); // retourne la personne par l'id de l'hashmap
     }
     
+    /**
+     * Retourne la mission de l'id passé en parametre
+     * @param id L'id de la mission recherchée
+     * @return La mission recherchée
+     */
     public static Mission findMissionById (int id){
         return missions.get(id); // retourne la mission par l'id de l'hashmap
     }
   
+    /**
+     * Affiche les informations des arrayList de la classe
+     * @return Un String contenant les infos de la classe
+     */
     public static String afficherInfoEnt(){
         String s = "";
         s = "Liste des competences de l'entreprise : ";
@@ -75,6 +107,10 @@ public class Entreprise {
         return s;
     }
     
+    /**
+     * Recupere les informations des personnels de la classe
+     * @return une string contenant les information de l'arraylist de personnel
+     */
     public static String afficherPersonnel(){
         String s = "";
         s = "Liste des Personnels de l'entreprise : ";
@@ -86,15 +122,28 @@ public class Entreprise {
         return s;
     }
     
+    /**
+     * Getteur de la liste de personnel
+     * @return la liste de personnel
+     */
     public static HashMap<Integer, Personnel> getlistePersonnel(){
         return personnels;
     }
 
+    /**
+     * getteur de la liste de competence
+     * @return la liste de competence
+     */
     public static HashMap<String, Competence> getCompetences() {
         
         return competences;
     }
     
+    /**
+     * Recupere les competence d'un personnel contenu dans l'entreprise
+     * @param p Le personnel dont on veuxt connaitre les competences
+     * @return Les competences du personnel passé en parametre
+     */
     public static HashMap<String, Competence> getPersonnelCompetence(Personnel p){
         HashMap<String, Competence> competenceAcquise = new HashMap();
         // parcours la liste des id des compétences de la personne
@@ -108,6 +157,11 @@ public class Entreprise {
         return competenceAcquise;
     }
     
+    /**
+     * Recupere les competence d'une mission contenu dans l'entreprise
+     * @param m La mission a analyser
+     * @return Les competences de la mission
+     */
     public static  HashMap<String, Competence> getMissionCompetence(Mission m){
          HashMap<String, Competence> competenceRecquise = new HashMap();
         // parcours la liste des id des compétences de la personne
@@ -121,6 +175,11 @@ public class Entreprise {
         return competenceRecquise;
     }
     
+    /**
+     * Recupere les personnels d'une mission contenu dans l'entreprise
+     * @param m La mission a analser
+     * @return Les personnels associés a la mission
+     */
     public static  HashMap<Integer, Personnel> getMissionPersonnel(Mission m){
         HashMap<Integer, Personnel> personnnelRaccorde = new HashMap();
         // parcours la liste des id des compétences de la personne
@@ -136,8 +195,11 @@ public class Entreprise {
         return personnnelRaccorde;
     }
     
-    
-    
+    /**
+     * AJoute un personnel
+     * @param p Le personnel a ajouter
+     * @return l'id du nouveau personnel
+     */
     public static int addPersonnel(Personnel p) {
          int id = getLastIdPersonnel()+1;
          personnels.put(id, p);
@@ -145,6 +207,11 @@ public class Entreprise {
          
     }
     
+    /**
+     * Ajoute une mission
+     * @param m la mission a ajouter
+     * @return l'id de la nouvelle mission
+     */
     public static int addMission(Mission m) {
          int id = getLastIdMission()+1;
          missions.put(id, m);
@@ -152,10 +219,22 @@ public class Entreprise {
          
     }
     
+    /**
+     * Supprime le personnel passé en parametre
+     * @param p le personnel a supprimer
+     * @param id l'id du personnel a supprimer
+     */
     public static void removePersonnel (Personnel p, int id) {
         personnels.remove(id, p);
     }
     
+    /**
+     * Met a jour les infos basique sur un personnel
+     * @param id Le nouvel id du personnel
+     * @param nom Le nouveau nom 
+     * @param prenom Le prenom
+     * @param dateNaiss La nouvelle date de naissance
+     */
     public static void updBasicValuePersonnel (int id, String nom, String prenom, Calendar dateNaiss){
         HashMap<Integer, Personnel> personnelsUPD = personnels;
         personnelsUPD.get(id).setNom(nom);
@@ -163,6 +242,14 @@ public class Entreprise {
         personnelsUPD.get(id).setDateNaiss(dateNaiss);
     }
     
+    /**
+     * Met a jour les infos basiques sur une mission
+     * @param id Le nouvel id de la mission
+     * @param NbMini Le nouveau nombre minimum de personnel qui doivent etre affectés 
+     * @param nom Le nouveau nom 
+     * @param dateDeb La nouvelle date de debut
+     * @param dateFin La nouvelle date de fin
+     */
     public static void updBasicValueMission (int id, int NbMini, String nom, Calendar dateDeb, Calendar dateFin){
         HashMap<Integer, Mission> missionsUPD = missions;
         missionsUPD.get(id).setNom(nom);
@@ -171,7 +258,11 @@ public class Entreprise {
         missionsUPD.get(id).setDateFinEstime(dateFin);
     }
     
-   
+    /**
+     * Retourne le nombre de jour travaillé par un personnel
+     * @param id id du personnel 
+     * @return Le nombre de jour travaillé 
+     */
     public static int getNbJourNonTrav(Integer id){
         Personnel p = personnels.get(id);
         Calendar dateFin = Calendar.getInstance();
@@ -197,6 +288,10 @@ public class Entreprise {
         return today.get(Calendar.DATE)-date.get(Calendar.DATE);
     }
     
+    /**
+     * Retourne le plus grand id de la liste du personnel
+     * @return le dernier id de la liste
+     */
     public static int getLastIdPersonnel(){
         int id=0;
         for(Map.Entry p : personnels.entrySet()){
@@ -205,6 +300,10 @@ public class Entreprise {
         return id;
     }
     
+    /**
+     * Retourne le plus grand id de la liste des missions
+     * @return le dernier id de la liste
+     */
     public static int getLastIdMission(){
         int id=0;
         for(Map.Entry p : missions.entrySet()){
@@ -259,7 +358,10 @@ public class Entreprise {
         return monC;
     }
     
-    //retourne le personnel qui n'a pas de mission
+    /**
+     * Retounre la liste des personnels qui ne sont pas affectés a des missions
+     * @return la liste des personnels
+     */
     public static HashMap<Integer, Personnel> getPersoSansMiss(){
         HashMap<Integer, Personnel> ret = new HashMap<>();
         boolean participe;
@@ -300,8 +402,10 @@ public class Entreprise {
         return ret;
     }
     
-    
-    
+    /**
+     * Supprime une mission definitivement
+     * @param idM l'id de la mission a supprimer
+     */
     public static void removeMission(int idM){ 
         Mission miss = findMissionById(idM); 
         HashMap<Integer, Personnel> personnelDeLaMission = getMissionPersonnel(miss); 
@@ -313,6 +417,10 @@ public class Entreprise {
         missions.remove(idM); 
     }
 
+    /**
+     * Retourne la liste des missions avec les etats mis a jours.
+     * @return la liste des missions
+     */
     public static HashMap<Integer, Mission> getMissions() {
         for(Map.Entry m : missions.entrySet()){
             ((Mission)m.getValue()).updateEtat();
@@ -320,8 +428,9 @@ public class Entreprise {
         return missions;
     }
     
-    /*
+    /**
     * Retourne les personnels ayant le plus de competences en commun avec la mission
+    * @return la liste de personnel
     */
     public static ArrayList<Integer> getPersonnelSuggere(Mission m){
         

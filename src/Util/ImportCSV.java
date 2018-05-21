@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * Permet d'importer les fichiers CSV de base de données dans la classe Entreprise
  * @author Yanek
  */
 public class ImportCSV implements ImportInterface{
@@ -30,6 +30,19 @@ public class ImportCSV implements ImportInterface{
     private HashMap<Integer,ArrayList<String>> listeCompetencesMission;
     private HashMap<Integer,ArrayList<String>> listePersoMission;
     
+    /**
+     * Importe les fichier passés en parametre dans les map passées en parametre
+     * @param fPersonnels le fichier des personnel
+     * @param fCompetences le fichier des competences
+     * @param fCompetencesPerso le fichier des competences associés aux personnels
+     * @param fMission Le fichier des missions
+     * @param fCompetenceMission le fichier des competences associées aux misions
+     * @param fPersonnelMission le fichier des personnels associés aux missions
+     * @param lstMission La liste ou les missions sont stockées
+     * @param lstComp La liste ou les competences sont stockées
+     * @param lstPerso La liste ou les personnels sont stockés
+     * @throws Exception Si des problemes avec les fichiers
+     */
     @Override
     public void importer(File fPersonnels, File fCompetences, File fCompetencesPerso, File fMission, File fCompetenceMission, File fPersonnelMission,
             HashMap<Integer, Personnel> lstPerso, HashMap<String, Competence> lstComp,

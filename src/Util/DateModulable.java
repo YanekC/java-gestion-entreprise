@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- *
+ * Permet d'avoir une date interne a l'application pour povoir effectuer des tests facilement
  * @author Yanek
  */
 public class DateModulable {
@@ -18,21 +18,23 @@ public class DateModulable {
     
     private static Calendar date = Calendar.getInstance();
     
-    /*
+    /**
     * Retourne la date actuelle voulu pour l'application
+    * @return un calendrier
     */
     public static Calendar getDate(){
         return date;
     }
     
-    /*
+    /**
     * Retourne la date au format string
+    * @return la date au format string
     */
     public static String getDateString(){
         return formatDate.format(date.getTime());
     }
     
-    /*
+    /**
     * Synchronise la date de l'application avec la date actuelle.
     */
     public static void sync(){

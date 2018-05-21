@@ -18,7 +18,7 @@ public class Personnel{
     private ArrayList<String> listeCompetences;
     
     /**
-     * Constructeur de base d'un personnel.
+     * Constructeur de base d'un personnel. Passer la date en string au format jj/mm/yyyy
      * @param nom Le nom du personnel
      * @param prenom Le prenom du personnel
      * @param dateNaiss La date de naissance du personnel
@@ -36,7 +36,12 @@ public class Personnel{
         }
         
     }
-    
+    /**
+     * Constructeur de base d'un personnel, avec des calendriers passé directement en parametre
+     * @param nom Le nom du personnel
+     * @param prenom Le prenom du personnel
+     * @param dateNaiss La date de naissance du personnel
+     */
     public Personnel(String nom, String prenom, Calendar dateNaiss){
         this.nom = nom;
         this.prenom = prenom;

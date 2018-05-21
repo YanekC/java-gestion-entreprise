@@ -11,17 +11,22 @@ import javax.swing.RowFilter;
 import javax.swing.table.TableModel;
 
 /**
- *
+ * Filtre de ligne personnalisé pour pouvoir trier les JTables de l'application.
  * @author Yanek
  */
 public class MonRowFilter extends RowFilter<TableModel, Integer>{
     
     private HashMap<Integer, String> listeFiltre;
             
+    /**
+     * Creer le filtre avec un hashmap contenant en clé la colonne a filtrer et en valeur le texte a filtrer
+     * @param lst
+     */
     public MonRowFilter(HashMap<Integer, String> lst){
         listeFiltre = lst;
     }
 
+    @Override
     public boolean include(RowFilter.Entry<? extends TableModel, ? extends Integer> entry) {
         boolean ret = true;
         

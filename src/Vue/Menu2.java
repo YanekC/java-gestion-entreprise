@@ -5,53 +5,25 @@
  */
 package Vue;
 
-import Model.Competence;
-import Model.Entreprise;
-import Model.Mission;
-import Model.Personnel;
+import Model.*;
 import Util.DateModulable;
 import Vue.Competences.AjouterCompetenceJFrame;
 import Vue.Missions.AjouterMissionJFrame;
 import Vue.Parametres.ParametreJFrame;
 import Vue.Personnel.AjouterModifierPersonnelJFrame;
 import Vue.boutonsJtable.ButtonModifierEditor;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ButtonModel;
-import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.RowFilter;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
+import javax.swing.*;
+import javax.swing.table.*;
 
 /**
+ * Fenetre principale de l'application. Contient les quatre panneaux principaux
+ * de l'application.
  *
  * @author guilhem, sandeox
  */
@@ -60,32 +32,28 @@ public class Menu2 extends javax.swing.JFrame {
     private Entreprise entC;
     private ImageIcon iconeSuppr;
     private ImageIcon iconeModif;
+
     /**
-     * Creates new form test
+     * Creation de la fenetre.
      */
     public Menu2() throws Exception {
-        
-        
-        
+
         File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
         File fCompetences = new File("resources\\csv\\liste_competences.csv");
         File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
         File fMission = new File("resources\\csv\\liste_missions.csv");
         File fCompetenceMission = new File("resources\\csv\\competence_mission.csv");
         File fPersonnelMission = new File("resources\\csv\\personnel_mission.csv");
-        
-        ImageIcon icon = new ImageIcon("resources\\images\\pencil.png") ;  
+
+        ImageIcon icon = new ImageIcon("resources\\images\\pencil.png");
         Image img = icon.getImage();
-        Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH) ;  
-        iconeModif = new ImageIcon( newimg );
-        icon = new ImageIcon("resources\\images\\del.png") ;  
+        Image newimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        iconeModif = new ImageIcon(newimg);
+        icon = new ImageIcon("resources\\images\\del.png");
         img = icon.getImage();
-        newimg = img.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH) ;  
-        iconeSuppr = new ImageIcon( newimg );
-        
-        
-        
-        
+        newimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+        iconeSuppr = new ImageIcon(newimg);
+
         initComponents();
         this.setLocationRelativeTo(null); // positionner la fenetre au centre de l'écran
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
@@ -96,19 +64,16 @@ public class Menu2 extends javax.swing.JFrame {
         remplirTableauCompetences();
         remplirTableauMissionsSynth();
         remplirListePersoSansMiss();
-        
 
         //Empecher la modification 
         jTableDuPersonnel.setDefaultEditor(Object.class, null);
         jTableCompetences.setDefaultEditor(Object.class, null);
         jTableMission.setDefaultEditor(Object.class, null);
-        
+
         /* ----- Mise à jour des CSV à la fermeture de l'application -------- */
-        Runtime.getRuntime().addShutdownHook(new Thread()
-        {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
-            public void run()
-            {
+            public void run() {
                 File fPersonnels = new File("resources\\csv\\liste_personnel.csv");
                 File fCompetences = new File("resources\\csv\\liste_competences.csv");
                 File fCompetencesPerso = new File("resources\\csv\\competences_personnel.csv");
@@ -119,7 +84,7 @@ public class Menu2 extends javax.swing.JFrame {
             }
         });
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -502,7 +467,7 @@ public class Menu2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAjouterPersonneActionPerformed
 
     private void jTableDuPersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDuPersonnelMouseClicked
-        JTable table =(JTable) evt.getSource();
+        JTable table = (JTable) evt.getSource();
         Point point = evt.getPoint();
         int row = table.rowAtPoint(point);
         if (evt.getClickCount() == 2 && table.getSelectedRow() != -1) {
@@ -511,7 +476,7 @@ public class Menu2 extends javax.swing.JFrame {
             AjouterModifierPersonnelJFrame apf = new AjouterModifierPersonnelJFrame();
             apf.setVisible(true);
             /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-            apf.remplirFormPersonnel(id, table,row, 0, this);
+            apf.remplirFormPersonnel(id, table, row, 0, this);
         }
     }//GEN-LAST:event_jTableDuPersonnelMouseClicked
 
@@ -525,12 +490,12 @@ public class Menu2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTableMissionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMissionMouseClicked
-        JTable table =(JTable) evt.getSource();
+        JTable table = (JTable) evt.getSource();
         Point point = evt.getPoint();
         int row = table.rowAtPoint(point);
         if (evt.getClickCount() == 2 && table.getSelectedRow() != -1) {
             int id = getColZeroValueSelectedMission();
-            
+
             AjouterMissionJFrame apf = new AjouterMissionJFrame();
             apf.setVisible(true);
             /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
@@ -547,7 +512,7 @@ public class Menu2 extends javax.swing.JFrame {
         AjouterMissionJFrame apf = new AjouterMissionJFrame();
         apf.setVisible(true);
         /* -- Envoie de l'id pour remplir la frame, envois de la ligne pour actualiser --------*/
-        apf.remplirFormMission(id, jTableMission,jTableMission.getSelectedRow(), 0, apf);
+        apf.remplirFormMission(id, jTableMission, jTableMission.getSelectedRow(), 0, apf);
     }//GEN-LAST:event_jButtonAddMissionActionPerformed
 
     private void jTextFieldRechNomMissCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldRechNomMissCaretUpdate
@@ -566,32 +531,40 @@ public class Menu2 extends javax.swing.JFrame {
         updateFiltrePers();
     }//GEN-LAST:event_jTextField2CaretUpdate
 
-    public void updateFiltreMiss(){
-        
+    /**
+     * Met a jour le filtre de la table des missions pour matcher avec les
+     * jtextfield
+     */
+    public void updateFiltreMiss() {
+
         HashMap<Integer, String> filtresMiss;
         filtresMiss = new HashMap<>();
         filtresMiss.put(1, jTextFieldRechNomMiss.getText());
         filtresMiss.put(5, jTextFieldRechEtat.getText());
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(jTableMission.getModel());
-        RowFilter<TableModel , Integer> filtre = new MonRowFilter(filtresMiss);
+        RowFilter<TableModel, Integer> filtre = new MonRowFilter(filtresMiss);
         jTableMission.setRowSorter(rowSorter);
         rowSorter.setRowFilter(filtre);
     }
-    
-    public void updateFiltrePers(){
-        
+
+    /**
+     * Met a jour le filtre de la table personnel pour matcher avec les
+     * jtextfield
+     */
+    public void updateFiltrePers() {
+
         HashMap<Integer, String> filtresPers;
         filtresPers = new HashMap<>();
         filtresPers.put(1, jTextFieldRechNom.getText());
         filtresPers.put(2, jTextField2.getText());
 
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(jTableDuPersonnel.getModel());
-        RowFilter<TableModel , Integer> filtre = new MonRowFilter(filtresPers);
+        RowFilter<TableModel, Integer> filtre = new MonRowFilter(filtresPers);
         jTableDuPersonnel.setRowSorter(rowSorter);
         rowSorter.setRowFilter(filtre);
     }
-    
-    private int getColZeroValueHover(int row, int col){
+
+    private int getColZeroValueHover(int row, int col) {
         //get row pointed of pointer
         int rowIndex = row;
         //get column 0 (here ID)
@@ -601,150 +574,161 @@ public class Menu2 extends javax.swing.JFrame {
         //System.out.println(colZeroValue.getClass()); 
         int id = 0;
         //Get the id
-        try{
-           //parse object to string then int
-           String stringId = (String) colZeroValue;
-           id = Integer.parseInt(stringId);
-        return id;
-        }
-        catch(Exception e){
+        try {
+            //parse object to string then int
+            String stringId = (String) colZeroValue;
+            id = Integer.parseInt(stringId);
+            return id;
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }    
+        }
         return id;
     }
-    
-    
-    
-    public int getColZeroValueSelectedMission(){
+
+    /**
+     * Retounre la bonne valeur selectionné dans la table mission, meme si celle
+     * ci est triée.
+     *
+     * @return l'index de la colonne selectionné
+     */
+    public int getColZeroValueSelectedMission() {
         //Get the column 0 (here ID) from the model whenever it's sort or not (due to issue on sort)
         Object colZeroValue = (jTableMission.getModel().getValueAt(jTableMission.convertRowIndexToModel(jTableMission.getSelectedRow()), 0));
         //System.out.println(colZeroValue.getClass()); 
         int id = 0;
         //Get the id
-        try{
-           //parse object to string then int
-           String stringId = (String) colZeroValue;
-           id = Integer.parseInt(stringId);
-        return id;
-        }
-        catch(Exception e){
+        try {
+            //parse object to string then int
+            String stringId = (String) colZeroValue;
+            id = Integer.parseInt(stringId);
+            return id;
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }    
+        }
         return id;
     }
-            
-    public int getColZeroValueSelected(){
+
+    /**
+     * Retounre la bonne valeur selectionné dans la table personnel, meme si
+     * celle ci est triée.
+     *
+     * @return l'index de la colonne selectionné
+     */
+    public int getColZeroValueSelected() {
         //Get the column 0 (here ID) from the model whenever it's sort or not (due to issue on sort)
         Object colZeroValue = (jTableDuPersonnel.getModel().getValueAt(jTableDuPersonnel.convertRowIndexToModel(jTableDuPersonnel.getSelectedRow()), 0));
         //System.out.println(colZeroValue.getClass()); 
         int id = 0;
         //Get the id
-        try{
-           //parse object to string then int
-           String stringId = (String) colZeroValue;
-           id = Integer.parseInt(stringId);
-        return id;
-        }
-        catch(Exception e){
+        try {
+            //parse object to string then int
+            String stringId = (String) colZeroValue;
+            id = Integer.parseInt(stringId);
+            return id;
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }    
+        }
         return id;
     }
-            
-    public void setToolTipCompetence(){
-         jTableCompetences.addMouseMotionListener(new MouseMotionAdapter(){
-                @Override
-                public void mouseMoved(MouseEvent evt){
-                    //mouse pointer
-                    java.awt.Point p = evt.getPoint();
-                    //get row pointed of pointer
-                    int rowIndex = jTableCompetences.rowAtPoint(p);
-                    //get column 0 (here ID)
-                    int colIndex = 0;
-                    //get current id hover
-                    int id = getColZeroValueHover(rowIndex, colIndex);
-                    
-                    //Get the personnel
-                    Personnel lePerso = Entreprise.findPersonnelById(id);
-                    //Get competence of this personnel
-                    HashMap<String, Competence> competences = Entreprise.getPersonnelCompetence(lePerso);
-                    
-                    String value ="<html>"; //obligé de mettre des balises html pour le saut à la ligne du tooltip
-                    if(competences.isEmpty()){
-                        value += "Aucune compétence";
+
+    /**
+     * Attache les tooltips decrivant les competences en detail d'un personnel
+     */
+    public void setToolTipCompetence() {
+        jTableDuPersonnel.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent evt) {
+                //mouse pointer
+                java.awt.Point p = evt.getPoint();
+                //get row pointed of pointer
+                int rowIndex = jTableDuPersonnel.rowAtPoint(p);
+                //get column 0 (here ID)
+                int colIndex = 0;
+                //get current id hover
+                int id = getColZeroValueHover(rowIndex, colIndex);
+
+                //Get the personnel
+                Personnel lePerso = Entreprise.findPersonnelById(id);
+                //Get competence of this personnel
+                HashMap<String, Competence> competences = Entreprise.getPersonnelCompetence(lePerso);
+
+                String value = "<html>"; //obligé de mettre des balises html pour le saut à la ligne du tooltip
+                if (competences.isEmpty()) {
+                    value += "Aucune compétence";
+                } else {
+                    for (Map.Entry<String, Competence> laCompetence : competences.entrySet()) {
+                        value += laCompetence.getValue().getLibelleFra() + "<br/>";
                     }
-                    else{
-                       for(Map.Entry<String, Competence> laCompetence: competences.entrySet()){
-                            value += laCompetence.getValue().getLibelleFra()+"<br/>";
-                       } 
-                    }
-                    value += "</html>";
-                    
-                    if(jTableCompetences.columnAtPoint(p) == jTableCompetences.getColumnCount() -1){
-                        jTableCompetences.setToolTipText(value);
-                    }else{
-                        jTableCompetences.setToolTipText(null);
-                    }
-                    
                 }
-            });
-    }
-    
-    public void remplirTableauPersonnel() throws Exception{
-        HashMap<Integer, Personnel> lePersonnel = entC.getlistePersonnel();
-        
-        
-        
-        for(Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()){
-           /*---- Si le personnel n'a aucune compétence ----*/
-            String comp = null;
-            if(e.getValue().getListeCompetences().isEmpty()){
-                comp = "0";
+                value += "</html>";
+
+                if (jTableDuPersonnel.columnAtPoint(p) == jTableDuPersonnel.getColumnCount() - 3) {
+                    jTableDuPersonnel.setToolTipText(value);
+                } else {
+                    jTableDuPersonnel.setToolTipText(null);
+                }
+
             }
-            else{
-                comp = ""+e.getValue().getListeCompetences().size();
-                }
-            
-            String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+"ⓘ "+comp;
+        });
+    }
+
+    /**
+     * Rempli la JTable du personnel avec les informations d'Entreprise
+     */
+    public void remplirTableauPersonnel() {
+        HashMap<Integer, Personnel> lePersonnel = entC.getlistePersonnel();
+
+        for (Map.Entry<Integer, Personnel> e : lePersonnel.entrySet()) {
+            /*---- Si le personnel n'a aucune compétence ----*/
+            String comp = null;
+            if (e.getValue().getListeCompetences().isEmpty()) {
+                comp = "0";
+            } else {
+                comp = "" + e.getValue().getListeCompetences().size();
+            }
+
+            String line = e.getKey() + ";" + e.getValue().getNom() + ";" + e.getValue().getPrenom() + ";" + e.getValue().getDateNaissString() + ";" + "ⓘ " + comp;
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
-           
+
         }
-        
-        
+
         jTableDuPersonnel.setAutoCreateRowSorter(true);
-        
-         /* ---- Masquer column ID ---- */
+
+        /* ---- Masquer column ID ---- */
         TableColumnModel tcm = jTableDuPersonnel.getColumnModel();
         tcm.removeColumn(tcm.getColumn(0));
-        
+
         jTableDuPersonnel.getColumnModel().getColumn(4).setCellRenderer(new ButtonModifierRenderer(iconeModif, "modifier"));
         jTableDuPersonnel.getColumnModel().getColumn(4).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "modifier", jTableDuPersonnel, "personnel", this));
         jTableDuPersonnel.getColumnModel().getColumn(4).setPreferredWidth(10);
-        
+
         jTableDuPersonnel.getColumnModel().getColumn(5).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
         jTableDuPersonnel.getColumnModel().getColumn(5).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "supprimer", jTableDuPersonnel, "personnel", this));
         jTableDuPersonnel.getColumnModel().getColumn(5).setPreferredWidth(10);
-        
+
     }
-    
-    public void remplirTableauMissions() throws Exception {
-        
+
+    /**
+     * Rempli la JTable des missions avec les informations d'Entreprise
+     */
+    public void remplirTableauMissions() {
+
         DefaultTableModel modelMission = (DefaultTableModel) jTableMission.getModel();
         modelMission.setRowCount(0);
-        
-        for(Map.Entry m : Entreprise.getMissions().entrySet()){
-            Mission miss = (Mission)m.getValue();
-            Object[] line = {String.valueOf(m.getKey()), miss.getNom(), miss.getDateDebutString(), 
+
+        for (Map.Entry m : Entreprise.getMissions().entrySet()) {
+            Mission miss = (Mission) m.getValue();
+            Object[] line = {String.valueOf(m.getKey()), miss.getNom(), miss.getDateDebutString(),
                 miss.getDateFinEstimeString(), String.valueOf(miss.getNbPersMin()),
                 miss.getEtatString(), "Modifier"};
             ((DefaultTableModel) jTableMission.getModel()).addRow(line);
         }
         jTableMission.setAutoCreateRowSorter(true);
-        
+
         /* ---- Masquer column ID ---- */
         TableColumnModel tcm = jTableMission.getColumnModel();
-        if(tcm.getColumnCount()== 8){
+        if (tcm.getColumnCount() == 8) {
             tcm.removeColumn(tcm.getColumn(0));
         }
         jTableMission.getColumnModel().getColumn(4).setCellRenderer(rMissionEtat);
@@ -754,70 +738,78 @@ public class Menu2 extends javax.swing.JFrame {
         jTableMission.getColumnModel().getColumn(6).setCellRenderer(new ButtonModifierRenderer(iconeSuppr, "supprimer"));
         jTableMission.getColumnModel().getColumn(6).setCellEditor(new ButtonModifierEditor(new JCheckBox(), iconeModif, "supprimer", jTableMission, "mission", this));
         jTableMission.getColumnModel().getColumn(6).setPreferredWidth(10);
-        
+
     }
-    
-    public void remplirTableauMissionsSynth() throws Exception {
-        
+
+    /**
+     * Rempli la JTable de la synthese des missions avec les informations
+     * d'Entreprise
+     */
+    public void remplirTableauMissionsSynth() {
+
         DefaultTableModel modelMission = (DefaultTableModel) jTableSyntheseMission.getModel();
         modelMission.setRowCount(0);
-        
+
         int cpt = 0;
-        
-        for(Map.Entry m : Entreprise.getMissions().entrySet()){
-            Mission miss = (Mission)m.getValue();
+
+        for (Map.Entry m : Entreprise.getMissions().entrySet()) {
+            Mission miss = (Mission) m.getValue();
             String[] line = {String.valueOf(m.getKey()), miss.getNom(), miss.getEtatString()};
             ((DefaultTableModel) jTableSyntheseMission.getModel()).addRow(line);
             cpt++;
         }
         jLabelTotMiss.setText(String.valueOf(cpt));
         jTableSyntheseMission.setAutoCreateRowSorter(true);
-        
+
         /* ---- Masquer column ID ---- */
         TableColumnModel tcm = jTableSyntheseMission.getColumnModel();
-        if(tcm.getColumnCount()==3){
+        if (tcm.getColumnCount() == 3) {
             tcm.removeColumn(tcm.getColumn(0));
         }
         jTableSyntheseMission.getColumnModel().getColumn(1).setCellRenderer(rMissionEtat);
-        
+
     }
-    
-    
-    public void remplirTableauCompetences() throws Exception {
+
+    /**
+     * Rempli la JTable des competences avec les informations d'Entreprise
+     */
+    public void remplirTableauCompetences() {
         HashMap<String, Competence> lesCompetences = Entreprise.getCompetences();
-        
-        for(Map.Entry c : lesCompetences.entrySet()){
-            Competence cpt = (Competence)c.getValue();
-            String line = cpt.getLibelleAng()+";"+cpt.getLibelleFra();
+
+        for (Map.Entry c : lesCompetences.entrySet()) {
+            Competence cpt = (Competence) c.getValue();
+            String line = cpt.getLibelleAng() + ";" + cpt.getLibelleFra();
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableCompetences.getModel()).addRow(laLigne);
         }
         jTableCompetences.setAutoCreateRowSorter(true);
-        
+
         /* --- Ajouter le tool tip de compétence --- */
         setToolTipCompetence();
     }
-        
-    public void remplirListePersoSansMiss(){
+
+    /**
+     * Rempli la JListe des personnels sans mission avec les informations
+     * d'Entreprise
+     */
+    public void remplirListePersoSansMiss() {
         HashMap<Integer, Personnel> liste = Entreprise.getPersoSansMiss();
         DefaultListModel modelListeSansMiss = new DefaultListModel();
         int nbJour;
         int cpt = 0;
         String p;
-        for(Map.Entry<Integer, Personnel> perso : liste.entrySet()) {
+        for (Map.Entry<Integer, Personnel> perso : liste.entrySet()) {
             //Fr lib
             nbJour = Entreprise.getNbJourNonTrav(perso.getKey());
-            if(nbJour == -1){
-                p = perso.getValue().getNom()+" "+perso.getValue().getPrenom()+" n'a jamais travaillé.";
-            }
-            else{
-                if(nbJour==0){
-                    p = perso.getValue().getNom()+" "+perso.getValue().getPrenom()+" a finis sa dernière mission aujourd'hui.";
+            if (nbJour == -1) {
+                p = perso.getValue().getNom() + " " + perso.getValue().getPrenom() + " n'a jamais travaillé.";
+            } else {
+                if (nbJour == 0) {
+                    p = perso.getValue().getNom() + " " + perso.getValue().getPrenom() + " a finis sa dernière mission aujourd'hui.";
+                } else {
+                    p = perso.getValue().getNom() + " " + perso.getValue().getPrenom() + " n'a pas travaillé depuis " + nbJour + " jours.";
                 }
-                else{
-                    p = perso.getValue().getNom()+" "+perso.getValue().getPrenom()+" n'a pas travaillé depuis "+nbJour+" jours.";
-                }
-                
+
             }
             modelListeSansMiss.addElement(p);
             cpt++;
@@ -825,52 +817,49 @@ public class Menu2 extends javax.swing.JFrame {
         jList1.setModel(modelListeSansMiss);
         jLabelTotSansMiss.setText(String.valueOf(cpt));
     }
-    
-    public void updateDate(){
-        try {
-            remplirTableauMissions();
-            remplirTableauMissionsSynth();
-            remplirListePersoSansMiss();
-        } catch (Exception ex) {
-            Logger.getLogger(Menu2.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+    /**
+     * Met a jour les JTable lorsq'une modification a été effectuée.
+     */
+    public void updateDate() {
+        remplirTableauMissions();
+        remplirTableauMissionsSynth();
+        remplirListePersoSansMiss();
     }
-    
+
     DefaultTableCellRenderer rMissionEtat = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object
-                value, boolean isSelected, boolean hasFocus, int row, int column) {
-                super.getTableCellRendererComponent(
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            super.getTableCellRendererComponent(
                     table, value, isSelected, hasFocus, row, column);
-                String etat = (String)value;
-                setBackground(Mission.getCouleurEtat(etat));
-                setForeground(Color.WHITE);
-                
-                return this;
-            }
-        };
-  
+            String etat = (String) value;
+            setBackground(Mission.getCouleurEtat(etat));
+            setForeground(Color.WHITE);
+
+            return this;
+        }
+    };
+
     public class ButtonModifierRenderer extends JButton implements TableCellRenderer {
 
         ImageIcon icone;
         String version;
-        
-        public ButtonModifierRenderer(ImageIcon icone, String version){
+
+        public ButtonModifierRenderer(ImageIcon icone, String version) {
             this.icone = icone;
             this.version = version;
         }
-        
+
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean isFocus, int row, int col) {
-            if(version.equals("modifier")){
+            if (version.equals("modifier")) {
                 setIcon(icone);
                 setBackground(Color.LIGHT_GRAY);
-            }
-            else if(version.equals("supprimer")){
+            } else if (version.equals("supprimer")) {
                 setBackground(new Color(189, 30, 45));
                 setForeground(Color.white);
                 setText("X");
             }
-            
+
             return this;
         }
     }

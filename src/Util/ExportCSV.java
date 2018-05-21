@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Util;
 
 import Model.Competence;
@@ -18,20 +13,24 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- *
+ * Classe permetant d'exporter les info de la classe entreprise dans des ficheirs CSV
  * @author Yanek
  */
 public class ExportCSV implements ExportInterface{
 
     /**
      * Réécris les fichiers passés en parametre avec les HashMaps passés en parametre
-     * @param fPersonnels
-     * @param fCompetences
-     * @param fCompetencesPerso
-     * @param listeCompetences
-     * @param listePersonnel
+     * @param fPersonnels le fichier des personnel
+     * @param fCompetences le fichier des competences
+     * @param fCompetencesPerso le fichier des competences associés aux personnels
+     * @param fMission Le fichier des missions
+     * @param fCompetenceMission le fichier des competences associées aux misions
+     * @param fPersonnelMission le fichier des personnels associés aux missions
+     * @param lstMission La liste ou les missions sont stockées
+     * @param listeCompetences La liste ou les competences sont stockées
+     * @param listePersonnel La liste ou les personnels sont stockés
      * @return Vrai si les fichiers ont bien été réécris
-     * @throws Exception 
+     * @throws Exception Si des problemes avec les fichiers
      */
     @Override
     public boolean exporter(File fPersonnels, File fCompetences, File fCompetencesPerso, File fMission, File fCompetenceMission, File fPersonnelMission,
