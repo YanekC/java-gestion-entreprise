@@ -652,13 +652,13 @@ public class Menu2 extends javax.swing.JFrame {
     }
             
     public void setToolTipCompetence(){
-         jTableDuPersonnel.addMouseMotionListener(new MouseMotionAdapter(){
+         jTableCompetences.addMouseMotionListener(new MouseMotionAdapter(){
                 @Override
                 public void mouseMoved(MouseEvent evt){
                     //mouse pointer
                     java.awt.Point p = evt.getPoint();
                     //get row pointed of pointer
-                    int rowIndex = jTableDuPersonnel.rowAtPoint(p);
+                    int rowIndex = jTableCompetences.rowAtPoint(p);
                     //get column 0 (here ID)
                     int colIndex = 0;
                     //get current id hover
@@ -680,10 +680,10 @@ public class Menu2 extends javax.swing.JFrame {
                     }
                     value += "</html>";
                     
-                    if(jTableDuPersonnel.columnAtPoint(p) == jTableDuPersonnel.getColumnCount() -1){
-                        jTableDuPersonnel.setToolTipText(value);
+                    if(jTableCompetences.columnAtPoint(p) == jTableCompetences.getColumnCount() -1){
+                        jTableCompetences.setToolTipText(value);
                     }else{
-                        jTableDuPersonnel.setToolTipText(null);
+                        jTableCompetences.setToolTipText(null);
                     }
                     
                 }
@@ -708,9 +708,6 @@ public class Menu2 extends javax.swing.JFrame {
             String line = e.getKey()+";"+e.getValue().getNom()+";"+e.getValue().getPrenom()+";"+e.getValue().getDateNaissString()+";"+"ⓘ "+comp;
             String[] laLigne = line.split(";");
             ((DefaultTableModel) jTableDuPersonnel.getModel()).addRow(laLigne);
-            
-            /* --- Ajouter le tool tip de compétence --- */
-            setToolTipCompetence();
            
         }
         
@@ -797,6 +794,8 @@ public class Menu2 extends javax.swing.JFrame {
         }
         jTableCompetences.setAutoCreateRowSorter(true);
         
+        /* --- Ajouter le tool tip de compétence --- */
+        setToolTipCompetence();
     }
         
     public void remplirListePersoSansMiss(){
