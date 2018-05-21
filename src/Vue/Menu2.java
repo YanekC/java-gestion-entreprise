@@ -82,7 +82,10 @@ public class Menu2 extends javax.swing.JFrame {
         img = icon.getImage();
         newimg = img.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH) ;  
         iconeSuppr = new ImageIcon( newimg );
-
+        
+        
+        
+        
         initComponents();
         this.setLocationRelativeTo(null); // positionner la fenetre au centre de l'écran
         this.setResizable(false); //la fenetre ne peut pas etre redimensionée
@@ -548,21 +551,46 @@ public class Menu2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddMissionActionPerformed
 
     private void jTextFieldRechNomMissCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldRechNomMissCaretUpdate
-        setRowSorter(evt, jTableMission, 1);
+        updateFiltreMiss();
     }//GEN-LAST:event_jTextFieldRechNomMissCaretUpdate
 
     private void jTextFieldRechEtatCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldRechEtatCaretUpdate
-        setRowSorter(evt, jTableMission, 5);
+        updateFiltreMiss();
     }//GEN-LAST:event_jTextFieldRechEtatCaretUpdate
 
     private void jTextFieldRechNomCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldRechNomCaretUpdate
-        setRowSorter(evt, jTableDuPersonnel, 1);
+        updateFiltrePers();
     }//GEN-LAST:event_jTextFieldRechNomCaretUpdate
 
     private void jTextField2CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField2CaretUpdate
-        setRowSorter(evt, jTableDuPersonnel, 2);
+        updateFiltrePers();
     }//GEN-LAST:event_jTextField2CaretUpdate
 
+    public void updateFiltreMiss(){
+        
+        HashMap<Integer, String> filtresMiss;
+        filtresMiss = new HashMap<>();
+        filtresMiss.put(1, jTextFieldRechNomMiss.getText());
+        filtresMiss.put(5, jTextFieldRechEtat.getText());
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(jTableMission.getModel());
+        RowFilter<TableModel , Integer> filtre = new MonRowFilter(filtresMiss);
+        jTableMission.setRowSorter(rowSorter);
+        rowSorter.setRowFilter(filtre);
+    }
+    
+    public void updateFiltrePers(){
+        
+        HashMap<Integer, String> filtresPers;
+        filtresPers = new HashMap<>();
+        filtresPers.put(1, jTextFieldRechNom.getText());
+        filtresPers.put(2, jTextField2.getText());
+
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(jTableDuPersonnel.getModel());
+        RowFilter<TableModel , Integer> filtre = new MonRowFilter(filtresPers);
+        jTableDuPersonnel.setRowSorter(rowSorter);
+        rowSorter.setRowFilter(filtre);
+    }
+    
     private int getColZeroValueHover(int row, int col){
         //get row pointed of pointer
         int rowIndex = row;
@@ -845,28 +873,6 @@ public class Menu2 extends javax.swing.JFrame {
             }
             
             return this;
-        }
-    }
-    
-    public void setRowSorter(javax.swing.event.CaretEvent evt, JTable table, int col){
-        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(table.getModel());
-        final String text = ((JTextField) evt.getSource()).getText();
-        final int colonne = col;
-        RowFilter<TableModel , Integer> filtre = new RowFilter<TableModel, Integer>() {
-            public boolean include(RowFilter.Entry<? extends TableModel, ? extends Integer> entry) {
-                
-                if(((String)entry.getValue(colonne)).toLowerCase().contains(text.toLowerCase())){
-                    return true;
-
-                }
-                return false;
-            }
-        };
-        table.setRowSorter(rowSorter);
-        if (text.trim().length() == 0) {
-            rowSorter.setRowFilter(null);
-        } else {
-            rowSorter.setRowFilter(filtre);
         }
     }
 
