@@ -20,7 +20,7 @@ import java.util.regex.*;
 //@TODO Ajouter des constante pour l'état
 
 /**
- *
+ * Represente une mission
  * @author guilhem, SanDeox
  */
 public class Mission {

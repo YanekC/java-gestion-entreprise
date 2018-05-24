@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vue.Competences;
 
 import java.awt.Container;
@@ -10,7 +5,7 @@ import java.awt.FlowLayout;
 import javax.swing.JFrame;
 
 /**
- *
+ * Classe de la fenetre d'ajout ou de modification d'une competence 
  * @author guilhem
  */
 public class AjouterCompetenceJFrame extends javax.swing.JFrame {

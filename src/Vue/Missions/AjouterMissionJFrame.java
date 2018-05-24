@@ -37,7 +37,7 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Classe de la fenetre d'jout et de modification des missions
  * @author guilhem, SanDeox
  */
 public class AjouterMissionJFrame extends javax.swing.JFrame {
@@ -89,6 +89,9 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Met a jour l'interface pour changer le theme.
+     */
     public void updateUIManager(){
         try {
             UIManager.setLookAndFeel(UIManager.getLookAndFeel());
@@ -112,6 +115,9 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Change le label de la fenetre en fonction de si c'est pour ajouter ou modifier
+     */
     public void setLabel(){
         //On ajoute !
         this.setTitle("Ajouter une Mission");
@@ -120,6 +126,14 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jBtnDelMission.setVisible(false);
     }
     
+    /**
+     * Initialise le formulaire si la mission existe deja et est a modifier
+     * @param id Id de la missions
+     * @param jtB La table ou est affiché la mission
+     * @param rI index de la ligne de la jtable
+     * @param cI index de la colonne
+     * @param apf La fenetre 
+     */
     public void remplirFormMission(int id, JTable jtB, int rI, int cI, AjouterMissionJFrame apf){
         this.jtB = jtB;
         this.rInd=rI;
@@ -161,6 +175,10 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Met a jour la liste des participant a une mission
+     * @param m la mission en modification
+     */
     public void remplirListesParticipants(Mission m){
         /* --- Remplir participant de la mission --- */
         HashMap<String, Personnel> personnelSurLaMission = remplirMesPersonnels(m);
@@ -170,7 +188,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
     }
     
     
-    public HashMap remplirMesPersonnels(Mission m){
+    private HashMap remplirMesPersonnels(Mission m){
          /*---- Fill personnel added to the Mission ------*/
        //Define model
         DefaultListModel modelListePersonnel = new DefaultListModel();
@@ -193,7 +211,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         return personnels;
     }
     
-    public void remplirListesParticipantsPotentiel(HashMap<String, Personnel> addedPersonnel){
+    private void remplirListesParticipantsPotentiel(HashMap<String, Personnel> addedPersonnel){
          /*---- Fill Personnel ------*/
         //Define model
         DefaultListModel modelAddCompetence = new DefaultListModel();
@@ -211,7 +229,7 @@ public class AjouterMissionJFrame extends javax.swing.JFrame {
         jListAjouterParticipant.setModel(modelAddCompetence);
     }
     
-    public ArrayList getUnAddedPersonnel(HashMap<String, Personnel> addedPersonnel){
+    private ArrayList getUnAddedPersonnel(HashMap<String, Personnel> addedPersonnel){
        /*--- Get unknown skill ---- */
        Mission m = Entreprise.findMissionById(id);
        //New ArrayList

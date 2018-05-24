@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vue.boutonsJtable;
 
 import Model.Entreprise;
@@ -23,7 +18,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Creer les buttons speciaux qui sont dans les jtables
  * @author Yanek
  */
 public class ButtonModifierEditor extends DefaultCellEditor {
@@ -37,6 +32,15 @@ public class ButtonModifierEditor extends DefaultCellEditor {
     private Menu2 menu;
 
     //Constructeur avec une CheckBox
+    /**
+     * Construit l'editeur du bouton
+     * @param checkBox une checkbox 
+     * @param icone une icone si besoin
+     * @param version 'modifier' ou 'supprimer' en fonction de ce qu'on veut que le bouton fasse
+     * @param table la table sur laquelle est le bouton
+     * @param versionTable 'mission' ou 'personnel' en fonction de la table sur laquelle le bouton est
+     * @param menu la frame appelante
+     */
     public ButtonModifierEditor(JCheckBox checkBox, ImageIcon icone, String version, JTable table, String versionTable, Menu2 menu) {
         //Par défaut, ce type d'objet travaille avec un JCheckBox
         super(checkBox);
@@ -53,6 +57,7 @@ public class ButtonModifierEditor extends DefaultCellEditor {
         this.versionTable = versionTable;
     }
 
+    @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         //On précise le numéro de ligne à notre listener
         bListener.setRow(row);
@@ -93,6 +98,7 @@ public class ButtonModifierEditor extends DefaultCellEditor {
             this.table = table;
         }
 
+        @Override
         public void actionPerformed(ActionEvent event) {
             if (version.equals("modifier")) {
                 if (versionTable.equals("mission")) {

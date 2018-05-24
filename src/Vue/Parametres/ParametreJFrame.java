@@ -11,7 +11,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 
 /**
- *
+ * Classe de la fenetre des parametres
  * @author Yanek
  */
 public class ParametreJFrame extends javax.swing.JFrame {
@@ -20,6 +20,7 @@ public class ParametreJFrame extends javax.swing.JFrame {
     
     /**
      * Creates new form NewJFrame
+     * @param caller La frame appelante
      */
     public ParametreJFrame(Menu2 caller) {
         this.caller = caller;

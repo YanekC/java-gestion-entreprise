@@ -3,7 +3,6 @@ package Vue.Personnel;
 import Model.Competence;
 import Model.Entreprise;
 import Model.Personnel;
-import static Model.Personnel.formatDate;
 import Vue.Menu2;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -16,13 +15,12 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Classe de la fenetre de modification et de l'ajout des personnels
  * @author guilhem, sandeox
  */
 public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
@@ -71,6 +69,9 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Ferme la fenetre
+     */
     public void hideFrame(){
         if(id==-1){
             dispose(); //ferme la fenêtre
@@ -397,6 +398,9 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jTextFieldPrenomActionPerformed
     
+    /**
+     * Rempli les competences que le personel n'a pas
+     */
     public void remplirCompetenceEmpty(){
        /*--- Fill Empty Competences ---- */
        //Define the two model
@@ -418,6 +422,14 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
        jListAjouterCompetence.setModel(fullCompetences);
     }
     
+    /**
+     * Rempli le formulaire du personnels
+     * @param id Id du personnel
+     * @param jtB table du personnel
+     * @param rI index de la ligne de la table appelante
+     * @param cI index de la colonne de la table appelante
+     * @param caller La frame appelante
+     */
     public void remplirFormPersonnel(int id, JTable jtB, int rI, int cI, Menu2 caller){
         this.jtB = jtB;
         this.rInd=rI;
@@ -450,7 +462,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         }
     }
     
-    public HashMap remplirMesCompetences(Personnel p){
+    private HashMap remplirMesCompetences(Personnel p){
         /*---- Fill known skill ------*/
         //Define model
         DefaultListModel modelListeCompetence = new DefaultListModel();
@@ -475,7 +487,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         return competences;
     }
     
-    public HashMap getUnknownCompetence(HashMap<String, Competence> knownCompetence){
+    private HashMap getUnknownCompetence(HashMap<String, Competence> knownCompetence){
        /*--- Get unknown skill ---- */
        //New Hashmap
        HashMap<String, Competence> unknownSkill = new HashMap();
@@ -496,7 +508,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
        return unknownSkill;
     }
     
-    public void remplirListesCompetencesNonAcquise(HashMap<String, Competence> knownCompetence){
+    private void remplirListesCompetencesNonAcquise(HashMap<String, Competence> knownCompetence){
         /*---- Fill unknown skill ------*/
         //Define model
         DefaultListModel modelAddCompetence = new DefaultListModel();
@@ -513,7 +525,7 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         jListAjouterCompetence.setModel(modelAddCompetence);
     }
     
-    public void remplirListesCompetences(Personnel p){
+    private void remplirListesCompetences(Personnel p){
         /* --- Remplir compétences du personnel --- */
         HashMap<String, Competence> personnalCompetence = remplirMesCompetences(p);
         //System.out.println(personnalCompetence);
@@ -522,6 +534,9 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Modifie le titre de la frame
+     */
     public void setLabel(){
         //On ajoute !
         this.setTitle("Ajouter un Personnel");
@@ -532,6 +547,10 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Met a jour la table de competence de la frame
+     * @return le nombre de competence
+     */
     public String updateJtableCompetence(){
        /* --- ⓘ update col competence--- */
          Personnel p = Entreprise.findPersonnelById(id);
@@ -539,6 +558,10 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
          return "ⓘ "+nbCompetence;
     }
     
+    /**
+     * Modifie le personnel si tout les champs sont valide alors les champs sont modifé et on update la jtable
+     * @throws ParseException 
+     */
     public void modifier() throws ParseException{
         if(valide()){
             //Récupère les champs nom et prénom
@@ -564,6 +587,12 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Retourne l'id de la ligne quand le tableau est filtré ou non
+     * @param model le tableau filtré
+     * @param jtId l'id de la ligne quand le tableau est filtré
+     * @return l'id de la ligne
+     */
     public int getRowById(JTable model, int jtId) {
         
         int found = 0;
@@ -588,6 +617,9 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
         return found;
     }
     
+    /**
+     * Ajoute le personnel si tout les champs sont valide alors les champs sont modifé et on update la jtable
+     */
     public void ajouter(){
         /* ---- Valide alors je l'ajoute ---- */
         if(valide()){
@@ -621,6 +653,10 @@ public class AjouterModifierPersonnelJFrame extends javax.swing.JFrame {
             }
     }
     
+    /**
+     * Retourne vrai si tous les champs sont correctes
+     * @return vrai si tous les champs sont correctes
+     */
     public boolean valide(){
         int ok = 0;
         //Test du nom

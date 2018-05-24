@@ -144,22 +144,12 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel3" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
-                                      <Component id="jLabel4" alignment="0" min="-2" pref="186" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace pref="114" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="jLabel3" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
+                              <Component id="jLabel4" alignment="0" min="-2" pref="186" max="-2" attributes="0"/>
+                              <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace pref="114" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jTextFieldNom" max="32767" attributes="0"/>
                               <Component id="jTextNbPersMin" alignment="0" pref="139" max="32767" attributes="0"/>
@@ -253,7 +243,7 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jButtonAjouterComp" pref="90" max="32767" attributes="0"/>
+                              <Component id="jButtonAjouterComp" max="32767" attributes="0"/>
                               <Component id="jButtonSupprComp" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
